@@ -11,7 +11,7 @@ body:
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us, what did you expect to happen?
+      description: Also tell us, what did you expect to happen and attach a log file!
     validations:
       required: true
   - type: dropdown
@@ -55,5 +55,5 @@ body:
       options:
         - label: I am using other mods besides Ice and Fire
           required: false
-        - label: I have attached a log file from the session that I have experienced this issue
+        - label: I have attached a log file from the session that I have experienced this issue on
           required: true
