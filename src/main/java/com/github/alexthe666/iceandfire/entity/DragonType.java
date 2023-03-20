@@ -66,7 +66,7 @@ public class DragonType {
     public void updateEggCondition(EntityDragonEgg egg) {
         BlockPos pos = new BlockPos(egg.position());
         if (this == FIRE) {
-            if (egg.level.getBlockState(pos).getMaterial() == Material.FIRE) {
+            if (egg.level.getBlockStates(egg.getBoundingBox().inflate(1)).filter(state -> state.is(Blocks.FIRE)).toArray().length == 8) { // getBlockState(pos).getMaterial() == Material.FIRE) {
                 egg.setDragonAge(egg.getDragonAge() + 1);
             }
             if (egg.getDragonAge() > IafConfig.dragonEggTime) {
@@ -88,7 +88,7 @@ public class DragonType {
                 dragon.setTame(true);
                 dragon.setOwnerUUID(egg.getOwnerId());
                 egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), SoundEvents.FIRE_EXTINGUISH, egg.getSoundSource(), 2.5F, 1.0F, false);
-                egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), IafSoundRegistry.EGG_HATCH, egg.getSoundSource(), 2.5F, 1.0F, false);
+                egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), IafSoundRegistry.EGG_HATCH.get(), egg.getSoundSource(), 2.5F, 1.0F, false);
                 egg.remove(Entity.RemovalReason.DISCARDED);
             }
         }
@@ -134,7 +134,7 @@ public class DragonType {
                     egg.level.addFreshEntity(lightningboltentity);
                 }
                 egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, egg.getSoundSource(), 2.5F, 1.0F, false);
-                egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), IafSoundRegistry.EGG_HATCH, egg.getSoundSource(), 2.5F, 1.0F, false);
+                egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), IafSoundRegistry.EGG_HATCH.get(), egg.getSoundSource(), 2.5F, 1.0F, false);
                 egg.remove(Entity.RemovalReason.DISCARDED);
 
 

@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "chared_gravel",
+      "name": "charred_gravel",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "iceandfire:chared_gravel"
+          "name": "iceandfire:charred_gravel"
         }
       ],
       "conditions": [

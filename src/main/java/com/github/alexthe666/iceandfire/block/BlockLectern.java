@@ -4,6 +4,7 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityLectern;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,9 +27,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 import static com.github.alexthe666.iceandfire.entity.tile.IafTileEntityRegistry.IAF_LECTERN;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockLectern extends BaseEntityBlock {
     public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
@@ -86,7 +88,7 @@ public class BlockLectern extends BaseEntityBlock {
     }
 
 
-    public void updateTick(Level worldIn, BlockPos pos, BlockState state, Random rand) {
+    public void updateTick(Level worldIn, BlockPos pos, BlockState state, RandomSource rand) {
         this.checkFall(worldIn, pos);
     }
 

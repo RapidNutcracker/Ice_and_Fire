@@ -11,6 +11,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIFindGaurdingEntity<T extends EntityMyrmexBase> extends TargetGoal {
     protected final DragonAITargetItems.Sorter theNearestAttackableTargetSorter;
     protected final Predicate<? super EntityMyrmexBase> targetEntitySelector;

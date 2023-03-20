@@ -7,6 +7,8 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAISummonerHurtTarget extends TargetGoal {
     EntityMyrmexSwarmer tameable;
     LivingEntity attacker;

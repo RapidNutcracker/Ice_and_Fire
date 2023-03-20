@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "chared_dirt_path",
+      "name": "charred_dirt_path",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "iceandfire:chared_dirt_path"
+          "name": "iceandfire:charred_dirt_path"
         }
       ],
       "conditions": [

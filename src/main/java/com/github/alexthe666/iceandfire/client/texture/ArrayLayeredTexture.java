@@ -24,23 +24,22 @@ public class ArrayLayeredTexture extends AbstractTexture {
     }
 
     @Override
-    public void load(@NotNull ResourceManager manager) {
+    public void load(@NotNull ResourceManager manager) throws IOException {
         Iterator<String> iterator = this.layeredTextureNames.iterator();
         String s = iterator.next();
 
-        try (Resource iresource = manager.getResource(new ResourceLocation(s))) {
-            NativeImage nativeimage = net.minecraftforge.client.MinecraftForgeClient.getImageLayer(new ResourceLocation(s), manager);
+        try {
+//            Resource iresource = manager.getResource(new ResourceLocation(s)).get();
+            NativeImage nativeImage1 = NativeImage.read(manager.open(new ResourceLocation(s)));
             while (iterator.hasNext()) {
                 String s1 = iterator.next();
                 if (s1 != null) {
-                    try (
-                        Resource iresource1 = manager.getResource(new ResourceLocation(s1));
-                        NativeImage nativeimage1 = NativeImage.read(iresource1.getInputStream())
-                    ) {
-                        for (int i = 0; i < Math.min(nativeimage1.getHeight(), nativeimage.getHeight()); i++) {
-                            for (int j = 0; j < Math.min(nativeimage1.getWidth(), nativeimage.getWidth()); j++) {
-                                blendPixel(nativeimage, nativeimage1, j, i, nativeimage1.getPixelRGBA(j, i));
-                            }
+
+                    Resource resource = manager.getResource(new ResourceLocation(s1)).get();
+                    NativeImage nativeImage2 = NativeImage.read(resource.open());
+                    for (int i = 0; i < Math.min(nativeImage2.getHeight(), nativeImage1.getHeight()); i++) {
+                        for (int j = 0; j < Math.min(nativeImage2.getWidth(), nativeImage1.getWidth()); j++) {
+                            blendPixel(nativeImage1, nativeImage2, j, i, nativeImage2.getPixelRGBA(j, i));
                         }
                     }
                 }
@@ -48,15 +47,14 @@ public class ArrayLayeredTexture extends AbstractTexture {
 
             if (!RenderSystem.isOnRenderThreadOrInit()) {
                 RenderSystem.recordRenderCall(() -> {
-                    this.loadImage(nativeimage);
+                    this.loadImage(nativeImage1);
                 });
             } else {
-                this.loadImage(nativeimage);
+                this.loadImage(nativeImage1);
             }
-        } catch (IOException ioexception) {
-            LOGGER.error("Couldn't load layered image", ioexception);
+        } catch (IOException exception) {
+            LOGGER.error("Couldn't load layered image", exception);
         }
-
     }
 
     public static void blendPixel(NativeImage nativeimage, NativeImage nativeimage1, int xIn, int yIn, int colIn) {

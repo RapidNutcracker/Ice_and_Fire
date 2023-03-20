@@ -274,7 +274,7 @@ public class EntityDreadScuttler extends EntityDreadMob implements IAnimatedEnti
     }
 
     protected void playStepSound(BlockPos pos, Block blockIn) {
-        this.playSound(IafSoundRegistry.MYRMEX_WALK, 0.25F, 1.0F);
+        this.playSound(IafSoundRegistry.MYRMEX_WALK.get(), 0.25F, 1.0F);
     }
 
     @Override

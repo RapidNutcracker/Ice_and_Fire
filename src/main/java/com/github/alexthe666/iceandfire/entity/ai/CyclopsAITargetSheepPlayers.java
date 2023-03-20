@@ -7,6 +7,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class CyclopsAITargetSheepPlayers<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
 
     public CyclopsAITargetSheepPlayers(Mob goalOwnerIn, Class<T> targetClassIn, boolean checkSight) {

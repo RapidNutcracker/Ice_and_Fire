@@ -28,6 +28,8 @@ import javax.annotation.Nullable;
 
 import static com.github.alexthe666.iceandfire.entity.tile.IafTileEntityRegistry.DRAGONFORGE_CORE;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockDragonforgeCore extends BaseEntityBlock implements IDragonProof, INoTab {
     private static boolean keepInventory;
     private final int isFire;

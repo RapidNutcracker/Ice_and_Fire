@@ -11,6 +11,7 @@ import com.github.alexthe666.iceandfire.inventory.IafContainerRegistry;
 import com.github.alexthe666.iceandfire.item.IafItemRegistry;
 import com.github.alexthe666.iceandfire.loot.IafLootRegistry;
 import com.github.alexthe666.iceandfire.message.*;
+import com.github.alexthe666.iceandfire.misc.IafSoundRegistry;
 import com.github.alexthe666.iceandfire.recipe.IafRecipeRegistry;
 import com.github.alexthe666.iceandfire.recipe.IafRecipeSerializers;
 import com.github.alexthe666.iceandfire.world.IafProcessors;
@@ -24,10 +25,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
+// import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
+// import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -59,25 +59,27 @@ public class IceAndFire {
     public static final String MODID = "iceandfire";
     public static final SimpleChannel NETWORK_WRAPPER;
     private static final String PROTOCOL_VERSION = Integer.toString(1);
+    public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     public static boolean DEBUG = true;
     public static String VERSION = "UNKNOWN";
+
+    private static int packetsRegistered = 0;
+
     public static CreativeModeTab TAB_ITEMS = new CreativeModeTab(MODID) {
         @Override
         public @NotNull ItemStack makeIcon() {
             return new ItemStack(IafItemRegistry.DRAGON_SKULL_FIRE.get());
         }
     };
-    public static CreativeModeTab TAB_BLOCKS = new CreativeModeTab("iceandfire.blocks") {
+    public static CreativeModeTab TAB_BLOCKS = new CreativeModeTab(MODID + ".blocks") {
         @Override
         public @NotNull ItemStack makeIcon() {
             return new ItemStack(IafBlockRegistry.DRAGON_SCALE_RED.get());
         }
     };
-    public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-    private static int packetsRegistered = 0;
 
     static {
-        NetworkRegistry.ChannelBuilder channel = NetworkRegistry.ChannelBuilder.named(new ResourceLocation("iceandfire", "main_channel"));
+        NetworkRegistry.ChannelBuilder channel = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main_channel"));
         String version = PROTOCOL_VERSION;
         version.getClass();
         channel = channel.clientAcceptedVersions(version::equals);
@@ -89,80 +91,83 @@ public class IceAndFire {
     }
 
     public IceAndFire() {
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        modBus.addListener(this::setup);
+        modBus.addListener(this::setupComplete);
+        modBus.addListener(this::setupClient);
+
+        final ModLoadingContext modLoadingContext = ModLoadingContext.get();
+
+
         try {
             ModContainer mod = ModList.get().getModContainerById(IceAndFire.MODID).orElseThrow(NullPointerException::new);
             VERSION = mod.getModInfo().getVersion().toString();
-        } catch (Exception ignored) {
-        }
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        } catch (Exception ignored) { }
 
-
-        final ModLoadingContext modLoadingContext = ModLoadingContext.get();
+        IafBlockRegistry.register(modBus);
+        IafEntityRegistry.register(modBus);
+        IafItemRegistry.register(modBus);
+        IafTileEntityRegistry.register(modBus);
+        IafVillagerRegistry.register(modBus);
+        IafSoundRegistry.register(modBus);
+//        // IafWorldRegistry.FEATURES.register(modBus);
+//        // IafWorldRegistry.STRUCTURES.register(modBus);
+        IafContainerRegistry.CONTAINERS.register(modBus);
+        IafRecipeRegistry.SERIALIZERS.register(modBus);
+        IafProcessors.PROCESSORS.register(modBus);
+        IafLootRegistry.register(modBus);
+//        MinecraftForge.EVENT_BUS.register(IafBlockRegistry.class);
+//        MinecraftForge.EVENT_BUS.register(IafRecipeRegistry.class);
 
         modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
         modLoadingContext.registerConfig(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
         PROXY.init();
 
-        MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
-        MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
+//        MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
+//        MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 
-        modBus.addGenericListener(StructureFeature.class, EventPriority.LOW,
-            (final RegistryEvent.Register<StructureFeature<?>> event) -> IafWorldRegistry
-                .registerStructureConfiguredFeatures());
-        modBus.addGenericListener(Feature.class, EventPriority.LOW,
-            (final RegistryEvent.Register<Feature<?>> event) -> IafWorldRegistry.registerConfiguredFeatures());
-
-        IafItemRegistry.ITEMS.register(modBus);
-        IafBlockRegistry.BLOCKS.register(modBus);
-        IafEntityRegistry.ENTITIES.register(modBus);
-        IafTileEntityRegistry.TYPES.register(modBus);
-        IafWorldRegistry.FEATURES.register(modBus);
-        IafWorldRegistry.STRUCTURES.register(modBus);
-        IafContainerRegistry.CONTAINERS.register(modBus);
-        IafRecipeSerializers.SERIALIZERS.register(modBus);
-        IafProcessors.PROCESSORS.register(modBus);
-        MinecraftForge.EVENT_BUS.register(IafBlockRegistry.class);
-        MinecraftForge.EVENT_BUS.register(IafRecipeRegistry.class);
-
-        modBus.addListener(this::setup);
-        modBus.addListener(this::setupComplete);
-        modBus.addListener(this::setupClient);
+        // modBus.addGenericListener(StructureFeature.class, EventPriority.LOW,
+        //     (final RegistryEvent.Register<StructureFeature<?>> event) -> IafWorldRegistry
+        //         .registerStructureConfiguredFeatures());
+        // modBus.addGenericListener(Feature.class, EventPriority.LOW,
+        //     (final RegistryEvent.Register<Feature<?>> event) -> IafWorldRegistry.registerConfiguredFeatures());
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onServerStarting(ServerAboutToStartEvent event) {
-        var biomes = event.getServer().registryAccess().ownedRegistryOrThrow(ForgeRegistries.BIOMES.getRegistryKey());
+//    @SubscribeEvent(priority = EventPriority.LOWEST)
+//    public void onServerStarting(ServerAboutToStartEvent event) {
+//        var biomes = event.getServer().registryAccess().ownedRegistryOrThrow(ForgeRegistries.BIOMES.getRegistryKey());
+//
+//        // Create configured structure feature tags
+//        DataGenerators.createResources(biomes);
+//        event.getServer().reloadResources(event.getServer().getPackRepository().getSelectedIds());
+//
+//        event.getServer().getWorldData().worldGenSettings().dimensions().forEach(levelStem -> {
+//            reloadSources(biomes, levelStem.generator());
+//        });
+//
+//        biomes.holders().forEach(biome -> {
+//            IafWorldRegistry.addFeatures(biome);
+//            IafEntityRegistry.addSpawners(biome);
+//        });
+//    }
 
-        // Create configured structure feature tags
-        DataGenerators.createResources(biomes);
-        event.getServer().reloadResources(event.getServer().getPackRepository().getSelectedIds());
+//    private static void reloadSources(Registry<Biome> biomes, ChunkGenerator generator) {
+//        if (generator instanceof NoiseBasedChunkGenerator chunkGenerator
+//                && chunkGenerator.biomeSource instanceof MultiNoiseBiomeSource biomeSource
+//                // && chunkGenerator.runtimeBiomeSource instanceof MultiNoiseBiomeSource runtimeBiomeSource
+//                )
+//        {
+//            // biomeSource.possibleBiomes.stream().distinct().forEach(IafWorldRegistry::addFeatures);
+//            // runtimeBiomeSource.possibleBiomes.stream().distinct().forEach(IafWorldRegistry::addFeatures);
+//        }
+//    }
 
-        event.getServer().getWorldData().worldGenSettings().dimensions().forEach(levelStem -> {
-            reloadSources(biomes, levelStem.generator());
-        });
-
-        biomes.holders().forEach(biome -> {
-            IafWorldRegistry.addFeatures(biome);
-            IafEntityRegistry.addSpawners(biome);
-        });
-
-    }
-
-    private static void reloadSources(Registry<Biome> biomes, ChunkGenerator generator) {
-        if (generator instanceof NoiseBasedChunkGenerator chunkGenerator
-                && chunkGenerator.biomeSource instanceof MultiNoiseBiomeSource biomeSource
-                && chunkGenerator.runtimeBiomeSource instanceof MultiNoiseBiomeSource runtimeBiomeSource)
-        {
-            biomeSource.possibleBiomes.stream().distinct().forEach(IafWorldRegistry::addFeatures);
-            runtimeBiomeSource.possibleBiomes.stream().distinct().forEach(IafWorldRegistry::addFeatures);
-        }
-    }
-
-    @SubscribeEvent
-    public void onServerStarted(ServerStartedEvent event) {
-        LOGGER.info(IafWorldRegistry.LOADED_FEATURES);
-        LOGGER.info(IafEntityRegistry.LOADED_ENTITIES);
-    }
+//    @SubscribeEvent
+//    public void onServerStarted(ServerStartedEvent event) {
+//        LOGGER.info(IafWorldRegistry.LOADED_FEATURES);
+//        LOGGER.info(IafEntityRegistry.LOADED_ENTITIES);
+//    }
 
     public static <MSG> void sendMSGToServer(MSG message) {
         NETWORK_WRAPPER.sendToServer(message);
@@ -204,8 +209,11 @@ public class IceAndFire {
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageSwingArm.class, MessageSwingArm::write, MessageSwingArm::read, MessageSwingArm.Handler::handle);
         event.enqueueWork(() -> {
             PROXY.setup();
+//            IafItemRegistry.initSpawnEggs();
+//            IafItemRegistry.initBannerItems();
+
             IafVillagerRegistry.setup();
-            IafLootRegistry.init();
+//            IafLootRegistry.init();
         });
     }
 

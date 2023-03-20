@@ -23,10 +23,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +38,7 @@ public class GuiLectern extends AbstractContainerScreen<ContainerLectern> {
     private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation("iceandfire:textures/gui/lectern.png");
     private static final ResourceLocation ENCHANTMENT_TABLE_BOOK_TEXTURE = new ResourceLocation("iceandfire:textures/models/lectern_book.png");
     private static BookModel bookModel;
-    private final Random random = new Random();
+    private final RandomSource random = RandomSource.create();
     private final Component nameable;
     public int ticks;
     public float flip;
@@ -225,13 +225,13 @@ public class GuiLectern extends AbstractContainerScreen<ContainerLectern> {
                 List<FormattedCharSequence> list = Lists.newArrayList();
 
                 if (enchantment == null) {
-                    list.add(new TextComponent(ChatFormatting.RED + I18n.get("container.lectern.no_bestiary")).getVisualOrderText());
+                    list.add(Component.literal(ChatFormatting.RED + I18n.get("container.lectern.no_bestiary")).getVisualOrderText());
                 } else if (!flag) {
-                    list.add(new TextComponent("" + ChatFormatting.WHITE + ChatFormatting.ITALIC + I18n.get(enchantment == null ? "" : "bestiary." + enchantment.name().toLowerCase())).getVisualOrderText());
+                    list.add(Component.literal("" + ChatFormatting.WHITE + ChatFormatting.ITALIC + I18n.get(enchantment == null ? "" : "bestiary." + enchantment.name().toLowerCase())).getVisualOrderText());
                     ChatFormatting textformatting = i >= i1 ? ChatFormatting.GRAY : ChatFormatting.RED;
-                    list.add(new TextComponent(textformatting + "" + I18n.get("container.lectern.costs")).getVisualOrderText());
+                    list.add(Component.literal(textformatting + "" + I18n.get("container.lectern.costs")).getVisualOrderText());
                     String s = I18n.get("container.lectern.manuscript.many", i1);
-                    list.add(new TextComponent(textformatting + "" + s).getVisualOrderText());
+                    list.add(Component.literal(textformatting + "" + s).getVisualOrderText());
                 }
 
                 this.renderTooltip(matrixStack, list, mouseX, mouseY);

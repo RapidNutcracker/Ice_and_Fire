@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.entity.ai;
 
 import com.github.alexthe666.iceandfire.entity.EntitySiren;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -12,6 +13,8 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Random;
+
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
 
 public class AquaticAIGetInWater extends Goal {
 
@@ -76,7 +79,7 @@ public class AquaticAIGetInWater extends Goal {
 
     @Nullable
     protected Vec3 findPossibleShelter(int xz, int y) {
-        Random random = this.creature.getRandom();
+        RandomSource random = this.creature.getRandom();
         BlockPos blockpos = new BlockPos(this.creature.getX(), this.creature.getBoundingBox().minY,
             this.creature.getZ());
 

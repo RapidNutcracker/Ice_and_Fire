@@ -19,23 +19,24 @@ public class RenderDreadLich extends MobRenderer<EntityDreadLich, ModelDreadLich
     public static final ResourceLocation TEXTURE_2 = new ResourceLocation("iceandfire:textures/models/dread/dread_lich_2.png");
     public static final ResourceLocation TEXTURE_3 = new ResourceLocation("iceandfire:textures/models/dread/dread_lich_3.png");
     public static final ResourceLocation TEXTURE_4 = new ResourceLocation("iceandfire:textures/models/dread/dread_lich_4.png");
-    public final HideableLayer<EntityDreadLich, ModelDreadLich, ItemInHandLayer<EntityDreadLich, ModelDreadLich>> itemLayer;
+    // TODO ItemLayer
+    // public final HideableLayer<EntityDreadLich, ModelDreadLich, ItemInHandLayer<EntityDreadLich, ModelDreadLich>> itemLayer;
 
     public RenderDreadLich(EntityRendererProvider.Context context) {
         super(context, new ModelDreadLich(0.0F), 0.6F);
         this.addLayer(new LayerGenericGlowing<>(this, TEXTURE_EYES));
-        this.itemLayer = new HideableLayer<>(new ItemInHandLayer<>(this), this);
-        this.addLayer(this.itemLayer);
+        // this.itemLayer = new HideableLayer<>(new ItemInHandLayer<EntityDreadLich, ModelDreadLich>(this), this);
+        // this.addLayer(this.itemLayer);
     }
 
     @Override
     protected void scale(EntityDreadLich entity, PoseStack matrixStackIn, float partialTickTime) {
         matrixStackIn.scale(0.95F, 0.95F, 0.95F);
         if (entity.getAnimation() == this.getModel().getSpawnAnimation()) {
-            this.itemLayer.hidden = entity.getAnimationTick() <= this.getModel().getSpawnAnimation().getDuration() - 10;
+            // this.itemLayer.hidden = entity.getAnimationTick() <= this.getModel().getSpawnAnimation().getDuration() - 10;
             return;
         }
-        this.itemLayer.hidden = false;
+        // this.itemLayer.hidden = false;
     }
 
     @Nullable

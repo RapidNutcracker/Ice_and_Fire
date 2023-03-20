@@ -9,6 +9,7 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Random;
@@ -17,7 +18,7 @@ public class FrozenProperties {
     private static final String FROZEN_DATA = "FrozenDataIaf";
     private static final String FROZEN_BOOL = "IsFrozen";
     private static final String FROZEN_TIME = "TicksUntilUnfrozen";
-    private static final Random rand = new Random();
+    private static final RandomSource rand = RandomSource.create();
 
     private static CompoundTag getOrCreateFrozenData(LivingEntity entity) {
         return getOrCreateFrozenData(CitadelEntityData.getCitadelTag(entity));

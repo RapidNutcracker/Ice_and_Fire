@@ -8,7 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -45,7 +45,7 @@ public class ItemHippogryphEgg extends Item {
 
     @Override
     public void fillItemCategory(@NotNull CreativeModeTab group, @NotNull NonNullList<ItemStack> items) {
-        if (this.allowdedIn(group)) {
+        if (this.allowedIn(group)) {
             for (EnumHippogryphTypes type : EnumHippogryphTypes.values()) {
                 ItemStack stack = new ItemStack(this);
                 CompoundTag tag = new CompoundTag();
@@ -87,6 +87,6 @@ public class ItemHippogryphEgg extends Item {
         }
 
         String type = EnumHippogryphTypes.values()[Mth.clamp(eggOrdinal, 0, EnumHippogryphTypes.values().length - 1)].name().toLowerCase();
-        tooltip.add(new TranslatableComponent("entity.iceandfire.hippogryph." + type).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("entity.iceandfire.hippogryph." + type).withStyle(ChatFormatting.GRAY));
     }
 }

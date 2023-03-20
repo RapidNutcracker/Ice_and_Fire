@@ -5,6 +5,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIMoveToMate extends Goal {
     private final EntityMyrmexRoyal myrmex;
     private final double movementSpeed;

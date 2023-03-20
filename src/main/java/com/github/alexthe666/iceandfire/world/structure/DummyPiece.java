@@ -5,9 +5,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -16,21 +17,20 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
 
 public class DummyPiece extends TemplateStructurePiece {
     // Register to the registry name of the old structure piece removed to prevent logspam for players in existing worlds.
 
-    public DummyPiece(StructureManager manager, ResourceLocation location, BlockPos pos, Rotation rotation) {
-        super(IafWorldRegistry.DUMMY_PIECE, 0, manager, location, location.toString(), makeSettings(rotation), pos);
+    public DummyPiece(StructureTemplateManager structureTemplateManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
+        super(IafWorldRegistry.DUMMY_PIECE, 0, structureTemplateManager, location, location.toString(), makeSettings(rotation), pos);
     }
 
-    public DummyPiece(StructureManager structureManager, CompoundTag tag) {
-        super(IafWorldRegistry.DUMMY_PIECE, tag, structureManager, (p_163217_) -> {
+    public DummyPiece(StructureTemplateManager structureTemplateManager, CompoundTag tag) {
+        super(IafWorldRegistry.DUMMY_PIECE, tag, structureTemplateManager, (p_163217_) -> {
             return makeSettings(Rotation.valueOf(tag.getString("Rot")));
         });
     }
@@ -49,11 +49,12 @@ public class DummyPiece extends TemplateStructurePiece {
 
 
     @Override
-    public void postProcess(@NotNull WorldGenLevel p_230383_1_, @NotNull StructureFeatureManager p_230383_2_, @NotNull ChunkGenerator p_230383_3_, @NotNull Random p_230383_4_, @NotNull BoundingBox p_230383_5_, @NotNull ChunkPos p_230383_6_, @NotNull BlockPos p_230383_7_) {
+    public void postProcess(
+        @NotNull WorldGenLevel p_230383_1_, @NotNull StructureManager p_230383_2_, @NotNull ChunkGenerator p_230383_3_, @NotNull RandomSource p_230383_4_, @NotNull BoundingBox p_230383_5_, @NotNull ChunkPos p_230383_6_, @NotNull BlockPos p_230383_7_) {
         // Override post processing function since we don't have to do any for this dummy piece
     }
 
     @Override
-    protected void handleDataMarker(@NotNull String function, @NotNull BlockPos pos, @NotNull ServerLevelAccessor worldIn, @NotNull Random rand, @NotNull BoundingBox sbb) {
+    protected void handleDataMarker(@NotNull String function, @NotNull BlockPos pos, @NotNull ServerLevelAccessor worldIn, @NotNull RandomSource rand, @NotNull BoundingBox sbb) {
     }
 }

@@ -4,6 +4,8 @@ import com.github.alexthe666.citadel.client.model.AdvancedModelBox;
 import com.github.alexthe666.citadel.client.model.ModelAnimator;
 import com.github.alexthe666.iceandfire.client.model.util.HideableModelRenderer;
 import com.github.alexthe666.iceandfire.entity.EntityDreadGhoul;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class ModelDreadGhoul extends ModelBipedBase<EntityDreadGhoul> {
 
@@ -142,5 +144,4 @@ public class ModelDreadGhoul extends ModelBipedBase<EntityDreadGhoul> {
             animator.resetKeyframe(5);
         }
     }
-
 }

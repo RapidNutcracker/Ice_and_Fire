@@ -5,6 +5,7 @@ import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 import com.github.alexthe666.iceandfire.world.IafWorldRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -12,21 +13,22 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Random;
+import java.util.function.Supplier;
+
 
 public class SpawnDragonSkeleton extends Feature<NoneFeatureConfiguration> {
 
     protected EntityType<? extends EntityDragonBase> dragonType;
 
-    public SpawnDragonSkeleton(EntityType<? extends EntityDragonBase> dt, Codec<NoneFeatureConfiguration> configFactoryIn) {
+    public SpawnDragonSkeleton(Supplier<EntityType<? extends EntityDragonBase>> dt, Codec<NoneFeatureConfiguration> configFactoryIn) {
         super(configFactoryIn);
-        dragonType = dt;
+//        dragonType = dt.get();
     }
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel worldIn = context.level();
-        Random rand = context.random();
+        RandomSource rand = context.random();
         BlockPos position = context.origin();
         if (!IafWorldRegistry.isDimensionListedForMobs(worldIn)) {
             return false;

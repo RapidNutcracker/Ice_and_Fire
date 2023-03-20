@@ -573,4 +573,5 @@ public class ModelAmphithere extends ModelDragonBase<EntityAmphithere> {
         this.renderToBuffer(matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
     }
+
 }

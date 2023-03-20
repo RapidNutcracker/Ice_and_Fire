@@ -140,8 +140,8 @@ public class ModelPixie extends ModelDragonBase<EntityPixie> {
         }
 
         if (entity.isPixieSitting()) {
-            this.Right_Arm.rotateAngleX += -((float) Math.PI / 5F);
-            this.Left_Arm.rotateAngleX += -((float) Math.PI / 5F);
+            this.Right_Arm.rotateAngleX -= ((float) Math.PI / 5F);
+            this.Left_Arm.rotateAngleX -= ((float) Math.PI / 5F);
             this.Right_Leg.rotateAngleX = -1.4137167F;
             this.Right_Leg.rotateAngleY = ((float) Math.PI / 10F);
             this.Right_Leg.rotateAngleZ = 0.07853982F;
@@ -199,8 +199,9 @@ public class ModelPixie extends ModelDragonBase<EntityPixie> {
         this.Right_Wing.rotateAngleZ = (float) Math.toRadians(28);
         this.Left_Wing2.rotateAngleZ = (float) Math.toRadians(-8);
         this.Right_Wing2.rotateAngleZ = (float) Math.toRadians(8);
-		/*ItemStack itemstack = entity.getHeldItem(Hand.MAIN_HAND);
-		if (!itemstack.isEmpty()) {
+		/*
+		ItemStack itemStack = entity.getHeldItem(Hand.MAIN_HAND);
+		if (!itemStack.isEmpty()) {
             this.Body.rotateAngleX = f12;
             this.Head.rotateAngleX -= f12;
             this.faceTarget(f3, f4, 1, this.Head);
@@ -256,8 +257,8 @@ public class ModelPixie extends ModelDragonBase<EntityPixie> {
             this.chainWave(LEFT_WINGS, speed_fly, degree_fly * 0.75F, 1, jar.ticksExisted + partialTicks, 1);
             this.chainWave(RIGHT_WINGS, speed_fly, degree_fly * 0.75F, 1, jar.ticksExisted + partialTicks, 1);
         }
-		/*ItemStack itemstack = entity.getHeldItem(Hand.MAIN_HAND);
-		if (!itemstack.isEmpty()) {
+		/*ItemStack itemStack = entity.getHeldItem(Hand.MAIN_HAND);
+		if (!itemStack.isEmpty()) {
             this.Body.rotateAngleX = f12;
             this.Head.rotateAngleX -= f12;
             this.faceTarget(f3, f4, 1, this.Head);

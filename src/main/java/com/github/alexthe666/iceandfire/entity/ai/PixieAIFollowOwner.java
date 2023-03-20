@@ -13,6 +13,8 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class PixieAIFollowOwner extends Goal {
     private final EntityPixie tameable;
     Level world;

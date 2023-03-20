@@ -1,6 +1,7 @@
 package com.github.alexthe666.iceandfire.enums;
 
 import com.github.alexthe666.citadel.server.item.CustomArmorMaterial;
+import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.block.BlockSeaSerpentScales;
 import com.github.alexthe666.iceandfire.block.IafBlockRegistry;
 import com.github.alexthe666.iceandfire.item.IafArmorMaterial;
@@ -10,6 +11,7 @@ import com.github.alexthe666.iceandfire.item.ItemSeaSerpentScales;
 import net.minecraft.ChatFormatting;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
@@ -38,7 +40,7 @@ public enum EnumSeaSerpent {
     EnumSeaSerpent(ChatFormatting color) {
         this.resourceName = this.name().toLowerCase(Locale.ROOT);
         this.color = color;
-        this.scaleBlock = IafBlockRegistry.BLOCKS.register("sea_serpent_scale_block_%s".formatted(this.resourceName), () -> new BlockSeaSerpentScales(resourceName, color));
+        this.scaleBlock = IafBlockRegistry.registerBlock("sea_serpent_scale_block_%s".formatted(this.resourceName), () -> new BlockSeaSerpentScales(resourceName, color), IceAndFire.TAB_BLOCKS);
         //this.scaleBlock = new BlockSeaSerpentScales(this.resourceName, this.color);
     }
 

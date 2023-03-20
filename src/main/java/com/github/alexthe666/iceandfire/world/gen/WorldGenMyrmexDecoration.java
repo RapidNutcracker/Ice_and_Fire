@@ -6,6 +6,7 @@ import com.github.alexthe666.iceandfire.entity.util.MyrmexHive;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -24,7 +25,7 @@ public class WorldGenMyrmexDecoration {
     public static final ResourceLocation MYRMEX_TRASH_CHEST = new ResourceLocation("iceandfire", "chest/myrmex_trash_chest");
     private static final Direction[] HORIZONTALS = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
 
-    public static void generateSkeleton(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+    public static void generateSkeleton(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, RandomSource rand) {
         if (worldIn.getBlockState(blockpos.below()).isFaceSturdy(worldIn, blockpos.below(), Direction.UP)) {
             Direction direction = Direction.from2DDataValue(rand.nextInt(3));
             Direction.Axis oppositeAxis = direction.getAxis() == Direction.Axis.X ? Direction.Axis.Z : Direction.Axis.X;
@@ -62,7 +63,7 @@ public class WorldGenMyrmexDecoration {
         }
     }
 
-    public static void generateLeaves(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand, boolean jungle) {
+    public static void generateLeaves(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, RandomSource rand, boolean jungle) {
         if (worldIn.getBlockState(blockpos.below()).isFaceSturdy(worldIn, blockpos.below(), Direction.UP)) {
             BlockState leaf = Blocks.OAK_LEAVES.defaultBlockState().setValue(LeavesBlock.PERSISTENT, Boolean.TRUE);
             if (jungle) {
@@ -84,13 +85,13 @@ public class WorldGenMyrmexDecoration {
         }
     }
 
-    public static void generatePumpkins(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand, boolean jungle) {
+    public static void generatePumpkins(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, RandomSource rand, boolean jungle) {
         if (worldIn.getBlockState(blockpos.below()).isFaceSturdy(worldIn, blockpos.below(), Direction.UP)) {
             worldIn.setBlock(blockpos, jungle ? Blocks.MELON.defaultBlockState() : Blocks.PUMPKIN.defaultBlockState(), 2);
         }
     }
 
-    public static void generateCocoon(LevelAccessor worldIn, BlockPos blockpos, Random rand, boolean jungle, ResourceLocation lootTable) {
+    public static void generateCocoon(LevelAccessor worldIn, BlockPos blockpos, RandomSource rand, boolean jungle, ResourceLocation lootTable) {
         if (worldIn.getBlockState(blockpos.below()).isFaceSturdy(worldIn, blockpos.below(), Direction.UP)) {
             worldIn.setBlock(blockpos, jungle ? IafBlockRegistry.JUNGLE_MYRMEX_COCOON.get().defaultBlockState() : IafBlockRegistry.DESERT_MYRMEX_COCOON.get().defaultBlockState(), 3);
 
@@ -102,13 +103,13 @@ public class WorldGenMyrmexDecoration {
         }
     }
 
-    public static void generateMushrooms(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+    public static void generateMushrooms(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, RandomSource rand) {
         if (worldIn.getBlockState(blockpos.below()).isFaceSturdy(worldIn, blockpos.below(), Direction.UP)) {
             worldIn.setBlock(blockpos, rand.nextBoolean() ? Blocks.BROWN_MUSHROOM.defaultBlockState() : Blocks.RED_MUSHROOM.defaultBlockState(), 2);
         }
     }
 
-    public static void generateGold(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+    public static void generateGold(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, RandomSource rand) {
         BlockState gold = IafBlockRegistry.GOLD_PILE.get().defaultBlockState();
         int choice = rand.nextInt(2);
         if (choice == 1) {
@@ -134,7 +135,7 @@ public class WorldGenMyrmexDecoration {
         }
     }
 
-    public static void generateTrashHeap(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+    public static void generateTrashHeap(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, RandomSource rand) {
         if (worldIn.getBlockState(blockpos.below()).isFaceSturdy(worldIn, blockpos.below(), Direction.UP)) {
             Block blob = Blocks.DIRT;
             switch (rand.nextInt(3)) {
@@ -168,7 +169,7 @@ public class WorldGenMyrmexDecoration {
         }
     }
 
-    public static void generateTrashOre(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+    public static void generateTrashOre(LevelAccessor worldIn, BlockPos blockpos, BlockPos origin, int radius, RandomSource rand) {
         Block current = worldIn.getBlockState(blockpos).getBlock();
         if (origin.distSqr(blockpos) <= (double) (radius * radius)) {
             if (current == Blocks.DIRT || current == Blocks.SAND || current == Blocks.COBBLESTONE || current == Blocks.GRAVEL) {
@@ -183,7 +184,7 @@ public class WorldGenMyrmexDecoration {
                 } else if (rand.nextInt(2) == 0) {
                     ore = rand.nextBoolean() ? Blocks.EMERALD_ORE : IafBlockRegistry.SAPPHIRE_ORE.get();
                     if(rand.nextInt(2) == 0){
-                        ore = IafBlockRegistry.AMYTHEST_ORE.get();
+                        ore = IafBlockRegistry.AMETHYST_ORE.get();
                     }
                 }
                 worldIn.setBlock(blockpos, ore.defaultBlockState(), 2);

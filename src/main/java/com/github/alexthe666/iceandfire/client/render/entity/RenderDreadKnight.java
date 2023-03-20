@@ -21,7 +21,8 @@ public class RenderDreadKnight extends MobRenderer<EntityDreadKnight, ModelDread
     public RenderDreadKnight(EntityRendererProvider.Context context) {
         super(context, new ModelDreadKnight(0.0F), 0.6F);
         this.addLayer(new LayerGenericGlowing<>(this, TEXTURE_EYES));
-        this.addLayer(new ItemInHandLayer<>(this));
+        // TODO ItemLayer
+        // this.addLayer(new ItemInHandLayer<EntityDreadKnight, ModelDreadKnight>(this, this));
     }
 
     @Override

@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
+import net.minecraft.client.renderer.RenderStateShard.TextureStateShard;
+
 public class IafRenderType extends RenderType {
 
     private static final ResourceLocation STONE_TEXTURE = new ResourceLocation("textures/block/stone.png");

@@ -7,6 +7,7 @@ import com.github.alexthe666.iceandfire.world.IafWorldRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -28,7 +29,7 @@ public class WorldGenSirenIsland extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel worldIn = context.level();
-        Random rand = context.random();
+        RandomSource rand = context.random();
         BlockPos position = context.origin();
         if (!IafWorldRegistry.isDimensionListedForFeatures(worldIn)) {
             return false;
@@ -75,7 +76,7 @@ public class WorldGenSirenIsland extends Feature<NoneFeatureConfiguration> {
         return layer > up ? (int) (layer * 0.25) + up : layer;
     }
 
-    private BlockState getStone(Random random) {
+    private BlockState getStone(RandomSource random) {
         int chance = random.nextInt(100);
         if (chance > 90) {
             return Blocks.MOSSY_COBBLESTONE.defaultBlockState();
@@ -88,7 +89,7 @@ public class WorldGenSirenIsland extends Feature<NoneFeatureConfiguration> {
         }
     }
 
-    private void spawnSiren(ServerLevelAccessor worldIn, Random rand, BlockPos position) {
+    private void spawnSiren(ServerLevelAccessor worldIn, RandomSource rand, BlockPos position) {
         EntitySiren siren = new EntitySiren(IafEntityRegistry.SIREN.get(), worldIn.getLevel());
         siren.setSinging(true);
         siren.setHairColor(rand.nextInt(2));

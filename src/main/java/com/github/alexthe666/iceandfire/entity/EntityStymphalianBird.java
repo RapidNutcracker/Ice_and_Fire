@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityStymphalianBird extends Monster implements IAnimatedEntity, Enemy, IVillagerFear, IAnimalFear {
 
     public static final Predicate<Entity> STYMPHALIAN_PREDICATE = new Predicate<Entity>() {
@@ -114,7 +116,7 @@ public class EntityStymphalianBird extends Monster implements IAnimatedEntity, E
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 10;
     }
 
@@ -281,7 +283,7 @@ public class EntityStymphalianBird extends Monster implements IAnimatedEntity, E
                 if (this.isFlying()) {
                     setYRot(yBodyRot);
                     if ((this.getAnimationTick() == 7 || this.getAnimationTick() == 14) && isDirectPathBetweenPoints(this, this.position(), target.position())) {
-                        this.playSound(IafSoundRegistry.STYMPHALIAN_BIRD_ATTACK, 1, 1);
+                        this.playSound(IafSoundRegistry.STYMPHALIAN_BIRD_ATTACK.get(), 1, 1);
                         for (int i = 0; i < 4; i++) {
                             float wingX = (float) (getX() + 1.8F * 0.5F * Mth.cos((float) ((getYRot() + 180 * (i % 2)) * Math.PI / 180)));
                             float wingZ = (float) (getZ() + 1.8F * 0.5F * Mth.sin((float) ((getYRot() + 180 * (i % 2)) * Math.PI / 180)));
@@ -434,19 +436,19 @@ public class EntityStymphalianBird extends Monster implements IAnimatedEntity, E
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.STYMPHALIAN_BIRD_IDLE;
+        return IafSoundRegistry.STYMPHALIAN_BIRD_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return IafSoundRegistry.STYMPHALIAN_BIRD_HURT;
+        return IafSoundRegistry.STYMPHALIAN_BIRD_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.STYMPHALIAN_BIRD_DIE;
+        return IafSoundRegistry.STYMPHALIAN_BIRD_DIE.get();
     }
 
     @Override

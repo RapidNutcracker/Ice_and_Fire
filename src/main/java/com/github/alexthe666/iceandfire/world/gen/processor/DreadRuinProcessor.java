@@ -7,6 +7,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,7 +19,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class DreadRuinProcessor extends StructureProcessor {
 
@@ -29,7 +29,7 @@ public class DreadRuinProcessor extends StructureProcessor {
     public DreadRuinProcessor() {
     }
 
-    public static BlockState getRandomCrackedBlock(@Nullable BlockState prev, Random random) {
+    public static BlockState getRandomCrackedBlock(@Nullable BlockState prev, RandomSource random) {
         float rand = random.nextFloat();
         if (rand < 0.5) {
             return IafBlockRegistry.DREAD_STONE_BRICKS.get().defaultBlockState();
@@ -42,7 +42,7 @@ public class DreadRuinProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo process(@NotNull LevelReader worldReader, @NotNull BlockPos pos, @NotNull BlockPos pos2, StructureTemplate.@NotNull StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo infoIn2, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
-        Random random = settings.getRandom(infoIn2.pos);
+        RandomSource random = settings.getRandom(infoIn2.pos);
         if (random.nextFloat() <= integrity) {
             if (infoIn2.state.getBlock() == IafBlockRegistry.DREAD_STONE_BRICKS.get()) {
                 BlockState state = getRandomCrackedBlock(null, random);
@@ -51,7 +51,7 @@ public class DreadRuinProcessor extends StructureProcessor {
             if (infoIn2.state.getBlock() == IafBlockRegistry.DREAD_SPAWNER.get()) {
                 CompoundTag tag = new CompoundTag();
                 CompoundTag spawnData = new CompoundTag();
-                ResourceLocation spawnerMobId = ForgeRegistries.ENTITIES.getKey(getRandomMobForMobSpawner(random));
+                ResourceLocation spawnerMobId = ForgeRegistries.ENTITY_TYPES.getKey(getRandomMobForMobSpawner(random));
                 if (spawnerMobId != null) {
                     CompoundTag entity = new CompoundTag();
                     entity.putString("id", spawnerMobId.toString());
@@ -70,10 +70,10 @@ public class DreadRuinProcessor extends StructureProcessor {
 
     @Override
     protected @NotNull StructureProcessorType getType() {
-        return IafProcessors.DREADRUINPROCESSOR.get();
+        return IafProcessors.DREAD_RUIN_PROCESSOR.get();
     }
 
-    private EntityType getRandomMobForMobSpawner(Random random) {
+    private EntityType getRandomMobForMobSpawner(RandomSource random) {
         float rand = random.nextFloat();
         if (rand < 0.3D) {
             return IafEntityRegistry.DREAD_THRALL.get();

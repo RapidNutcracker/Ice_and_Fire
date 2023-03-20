@@ -1,6 +1,7 @@
 package com.github.alexthe666.iceandfire.world.gen;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 
@@ -15,7 +16,7 @@ public class WorldGenCaveStalactites {
         this.maxHeight = maxHeight;
     }
 
-    public boolean generate(LevelAccessor worldIn, Random rand, BlockPos position) {
+    public boolean generate(LevelAccessor worldIn, RandomSource rand, BlockPos position) {
         int height = maxHeight + rand.nextInt(3);
         for (int i = 0; i < height; i++) {
             if (i < height / 2) {

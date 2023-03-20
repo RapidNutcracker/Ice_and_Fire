@@ -1,5 +1,6 @@
 {
   "parent": "block/cube",
+  "render_type": "translucent",
   "textures": {
     "particle": "iceandfire:block/myrmex_desert_resin_all",
     "down": "iceandfire:block/myrmex_desert_resin_blank",

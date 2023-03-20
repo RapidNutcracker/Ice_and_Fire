@@ -30,6 +30,8 @@ import javax.annotation.Nullable;
 
 import static com.github.alexthe666.iceandfire.entity.tile.IafTileEntityRegistry.DRAGONFORGE_INPUT;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockDragonforgeInput extends BaseEntityBlock implements IDragonProof {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
     private final int dragonType;

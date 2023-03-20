@@ -9,6 +9,8 @@ import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIWanderHiveCenter extends Goal {
     private final EntityMyrmexBase myrmex;
     private final double movementSpeed;

@@ -6,6 +6,8 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class SirenAIVanillaSwimming extends Goal {
     private final EntitySiren entity;
 

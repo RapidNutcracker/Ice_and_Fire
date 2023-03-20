@@ -1,5 +1,6 @@
 {
   "parent": "block/cube",
+  "render_type": "translucent",
   "textures": {
     "particle": "iceandfire:block/myrmex_jungle_resin_glass_all",
     "down": "iceandfire:block/myrmex_jungle_resin_glass_right",

@@ -10,6 +10,8 @@ import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class SeaSerpentAIAttackMelee extends Goal {
     protected final int attackInterval = 20;
     protected EntitySeaSerpent attacker;

@@ -8,6 +8,8 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.util.RandomSource;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
@@ -22,7 +24,7 @@ public class LightningRender {
 
     private Timestamp refreshTimestamp = new Timestamp();
 
-    private final Random random = new Random();
+    private final RandomSource random = RandomSource.create();
     private final Minecraft minecraft = Minecraft.getInstance();
 
     private final Map<Object, BoltOwnerData> boltOwners = new Object2ObjectOpenHashMap<>();

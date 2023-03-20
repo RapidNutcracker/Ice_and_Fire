@@ -13,6 +13,8 @@ import net.minecraftforge.network.PlayMessages;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityDragonFireCharge extends EntityDragonCharge {
 
     public EntityDragonFireCharge(EntityType<? extends Fireball> type, Level worldIn) {

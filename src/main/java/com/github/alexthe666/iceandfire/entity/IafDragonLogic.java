@@ -411,7 +411,7 @@ public class IafDragonLogic {
             if (!dragon.isDiving() && (dragon.isFlying() || dragon.isHovering())){
                 float dragonSoundVolume = IafConfig.dragonFlapNoiseDistance;
                 float dragonSoundPitch = dragon.getVoicePitch();
-                dragon.playSound(IafSoundRegistry.DRAGON_FLIGHT, dragonSoundVolume, dragonSoundPitch);
+                dragon.playSound(IafSoundRegistry.DRAGON_FLIGHT.get(), dragonSoundVolume, dragonSoundPitch);
             }
         }
         if (dragon.flightCycle < 58) {

@@ -21,6 +21,8 @@ import javax.annotation.Nullable;
 
 import static com.github.alexthe666.iceandfire.entity.tile.IafTileEntityRegistry.EGG_IN_ICE;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockEggInIce extends BaseEntityBlock {
     public Item itemBlock;
 

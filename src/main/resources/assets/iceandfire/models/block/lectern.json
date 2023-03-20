@@ -1,4 +1,5 @@
 {
+  "render_type": "cutout",
   "textures": {
     "0": "iceandfire:block/lectern",
     "1": "iceandfire:block/lectern_top",

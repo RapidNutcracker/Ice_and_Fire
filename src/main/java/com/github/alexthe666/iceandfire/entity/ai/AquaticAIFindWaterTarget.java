@@ -13,6 +13,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Comparator;
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class AquaticAIFindWaterTarget extends Goal {
     protected AquaticAIFindWaterTarget.Sorter fleePosSorter;
     private final Mob mob;

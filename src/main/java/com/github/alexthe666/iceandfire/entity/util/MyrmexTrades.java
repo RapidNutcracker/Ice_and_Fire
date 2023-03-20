@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -232,7 +233,7 @@ public class MyrmexTrades {
 
         @Override
         @Nullable
-        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull Random rand) {
+        public MerchantOffer getOffer(Entity pTrader, RandomSource pRandom) {            
             return new MerchantOffer(new ItemStack(IafItemRegistry.MYRMEX_DESERT_RESIN.get(), this.emeraldCount), new ItemStack(this.buyingItem.getItem(), this.buyingItemCount), new ItemStack(this.sellingItem.getItem(), this.sellingItemCount), this.maxUses, this.xpValue, this.priceMultiplier);
         }
     }
@@ -260,7 +261,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, RandomSource rand) {
             ItemStack lvt_3_1_ = new ItemStack(IafItemRegistry.MYRMEX_DESERT_RESIN.get(), this.emeraldCount);
             List<Potion> lvt_4_1_ = Registry.POTION.stream().filter((potion) -> {
                 return !potion.getEffects().isEmpty() && PotionBrewing.isBrewablePotion(potion);
@@ -291,7 +292,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, RandomSource rand) {
             int lvt_3_1_ = 5 + rand.nextInt(15);
             ItemStack lvt_4_1_ = EnchantmentHelper.enchantItem(rand, new ItemStack(this.sellingStack.getItem()), lvt_3_1_, false);
             int lvt_5_1_ = Math.min(this.emeraldCount + lvt_3_1_, 64);
@@ -315,7 +316,7 @@ public class MyrmexTrades {
 
         @Override
         @Nullable
-        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
             ItemStack lvt_3_1_ = new ItemStack(Items.SUSPICIOUS_STEW, 1);
             SuspiciousStewItem.saveMobEffect(lvt_3_1_, this.effect, this.duration);
             return new MerchantOffer(new ItemStack(IafItemRegistry.MYRMEX_DESERT_RESIN.get(), 1), lvt_3_1_, 12, this.xpValue, this.priceMultiplier);
@@ -356,7 +357,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
             ItemStack cloneStack = new ItemStack(this.stack.getItem(), this.itemCount);
             cloneStack.setTag(this.stack.getTag());
             return new MerchantOffer(new ItemStack(IafItemRegistry.MYRMEX_DESERT_RESIN.get(), this.emeraldCount), cloneStack, this.maxUses, this.exp, this.multiplier);
@@ -379,7 +380,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
             ItemStack lvt_3_1_ = new ItemStack(this.tradeItem, this.count);
             return new MerchantOffer(lvt_3_1_, new ItemStack(IafItemRegistry.MYRMEX_DESERT_RESIN.get()), this.maxUses, this.xpValue, this.priceMultiplier);
         }
@@ -413,7 +414,7 @@ public class MyrmexTrades {
 
         @Override
         @Nullable
-        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
             return new MerchantOffer(new ItemStack(IafItemRegistry.MYRMEX_JUNGLE_RESIN.get(), this.emeraldCount), new ItemStack(this.buyingItem.getItem(), this.buyingItemCount), new ItemStack(this.sellingItem.getItem(), this.sellingItemCount), this.maxUses, this.xpValue, this.priceMultiplier);
         }
     }
@@ -440,7 +441,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, RandomSource rand) {
             ItemStack lvt_3_1_ = new ItemStack(IafItemRegistry.MYRMEX_JUNGLE_RESIN.get(), this.emeraldCount);
             List<Potion> lvt_4_1_ = Registry.POTION.stream().filter((potion) -> {
                 return !potion.getEffects().isEmpty() && PotionBrewing.isBrewablePotion(potion);
@@ -471,7 +472,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, RandomSource rand) {
             int lvt_3_1_ = 5 + rand.nextInt(15);
             ItemStack lvt_4_1_ = EnchantmentHelper.enchantItem(rand, new ItemStack(this.sellingStack.getItem()), lvt_3_1_, false);
             int lvt_5_1_ = Math.min(this.emeraldCount + lvt_3_1_, 64);
@@ -514,7 +515,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
             ItemStack cloneStack = new ItemStack(this.stack.getItem(), this.itemCount);
             cloneStack.setTag(this.stack.getTag());
             return new MerchantOffer(new ItemStack(IafItemRegistry.MYRMEX_JUNGLE_RESIN.get(), this.emeraldCount), cloneStack, this.maxUses, this.exp, this.multiplier);
@@ -537,7 +538,7 @@ public class MyrmexTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull Random rand) {
+        public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
             ItemStack lvt_3_1_ = new ItemStack(this.tradeItem, this.count);
             return new MerchantOffer(lvt_3_1_, new ItemStack(IafItemRegistry.MYRMEX_JUNGLE_RESIN.get()), this.maxUses, this.xpValue, this.priceMultiplier);
         }

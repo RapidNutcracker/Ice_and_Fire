@@ -20,6 +20,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockIceSpikes extends Block {
     protected static final VoxelShape AABB = Block.box(1, 0, 1, 15, 8, 15);
     public Item itemBlock;

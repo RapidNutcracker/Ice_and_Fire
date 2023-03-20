@@ -10,6 +10,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIReEnterHive extends Goal {
     private final EntityMyrmexBase myrmex;
     private final double movementSpeed;

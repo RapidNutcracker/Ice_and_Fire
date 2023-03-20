@@ -22,6 +22,8 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityDreadMob extends Monster implements IDreadMob {
     protected static final EntityDataAccessor<Optional<UUID>> COMMANDER_UNIQUE_ID = SynchedEntityData.defineId(EntityDreadMob.class, EntityDataSerializers.OPTIONAL_UUID);
 

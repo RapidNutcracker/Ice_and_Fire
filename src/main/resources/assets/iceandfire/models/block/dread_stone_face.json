@@ -1,5 +1,6 @@
 {
   "parent": "block/cube",
+  "render_type": "cutout",
   "textures": {
     "particle": "iceandfire:block/dread_stone_face",
     "down": "iceandfire:block/dread_stone_face_top",

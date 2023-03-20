@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "chared_grass",
+      "name": "charred_grass",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "iceandfire:chared_grass"
+          "name": "iceandfire:charred_grass"
         }
       ],
       "conditions": [

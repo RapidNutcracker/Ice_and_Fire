@@ -2,15 +2,18 @@ package com.github.alexthe666.iceandfire.entity.ai;
 
 import com.github.alexthe666.iceandfire.entity.EntityPixie;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 import java.util.Random;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class PixieAIEnterHouse extends Goal {
 
     EntityPixie pixie;
-    Random random;
+    RandomSource random;
 
     public PixieAIEnterHouse(EntityPixie entityPixieIn) {
         this.pixie = entityPixieIn;

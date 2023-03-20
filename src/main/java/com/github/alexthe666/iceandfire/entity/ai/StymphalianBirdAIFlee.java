@@ -12,6 +12,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class StymphalianBirdAIFlee extends Goal {
     private final Predicate<Entity> canBeSeenSelector;
     private final float avoidDistance;

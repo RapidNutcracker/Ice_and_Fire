@@ -724,7 +724,6 @@ public class ModelGorgon extends ModelDragonBase<EntityGorgon> {
             SnakeJawL6, SnakeFang1L6, SnakeFang2L6, SnakeBodyL5, SnakeHeadL5, SnakeJawL5, SnakeFang1L5, SnakeFang2L5);
     }
 
-
     @Override
     public void renderStatue(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, Entity living) {
         this.renderToBuffer(matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

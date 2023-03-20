@@ -53,7 +53,7 @@ public class ItemDragonFlute extends Item {
                 }
             }*/
         }
-        worldIn.playSound(player, player.blockPosition(), IafSoundRegistry.DRAGONFLUTE, SoundSource.NEUTRAL, 1, 1.75F);
+        worldIn.playSound(player, player.blockPosition(), IafSoundRegistry.DRAGONFLUTE.get(), SoundSource.NEUTRAL, 1, 1.75F);
 
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, itemStackIn);
     }

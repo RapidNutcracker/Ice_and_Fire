@@ -20,7 +20,7 @@ import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.Item;
@@ -57,7 +57,7 @@ public class GuiBestiary extends Screen {
     protected Font font = getFont();
 
     public GuiBestiary(ItemStack book) {
-        super(new TranslatableComponent("bestiary_gui"));
+        super(Component.translatable("bestiary_gui"));
         this.book = book;
         if (!book.isEmpty() && book.getItem() != null && book.getItem() == IafItemRegistry.BESTIARY.get()) {
             if (book.getTag() != null) {
@@ -74,7 +74,10 @@ public class GuiBestiary extends Screen {
 
     private static Font getFont() {
         if (IafConfig.useVanillaFont || !Minecraft.getInstance().options.languageCode.equalsIgnoreCase("en_us")) {
-            return Minecraft.getInstance().font;
+            Minecraft instance = Minecraft.getInstance();
+            Font font = instance.font;
+            instance.close();
+            return font;
         } else {
             return (Font) IceAndFire.PROXY.getFontRenderer();
         }
@@ -93,11 +96,11 @@ public class GuiBestiary extends Screen {
             if ((this.index ? this.indexPages > 0 : this.pageType != null)) {
                 if (this.index) {
                     this.indexPages--;
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE, 1.0F));
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE.get(), 1.0F));
                 } else {
                     if (this.bookPages > 0) {
                         this.bookPages--;
-                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE, 1.0F));
+                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE.get(), 1.0F));
                     } else {
                         this.index = true;
                     }
@@ -109,10 +112,10 @@ public class GuiBestiary extends Screen {
             if ((this.index ? this.indexPages < this.indexPagesTotal - 1 : this.pageType != null && this.bookPages < this.pageType.pages)) {
                 if (this.index) {
                     this.indexPages++;
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE, 1.0F));
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE.get(), 1.0F));
                 } else {
                     this.bookPages++;
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE, 1.0F));
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE.get(), 1.0F));
                 }
             }
         });
@@ -124,11 +127,11 @@ public class GuiBestiary extends Screen {
                 int id = 2 + i;
                 IndexPageButton button = new IndexPageButton(centerX + 15 + (xIndex * 200),
                     centerY + 10 + (yIndex * 20) - (xIndex == 1 ? 20 : 0),
-                    new TranslatableComponent("bestiary."
+                    Component.translatable("bestiary."
                         + EnumBestiaryPages.values()[allPageTypes.get(i).ordinal()].toString().toLowerCase()),
                     (p_214132_1_) -> {
                         if (this.indexButtons.get(id - 2) != null && allPageTypes.get(id - 2) != null) {
-                            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE, 1.0F));
+                            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(IafSoundRegistry.BESTIARY_PAGE.get(), 1.0F));
                             this.index = false;
                             this.bookPages = 0;
                             this.pageType = allPageTypes.get(id - 2);
@@ -790,16 +793,16 @@ public class GuiBestiary extends Screen {
         Resource resource = null;
 
         try {
-            resource = Minecraft.getInstance().getResourceManager().getResource(fileLoc);
-        } catch (IOException e) {
+            resource = Minecraft.getInstance().getResourceManager().getResource(fileLoc).orElseThrow();
+        } catch (Exception e) {
             try {
-                resource = Minecraft.getInstance().getResourceManager().getResource(backupLoc);
-            } catch (IOException e1) {
+                resource = Minecraft.getInstance().getResourceManager().getResource(backupLoc).get();
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
-        }
+        } 
         try {
-            final List<String> lines = IOUtils.readLines(resource.getInputStream(), StandardCharsets.UTF_8);
+            final List<String> lines = IOUtils.readLines(resource.open(), StandardCharsets.UTF_8);
             int zLevelAdd = 0;
             for (String line : lines) {
                 line = line.trim();
@@ -903,16 +906,16 @@ public class GuiBestiary extends Screen {
         Resource resource = null;
 
         try {
-            resource = Minecraft.getInstance().getResourceManager().getResource(fileLoc);
-        } catch (IOException e) {
+            resource = Minecraft.getInstance().getResourceManager().getResource(fileLoc).orElseThrow();
+        } catch (Exception e) {
             try {
-                resource = Minecraft.getInstance().getResourceManager().getResource(backupLoc);
-            } catch (IOException e1) {
+                resource = Minecraft.getInstance().getResourceManager().getResource(backupLoc).orElseThrow();
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
         try {
-            final List<String> lines = IOUtils.readLines(resource.getInputStream(), "UTF-8");
+            final List<String> lines = IOUtils.readLines(resource.open(), "UTF-8");
             int linenumber = 0;
             for (String line : lines) {
                 line = line.trim();

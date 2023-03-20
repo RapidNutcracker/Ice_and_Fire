@@ -14,7 +14,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +36,7 @@ public class GuiMyrmexStaff extends Screen {
     private int hiveCount;
 
     public GuiMyrmexStaff(ItemStack staff) {
-        super(new TranslatableComponent("myrmex_staff_screen"));
+        super(Component.translatable("myrmex_staff_screen"));
         this.jungle = staff.getItem() == IafItemRegistry.MYRMEX_JUNGLE_STAFF.get();
     }
 
@@ -49,13 +49,13 @@ public class GuiMyrmexStaff extends Screen {
         int j = (this.height - 166) / 2;
         int x_translate = 193;
         int y_translate = 37;
-        if (ClientProxy.getReferedClientHive() == null) {
+        if (ClientProxy.getReferredClientHive() == null) {
             return;
         }
         populateRoomMap();
-        this.addWidget(new Button(i + 124, j + 15, 120, 20, ClientProxy.getReferedClientHive().reproduces ? new TranslatableComponent("myrmex.message.disablebreeding") : new TranslatableComponent("myrmex.message.enablebreeding"), (p_214132_1_) -> {
-            boolean opposite = !ClientProxy.getReferedClientHive().reproduces;
-            ClientProxy.getReferedClientHive().reproduces = opposite;
+        this.addWidget(new Button(i + 124, j + 15, 120, 20, ClientProxy.getReferredClientHive().reproduces ? Component.translatable("myrmex.message.disablebreeding") : Component.translatable("myrmex.message.enablebreeding"), (p_214132_1_) -> {
+            boolean opposite = !ClientProxy.getReferredClientHive().reproduces;
+            ClientProxy.getReferredClientHive().reproduces = opposite;
         }));
         this.addWidget(
             this.previousPage = new ChangePageButton(i + 5, j + 150, false, this.jungle ? 2 : 1, (p_214132_1_) -> {
@@ -74,9 +74,9 @@ public class GuiMyrmexStaff extends Screen {
             int yIndex = rooms % ROOMS_PER_PAGE;
             BlockPos pos = allRoomPos.get(rooms).pos;
             //IndexPageButton button = new IndexPageButton(2 + i, centerX + 15 + (xIndex * 200), centerY + 10 + (yIndex * 20) - (xIndex == 1 ? 20 : 0), StatCollector.translateToLocal("bestiary." + EnumBestiaryPages.values()[allPageTypes.get(i).ordinal()].toString().toLowerCase()));
-            MyrmexDeleteButton button = new MyrmexDeleteButton(i + x_translate, j + y_translate + (yIndex) * 22, pos, new TranslatableComponent("myrmex.message.delete"), (p_214132_1_) -> {
+            MyrmexDeleteButton button = new MyrmexDeleteButton(i + x_translate, j + y_translate + (yIndex) * 22, pos, Component.translatable("myrmex.message.delete"), (p_214132_1_) -> {
                 if (ticksSinceDeleted <= 0) {
-                    ClientProxy.getReferedClientHive().removeRoom(pos);
+                    ClientProxy.getReferredClientHive().removeRoom(pos);
                     ticksSinceDeleted = 5;
                 }
             });
@@ -93,18 +93,18 @@ public class GuiMyrmexStaff extends Screen {
         allRoomPos.clear();
 
         for (WorldGenMyrmexHive.RoomType type : ROOMS) {
-            List<BlockPos> roomPos = ClientProxy.getReferedClientHive().getRooms(type);
+            List<BlockPos> roomPos = ClientProxy.getReferredClientHive().getRooms(type);
             for (BlockPos pos : roomPos) {
                 String name = type == WorldGenMyrmexHive.RoomType.FOOD ? "food" : type == WorldGenMyrmexHive.RoomType.NURSERY ? "nursery" : "misc";
                 allRoomPos.add(new Room(pos, name));
                 //this.buttonList.add(new MyrmexDeleteButton(buttons, i + x_translate, j + y_translate + (-1 + buttons) * 22, pos, I18n.format("myrmex.message.delete")));
             }
         }
-        for (BlockPos pos : ClientProxy.getReferedClientHive().getEntrances().keySet()) {
+        for (BlockPos pos : ClientProxy.getReferredClientHive().getEntrances().keySet()) {
             allRoomPos.add(new Room(pos, "enterance_surface"));
             //this.buttonList.add(new MyrmexDeleteButton(buttons, i + x_translate, j + y_translate + (-1 + buttons) * 22, pos, I18n.format("myrmex.message.delete")));
         }
-        for (BlockPos pos : ClientProxy.getReferedClientHive().getEntranceBottoms().keySet()) {
+        for (BlockPos pos : ClientProxy.getReferredClientHive().getEntranceBottoms().keySet()) {
             allRoomPos.add(new Room(pos, "enterance_bottom"));
             //this.buttonList.add(new MyrmexDeleteButton(buttons, i + x_translate, j + y_translate + (-1 + buttons) * 22, pos, I18n.format("myrmex.message.delete")));
         }
@@ -137,14 +137,14 @@ public class GuiMyrmexStaff extends Screen {
                 this.drawRoomInfo(ms, this.allRoomPos.get(rooms).string, this.allRoomPos.get(rooms).pos, i, j, color);
             }
         }
-        if (ClientProxy.getReferedClientHive() != null) {
-            if (!ClientProxy.getReferedClientHive().colonyName.isEmpty()) {
-                String title = I18n.get("myrmex.message.colony_named", ClientProxy.getReferedClientHive().colonyName);
+        if (ClientProxy.getReferredClientHive() != null) {
+            if (!ClientProxy.getReferredClientHive().colonyName.isEmpty()) {
+                String title = I18n.get("myrmex.message.colony_named", ClientProxy.getReferredClientHive().colonyName);
                 this.getMinecraft().font.draw(ms, title, i + 40 - title.length() / 2, j - 3, color);
             } else {
                 this.getMinecraft().font.draw(ms, I18n.get("myrmex.message.colony"), i + 80, j - 3, color);
             }
-            int opinion = ClientProxy.getReferedClientHive().getPlayerReputation(Minecraft.getInstance().player.getUUID());
+            int opinion = ClientProxy.getReferredClientHive().getPlayerReputation(Minecraft.getInstance().player.getUUID());
             this.getMinecraft().font.draw(ms, I18n.get("myrmex.message.hive_opinion", opinion), i, j + 12, color);
             this.getMinecraft().font.draw(ms, I18n.get("myrmex.message.rooms"), i, j + 25, color);
             /*int hiveCount = 0;
@@ -170,8 +170,8 @@ public class GuiMyrmexStaff extends Screen {
 
     @Override
     public void removed() {
-        if (ClientProxy.getReferedClientHive() != null) {
-            IceAndFire.NETWORK_WRAPPER.sendToServer(new MessageGetMyrmexHive(ClientProxy.getReferedClientHive().toNBT()));
+        if (ClientProxy.getReferredClientHive() != null) {
+            IceAndFire.NETWORK_WRAPPER.sendToServer(new MessageGetMyrmexHive(ClientProxy.getReferredClientHive().toNBT()));
         }
     }
 

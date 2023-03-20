@@ -26,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockDragonforgeBricks extends BaseEntityBlock implements IDragonProof {
 
     public static final BooleanProperty GRILL = BooleanProperty.create("grill");

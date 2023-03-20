@@ -35,6 +35,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityGorgon extends Monster implements IAnimatedEntity, IVillagerFear, IAnimalFear, IHumanoid, IHasCustomizableAttributes {
 
     public static Animation ANIMATION_SCARE;
@@ -171,7 +173,7 @@ public class EntityGorgon extends Monster implements IAnimatedEntity, IVillagerF
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 30;
     }
 
@@ -189,7 +191,7 @@ public class EntityGorgon extends Monster implements IAnimatedEntity, IVillagerF
         }
         if (this.deathTime >= 200) {
             if (!this.level.isClientSide && (this.isAlwaysExperienceDropper() || this.lastHurtByPlayerTime > 0 && this.shouldDropExperience() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS))) {
-                int i = this.getExperienceReward(this.lastHurtByPlayer);
+                int i = this.getExperienceReward();
                 i = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(this, this.lastHurtByPlayer, i);
                 while (i > 0) {
                     int j = ExperienceOrb.getExperienceValue(i);
@@ -230,7 +232,7 @@ public class EntityGorgon extends Monster implements IAnimatedEntity, IVillagerF
             boolean blindness = this.hasEffect(MobEffects.BLINDNESS) || attackTarget.hasEffect(MobEffects.BLINDNESS) || attackTarget instanceof IBlacklistedFromStatues && !((IBlacklistedFromStatues) attackTarget).canBeTurnedToStone();
             if (!blindness && this.deathTime == 0) {
                 if (this.getAnimation() != ANIMATION_SCARE) {
-                    this.playSound(IafSoundRegistry.GORGON_ATTACK, 1, 1);
+                    this.playSound(IafSoundRegistry.GORGON_ATTACK.get(), 1, 1);
                     this.setAnimation(ANIMATION_SCARE);
                 }
                 if (this.getAnimation() == ANIMATION_SCARE) {
@@ -317,19 +319,19 @@ public class EntityGorgon extends Monster implements IAnimatedEntity, IVillagerF
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.GORGON_IDLE;
+        return IafSoundRegistry.GORGON_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return IafSoundRegistry.GORGON_HURT;
+        return IafSoundRegistry.GORGON_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.GORGON_DIE;
+        return IafSoundRegistry.GORGON_DIE.get();
     }
 
     @Override

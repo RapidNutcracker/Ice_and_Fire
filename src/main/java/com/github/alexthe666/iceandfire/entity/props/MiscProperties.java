@@ -7,6 +7,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -24,7 +25,7 @@ public class MiscProperties {
     private static final String TARGETED_BY_SCEPTER_HOLDERS = "ScepterHolders";
     private static final String TARGETING_ENTITIES_WITH_SCEPTER = "ScepterTargets";
     private static final String SCEPTER_ENTITY_ID = "ScepterEntityId";
-    private static final Random rand = new Random();
+    private static final RandomSource rand = RandomSource.create();
 
     private static CompoundTag getOrCreateMiscData(LivingEntity entity) {
         return getOrCreateMiscData(CitadelEntityData.getCitadelTag(entity));

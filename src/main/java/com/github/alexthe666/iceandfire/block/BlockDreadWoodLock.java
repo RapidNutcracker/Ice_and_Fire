@@ -21,6 +21,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockDreadWoodLock extends Block implements IDragonProof, IDreadBlock {
     public static final BooleanProperty PLAYER_PLACED = BooleanProperty.create("player_placed");
 

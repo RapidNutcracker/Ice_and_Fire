@@ -15,6 +15,7 @@ import com.github.alexthe666.iceandfire.event.PlayerRenderEvents;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -34,24 +35,23 @@ import java.util.UUID;
 public class ClientProxy extends CommonProxy {
 
     public static Set<UUID> currentDragonRiders = new HashSet<UUID>();
-    private static MyrmexHive referedClientHive = null;
+    private static MyrmexHive referredClientHive = null;
     private int previousViewType = 0;
     private int thirdPersonViewDragon = 0;
     private Entity referencedMob = null;
     private BlockEntity referencedTE = null;
 
-    public static MyrmexHive getReferedClientHive() {
-        return referedClientHive;
+    public static MyrmexHive getReferredClientHive() {
+        return referredClientHive;
     }
 
     @Override
     public void setReferencedHive(MyrmexHive hive) {
-        referedClientHive = hive;
+        referredClientHive = hive;
     }
 
     @Override
     public void init() {
-        IafKeybindRegistry.init();
         MinecraftForge.EVENT_BUS.register(new PlayerRenderEvents());
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
     }
@@ -74,12 +74,15 @@ public class ClientProxy extends CommonProxy {
         if (world == null) {
             return;
         }
-        net.minecraft.client.particle.Particle particle = null;
+        Particle particle;
         if (name == EnumParticles.DragonFire) {
             particle = new ParticleDragonFlame(world, x, y, z, motX, motY, motZ, entityDragonBase, 0);
         } else if (name == EnumParticles.DragonIce) {
             particle = new ParticleDragonFrost(world, x, y, z, motX, motY, motZ, entityDragonBase, 0);
+        } else {
+            particle = null;
         }
+
         if (particle != null) {
             Minecraft.getInstance().particleEngine.add(particle);
         }
@@ -92,43 +95,20 @@ public class ClientProxy extends CommonProxy {
         if (world == null) {
             return;
         }
-        net.minecraft.client.particle.Particle particle = null;
+        Particle particle;
         switch (name) {
-            case DragonFire:
-                particle = new ParticleDragonFlame(world, x, y, z, motX, motY, motZ, size);
-                break;
-            case DragonIce:
-                particle = new ParticleDragonFrost(world, x, y, z, motX, motY, motZ, size);
-                break;
-            case Dread_Torch:
-                particle = new ParticleDreadTorch(world, x, y, z, motX, motY, motZ, size);
-                break;
-            case Dread_Portal:
-                particle = new ParticleDreadPortal(world, x, y, z, motX, motY, motZ, size);
-                break;
-            case Blood:
-                particle = new ParticleBlood(world, x, y, z);
-                break;
-            case If_Pixie:
-                particle = new ParticlePixieDust(world, x, y, z, (float) motX, (float) motY, (float) motZ);
-                break;
-            case Siren_Appearance:
-                particle = new ParticleSirenAppearance(world, x, y, z, (int) motX);
-                break;
-            case Ghost_Appearance:
-                particle = new ParticleGhostAppearance(world, x, y, z, (int) motX);
-                break;
-            case Siren_Music:
-                particle = new ParticleSirenMusic(world, x, y, z, motX, motY, motZ, 1);
-                break;
-            case Serpent_Bubble:
-                particle = new ParticleSerpentBubble(world, x, y, z, motX, motY, motZ, 1);
-                break;
-            case Hydra:
-                particle = new ParticleHydraBreath(world, x, y, z, (float) motX, (float) motY, (float) motZ);
-                break;
-            default:
-                break;
+            case DragonFire -> particle = new ParticleDragonFlame(world, x, y, z, motX, motY, motZ, size);
+            case DragonIce -> particle = new ParticleDragonFrost(world, x, y, z, motX, motY, motZ, size);
+            case Dread_Torch -> particle = new ParticleDreadTorch(world, x, y, z, motX, motY, motZ, size);
+            case Dread_Portal -> particle = new ParticleDreadPortal(world, x, y, z, motX, motY, motZ, size);
+            case Blood -> particle = new ParticleBlood(world, x, y, z);
+            case If_Pixie -> particle = new ParticlePixieDust(world, x, y, z, (float) motX, (float) motY, (float) motZ);
+            case Siren_Appearance -> particle = new ParticleSirenAppearance(world, x, y, z, (int) motX);
+            case Ghost_Appearance -> particle = new ParticleGhostAppearance(world, x, y, z, (int) motX);
+            case Siren_Music -> particle = new ParticleSirenMusic(world, x, y, z, motX, motY, motZ, 1);
+            case Serpent_Bubble -> particle = new ParticleSerpentBubble(world, x, y, z, motX, motY, motZ, 1);
+            case Hydra -> particle = new ParticleHydraBreath(world, x, y, z, (float) motX, (float) motY, (float) motZ);
+            default -> { particle = null; }
         }
         if (particle != null) {
             Minecraft.getInstance().particleEngine.add(particle);

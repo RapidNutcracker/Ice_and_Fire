@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class CockatriceAITarget<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
     private final EntityCockatrice cockatrice;
 

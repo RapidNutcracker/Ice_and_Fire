@@ -178,7 +178,7 @@ public class ContainerLectern extends AbstractContainerMenu {
                 this.tileFurnace.setChanged();
                 //this.xpSeed = playerIn.getXPSeed();
                 this.slotsChanged(this.tileFurnace);
-                playerIn.level.playSound(null, playerIn.blockPosition(), IafSoundRegistry.BESTIARY_PAGE, SoundSource.BLOCKS, 1.0F, playerIn.level.random.nextFloat() * 0.1F + 0.9F);
+                playerIn.level.playSound(null, playerIn.blockPosition(), IafSoundRegistry.BESTIARY_PAGE.get(), SoundSource.BLOCKS, 1.0F, playerIn.level.random.nextFloat() * 0.1F + 0.9F);
             }
             onUpdate();
             return true;

@@ -20,6 +20,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityStymphalianFeather extends AbstractArrow {
 
     public EntityStymphalianFeather(EntityType<? extends AbstractArrow> t, Level worldIn) {

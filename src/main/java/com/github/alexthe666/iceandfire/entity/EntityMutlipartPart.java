@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public abstract class EntityMutlipartPart extends Entity {
 
     private static final EntityDataAccessor<Optional<UUID>> PARENT_UUID = SynchedEntityData.defineId(EntityMutlipartPart.class, EntityDataSerializers.OPTIONAL_UUID);

@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 //import net.minecraft.data.worldgen.Features;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -41,7 +42,7 @@ public class WorldGenHydraCave extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel worldIn = context.level();
-        Random rand = context.random();
+        RandomSource rand = context.random();
         BlockPos position = context.origin();
         ChunkGenerator generator = context.chunkGenerator();
         if (!IafWorldRegistry.isDimensionListedForFeatures(worldIn)) {

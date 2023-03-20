@@ -1,6 +1,7 @@
 package com.github.alexthe666.iceandfire.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -14,7 +15,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockElementalFlower extends BushBlock {
     public Item itemBlock;
@@ -54,7 +56,7 @@ public class BlockElementalFlower extends BushBlock {
         }
     }
 
-    public void updateTick(Level worldIn, BlockPos pos, BlockState state, Random rand) {
+    public void updateTick(Level worldIn, BlockPos pos, BlockState state, RandomSource rand) {
         this.checkFall(worldIn, pos);
     }
 

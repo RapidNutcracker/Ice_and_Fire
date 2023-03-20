@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class DeathWormAITarget<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
     private final EntityDeathWorm deathworm;
 

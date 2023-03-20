@@ -14,6 +14,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class PixieAIFlee<T extends Entity> extends Goal {
     private final float avoidDistance;
     private final Class<T> classToAvoid;

@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.entity.ai;
 
 import com.github.alexthe666.iceandfire.entity.EntityDeathWorm;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Material;
@@ -10,6 +11,8 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Random;
+
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
 
 public class DeathWormAIGetInSand extends Goal {
     private final EntityDeathWorm creature;
@@ -62,7 +65,7 @@ public class DeathWormAIGetInSand extends Goal {
 
     @Nullable
     private Vec3 findPossibleShelter() {
-        Random random = this.creature.getRandom();
+        RandomSource random = this.creature.getRandom();
         BlockPos blockpos = new BlockPos(this.creature.getX(), this.creature.getBoundingBox().minY, this.creature.getZ());
 
         for (int i = 0; i < 10; ++i) {

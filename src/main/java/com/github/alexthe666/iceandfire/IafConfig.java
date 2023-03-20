@@ -7,7 +7,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import java.util.List;
 
 public class IafConfig {
-    public static boolean customMainMenu = true;
+    public static boolean customMainMenu = false;
     public static boolean useVanillaFont = false;
 
     //public static boolean logCascadingWorldGen = false;
@@ -18,15 +18,15 @@ public class IafConfig {
     public static boolean generateDragonSkeletons = true;
     public static int generateDragonSkeletonChance = 300;
     public static boolean generateDragonDens = true;
-    public static int generateDragonDenChance = 180;
+    public static int generateDragonDenChance = 260;
     public static boolean generateDragonRoosts = true;
-    public static int generateDragonRoostChance = 360;
+    public static int generateDragonRoostChance = 480;
     public static int dragonDenGoldAmount = 4;
     public static boolean useDimensionBlackList = true;
     public static List<? extends String> featureWhitelistedDimensions = Lists.newArrayList("minecraft:overworld");
     public static List<? extends String> featureBlacklistedDimensions = Lists.newArrayList("minecraft:nether", "minecraft:the_end");
     public static List<? extends String> dragonWhitelistedDimensions = Lists.newArrayList("minecraft:overworld");
-    public static List<? extends String> dragonBlacklistedDimensions = Lists.newArrayList("minecraft:the_nether", "minecraft:the_end");
+    public static List<? extends String> dragonBlacklistedDimensions = Lists.newArrayList("mine craft:the_nether", "minecraft:the_end");
     public static List<? extends String> mobWhitelistedDimensions = Lists.newArrayList("minecraft:overworld");
     public static List<? extends String> mobBlacklistedDimensions = Lists.newArrayList("minecraft:the_nether", "minecraft:the_end");
     public static List<? extends String> blacklistedBreakBlocks = Lists.newArrayList();
@@ -174,7 +174,7 @@ public class IafConfig {
     public static boolean dragonWeaponFireAbility = true;
     public static boolean dragonWeaponIceAbility = true;
     public static boolean dragonWeaponLightningAbility = true;
-    public static int villagerHouseWeight = 22;
+    public static int villagerHouseWeight = 5;
     public static boolean allowAttributeOverriding = true;
 
     public static void bakeClient(final ModConfig config) {

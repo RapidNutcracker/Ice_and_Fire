@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public abstract class EntityDragonCharge extends Fireball implements IDragonProjectile {
 
 

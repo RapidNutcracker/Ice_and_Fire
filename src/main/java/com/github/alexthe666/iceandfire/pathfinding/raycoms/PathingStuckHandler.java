@@ -5,6 +5,7 @@ package com.github.alexthe666.iceandfire.pathfinding.raycoms;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;
@@ -116,7 +117,7 @@ public class PathingStuckHandler implements IStuckHandler
      */
     private BlockPos moveAwayStartPos = BlockPos.ZERO;
 
-    private final Random rand = new Random();
+    private final RandomSource rand = RandomSource.create();
 
     private PathingStuckHandler()
     {

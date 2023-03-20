@@ -26,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityMyrmexEgg extends LivingEntity implements IBlacklistedFromStatues, IDeadMob {
 
     private static final EntityDataAccessor<Boolean> MYRMEX_TYPE = SynchedEntityData.defineId(EntityMyrmexEgg.class, EntityDataSerializers.BOOLEAN);
@@ -160,7 +162,7 @@ public class EntityMyrmexEgg extends LivingEntity implements IBlacklistedFromSta
             if (!level.isClientSide) {
                 level.addFreshEntity(myrmex);
             }
-            this.level.playLocalSound(this.getX(), this.getY() + this.getEyeHeight(), this.getZ(), IafSoundRegistry.EGG_HATCH, this.getSoundSource(), 2.5F, 1.0F, false);
+            this.level.playLocalSound(this.getX(), this.getY() + this.getEyeHeight(), this.getZ(), IafSoundRegistry.EGG_HATCH.get(), this.getSoundSource(), 2.5F, 1.0F, false);
         }
     }
 

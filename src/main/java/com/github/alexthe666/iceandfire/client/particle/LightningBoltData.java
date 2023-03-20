@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.client.particle;
 
 import com.mojang.math.Vector4f;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -12,7 +13,7 @@ import java.util.*;
  */
 public class LightningBoltData {
 
-    private final Random random = new Random();
+    private final RandomSource random = RandomSource.create();
 
     private final BoltRenderInfo renderInfo;
 
@@ -125,7 +126,7 @@ public class LightningBoltData {
         return quads;
     }
 
-    private static Vec3 findRandomOrthogonalVector(Vec3 vec, Random rand) {
+    private static Vec3 findRandomOrthogonalVector(Vec3 vec, RandomSource rand) {
         Vec3 newVec = new Vec3(-0.5 + rand.nextDouble(), -0.5 + rand.nextDouble(), -0.5 + rand.nextDouble());
         return vec.cross(newVec).normalize();
     }
@@ -211,10 +212,10 @@ public class LightningBoltData {
 
     public interface RandomFunction {
 
-        RandomFunction UNIFORM = Random::nextFloat;
+        RandomFunction UNIFORM = RandomSource::nextFloat;
         RandomFunction GAUSSIAN = rand -> (float) rand.nextGaussian();
 
-        float getRandom(Random rand);
+        float getRandom(RandomSource rand);
     }
 
     public interface SegmentSpreader {
@@ -245,7 +246,7 @@ public class LightningBoltData {
         /** Will re-spawn a bolt each time one expires. */
         SpawnFunction CONSECUTIVE = new SpawnFunction() {
             @Override
-            public Pair<Float, Float> getSpawnDelayBounds(Random rand) {
+            public Pair<Float, Float> getSpawnDelayBounds(RandomSource rand) {
                 return Pair.of(0F, 0F);
             }
             @Override
@@ -266,9 +267,9 @@ public class LightningBoltData {
             return (rand) -> Pair.of(delay - noise, delay + noise);
         }
 
-        Pair<Float, Float> getSpawnDelayBounds(Random rand);
+        Pair<Float, Float> getSpawnDelayBounds(RandomSource rand);
 
-        default float getSpawnDelay(Random rand) {
+        default float getSpawnDelay(RandomSource rand) {
             Pair<Float, Float> bounds = getSpawnDelayBounds(rand);
             return bounds.getLeft() + (bounds.getRight() - bounds.getLeft()) * rand.nextFloat();
         }

@@ -120,7 +120,7 @@ public class EntitySiren extends Monster implements IAnimatedEntity, IVillagerFe
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 8;
     }
 
@@ -134,12 +134,12 @@ public class EntitySiren extends Monster implements IAnimatedEntity, IVillagerFe
         if (this.getRandom().nextInt(2) == 0) {
             if (this.getAnimation() != ANIMATION_PULL) {
                 this.setAnimation(ANIMATION_PULL);
-                this.playSound(IafSoundRegistry.NAGA_ATTACK, 1, 1);
+                this.playSound(IafSoundRegistry.NAGA_ATTACK.get(), 1, 1);
             }
         } else {
             if (this.getAnimation() != ANIMATION_BITE) {
                 this.setAnimation(ANIMATION_BITE);
-                this.playSound(IafSoundRegistry.NAGA_ATTACK, 1, 1);
+                this.playSound(IafSoundRegistry.NAGA_ATTACK.get(), 1, 1);
             }
         }
         return true;
@@ -290,7 +290,7 @@ public class EntitySiren extends Monster implements IAnimatedEntity, IVillagerFe
             }
         }
         if (this.isActuallySinging() && !this.isInWater() && this.tickCount % 200 == 0) {
-            this.playSound(IafSoundRegistry.SIREN_SONG, 2, 1);
+            this.playSound(IafSoundRegistry.SIREN_SONG.get(), 2, 1);
         }
         AnimationHandler.INSTANCE.updateAnimations(this);
     }
@@ -505,19 +505,19 @@ public class EntitySiren extends Monster implements IAnimatedEntity, IVillagerFe
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return this.isAgressive() ? IafSoundRegistry.NAGA_IDLE : IafSoundRegistry.MERMAID_IDLE;
+        return this.isAgressive() ? IafSoundRegistry.NAGA_IDLE.get() : IafSoundRegistry.MERMAID_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return this.isAgressive() ? IafSoundRegistry.NAGA_HURT : IafSoundRegistry.MERMAID_HURT;
+        return this.isAgressive() ? IafSoundRegistry.NAGA_HURT.get() : IafSoundRegistry.MERMAID_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return this.isAgressive() ? IafSoundRegistry.NAGA_DIE : IafSoundRegistry.MERMAID_DIE;
+        return this.isAgressive() ? IafSoundRegistry.NAGA_DIE.get() : IafSoundRegistry.MERMAID_DIE.get();
     }
 
     @Override

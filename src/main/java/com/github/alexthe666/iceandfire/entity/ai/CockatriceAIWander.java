@@ -7,6 +7,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class CockatriceAIWander extends Goal {
     private final EntityCockatrice cockatrice;
     private double xPosition;

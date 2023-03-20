@@ -5,6 +5,8 @@ import com.github.alexthe666.citadel.client.model.ModelAnimator;
 import com.github.alexthe666.iceandfire.client.model.util.HideableModelRenderer;
 import com.github.alexthe666.iceandfire.entity.EntityGhost;
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class ModelGhost extends ModelBipedBase<EntityGhost> {
     public AdvancedModelBox robe;
@@ -181,5 +183,4 @@ public class ModelGhost extends ModelBipedBase<EntityGhost> {
         return ImmutableList.of(head, headware, body, armRight, armLeft, legRight, legLeft, robe, mask, hood, jaw,
             sleeveRight, robeLowerRight, robeLowerLeft, sleeveLeft);
     }
-
 }

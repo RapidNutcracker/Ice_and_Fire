@@ -27,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityGhostSword extends AbstractArrow {
 
     public EntityGhostSword(EntityType<? extends AbstractArrow> type, Level worldIn) {
@@ -141,7 +143,6 @@ public class EntityGhostSword extends AbstractArrow {
         return 15728880;
     }
 
-    @Override
     public float getBrightness() {
         return 1.0F;
     }

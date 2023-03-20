@@ -13,6 +13,8 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIFollowSummoner extends Goal {
     private final EntityMyrmexSwarmer tameable;
     Level world;

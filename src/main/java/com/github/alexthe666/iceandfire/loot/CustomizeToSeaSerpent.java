@@ -6,6 +6,8 @@ import com.github.alexthe666.iceandfire.item.ItemSeaSerpentScales;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
@@ -25,7 +27,7 @@ public class CustomizeToSeaSerpent extends LootItemConditionalFunction {
     @Override
     public @NotNull ItemStack run(ItemStack stack, @NotNull LootContext context) {
         if (!stack.isEmpty() && context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof EntitySeaSerpent) {
-            Random random = new Random();
+            RandomSource random = context.getRandom();
             EntitySeaSerpent seaSerpent = (EntitySeaSerpent) context.getParamOrNull(LootContextParams.THIS_ENTITY);
             if (seaSerpent == null) {
                 return stack;
@@ -45,7 +47,7 @@ public class CustomizeToSeaSerpent extends LootItemConditionalFunction {
 
     @Override
     public @NotNull LootItemFunctionType getType() {
-        return IafLootRegistry.CUSTOMIZE_TO_SERPENT;
+        return IafLootRegistry.CUSTOMIZE_TO_SEA_SERPENT.get();
     }
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<CustomizeToSeaSerpent> {

@@ -17,6 +17,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+
 public class RenderTideTridentItem extends BlockEntityWithoutLevelRenderer {
     private static final ModelTideTrident MODEL = new ModelTideTrident();
 

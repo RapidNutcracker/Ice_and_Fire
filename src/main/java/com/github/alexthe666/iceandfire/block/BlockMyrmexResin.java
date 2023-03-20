@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockMyrmexResin extends Block {
 
     private final boolean sticky;

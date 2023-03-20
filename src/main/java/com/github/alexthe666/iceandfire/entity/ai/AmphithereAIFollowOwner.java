@@ -12,6 +12,8 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class AmphithereAIFollowOwner extends Goal {
     private final EntityAmphithere ampithere;
     private final double followSpeed;

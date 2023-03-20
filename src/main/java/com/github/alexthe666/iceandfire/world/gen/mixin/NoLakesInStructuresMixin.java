@@ -25,10 +25,10 @@ public class NoLakesInStructuresMixin {
         if (!(context.level() instanceof WorldGenRegion))
             return;
 
-        for (var structure : List.of(IafWorldRegistry.MAUSOLEUM_CF, IafWorldRegistry.GORGON_TEMPLE_CF, IafWorldRegistry.GRAVEYARD_CF)) {
-            var structureStart = context.level().getChunk(context.origin()).getStartForFeature(structure.value());
-            if (structureStart != null && structureStart.isValid())
-                cir.setReturnValue(false);
-        }
+        // for (var structure : List.of(IafWorldRegistry.MAUSOLEUM_CF, IafWorldRegistry.GORGON_TEMPLE_CF, IafWorldRegistry.GRAVEYARD_CF)) {
+        //     var structureStart = context.level().getChunk(context.origin()).getStartForFeature(structure.value());
+        //     if (structureStart != null && structureStart.isValid())
+        //         cir.setReturnValue(false);
+        // }
     }
 }

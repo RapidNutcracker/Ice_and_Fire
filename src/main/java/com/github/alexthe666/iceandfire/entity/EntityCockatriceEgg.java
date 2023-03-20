@@ -17,6 +17,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityCockatriceEgg extends ThrowableItemProjectile {
 
     public EntityCockatriceEgg(EntityType<? extends ThrowableItemProjectile> type, Level worldIn) {

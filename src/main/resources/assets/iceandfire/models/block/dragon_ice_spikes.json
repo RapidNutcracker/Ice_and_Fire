@@ -1,5 +1,6 @@
 {
   "parent": "block/crop",
+  "render_type": "cutout",
   "textures": {
     "crop": "iceandfire:block/dragon_ice_spikes"
   }

@@ -4,6 +4,7 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.block.IafBlockRegistry;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -12,8 +13,8 @@ import java.util.function.Supplier;
 
 public class IafTileEntityRegistry {
 
-    public static final DeferredRegister<BlockEntityType<?>> TYPES = DeferredRegister
-        .create(ForgeRegistries.BLOCK_ENTITIES, IceAndFire.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister
+        .create(ForgeRegistries.BLOCK_ENTITY_TYPES, IceAndFire.MODID);
 
     //@formatter:off
     public static final RegistryObject<BlockEntityType<TileEntityLectern>> IAF_LECTERN = registerTileEntity(() -> BlockEntityType.Builder.of(TileEntityLectern::new, IafBlockRegistry.LECTERN.get()), "lectern");
@@ -32,6 +33,10 @@ public class IafTileEntityRegistry {
 
     public static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> registerTileEntity(
             Supplier<BlockEntityType.Builder<T>> supplier, String entityName) {
-        return TYPES.register(entityName, () -> supplier.get().build(null));
+        return BLOCK_ENTITIES.register(entityName, () -> supplier.get().build(null));
+    }
+
+    public static void register(IEventBus modBus) {
+        BLOCK_ENTITIES.register(modBus);
     }
 }

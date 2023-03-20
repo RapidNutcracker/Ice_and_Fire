@@ -105,7 +105,7 @@ public class EntityCyclops extends Monster implements IAnimatedEntity, IBlacklis
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 40;
     }
 
@@ -170,7 +170,7 @@ public class EntityCyclops extends Monster implements IAnimatedEntity, IBlacklis
             if (!entityIn.hasPassenger(this)
                 && entityIn.getBbWidth() < 1.95F
                 && !(entityIn instanceof EntityDragonBase)
-                && !entityIn.getType().is((ForgeRegistries.ENTITIES.tags().createTagKey(IafTagRegistry.CYCLOPS_UNLIFTABLES)))) {
+                && !entityIn.getType().is((ForgeRegistries.ENTITY_TYPES.tags().createTagKey(IafTagRegistry.CYCLOPS_UNLIFTABLES)))) {
                 this.setAnimation(ANIMATION_EATPLAYER);
                 entityIn.stopRiding();
                 entityIn.startRiding(this, true);
@@ -283,10 +283,10 @@ public class EntityCyclops extends Monster implements IAnimatedEntity, IBlacklis
             this.setTarget(null);
         }
         if (this.getAnimation() == ANIMATION_ROAR && this.getAnimationTick() == 5) {
-            this.playSound(IafSoundRegistry.CYCLOPS_BLINDED, 1, 1);
+            this.playSound(IafSoundRegistry.CYCLOPS_BLINDED.get(), 1, 1);
         }
         if (this.getAnimation() == ANIMATION_EATPLAYER && this.getAnimationTick() == 25) {
-            this.playSound(IafSoundRegistry.CYCLOPS_BITE, 1, 1);
+            this.playSound(IafSoundRegistry.CYCLOPS_BITE.get(), 1, 1);
         }
         if (this.getAnimation() == ANIMATION_STOMP && this.getTarget() != null && this.distanceToSqr(this.getTarget()) < 12D && this.getAnimationTick() == 14) {
             this.getTarget().hurt(DamageSource.mobAttack(this), (float) this.getAttribute(Attributes.ATTACK_DAMAGE).getValue());
@@ -417,19 +417,19 @@ public class EntityCyclops extends Monster implements IAnimatedEntity, IBlacklis
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.CYCLOPS_IDLE;
+        return IafSoundRegistry.CYCLOPS_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return IafSoundRegistry.CYCLOPS_HURT;
+        return IafSoundRegistry.CYCLOPS_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.CYCLOPS_DIE;
+        return IafSoundRegistry.CYCLOPS_DIE.get();
     }
 
     @Override

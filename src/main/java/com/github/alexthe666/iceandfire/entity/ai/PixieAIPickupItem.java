@@ -19,6 +19,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class PixieAIPickupItem<T extends ItemEntity> extends TargetGoal {
     protected final DragonAITargetItems.Sorter theNearestAttackableTargetSorter;
     protected final Predicate<? super ItemEntity> targetEntitySelector;
@@ -110,7 +112,7 @@ public class PixieAIPickupItem<T extends ItemEntity> extends TargetGoal {
 
             pixie.setItemInHand(InteractionHand.MAIN_HAND, this.targetEntity.getItem());
             this.targetEntity.getItem().shrink(1);
-            pixie.playSound(IafSoundRegistry.PIXIE_TAUNT, 1F, 1F);
+            pixie.playSound(IafSoundRegistry.PIXIE_TAUNT.get(), 1F, 1F);
             stop();
         }
     }

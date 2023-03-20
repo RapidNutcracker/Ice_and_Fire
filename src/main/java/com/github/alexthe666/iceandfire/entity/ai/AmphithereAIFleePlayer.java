@@ -13,6 +13,8 @@ import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.List;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class AmphithereAIFleePlayer extends Goal {
     private final double farSpeed;
     private final double nearSpeed;

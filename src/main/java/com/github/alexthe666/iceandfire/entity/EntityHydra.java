@@ -33,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityHydra extends Monster implements IAnimatedEntity, IMultipartEntity, IVillagerFear, IAnimalFear, IHasCustomizableAttributes {
 
     public static final int HEADS = 9;
@@ -157,7 +159,7 @@ public class EntityHydra extends Monster implements IAnimatedEntity, IMultipartE
                 if (tickCount % 7 == 0 && attackTarget != null && i < this.getHeadCount()) {
                     Vec3 Vector3d = this.getViewVector(1.0F);
                     if (random.nextFloat() < 0.2F) {
-                        this.playSound(IafSoundRegistry.HYDRA_SPIT, this.getSoundVolume(), this.getVoicePitch());
+                        this.playSound(IafSoundRegistry.HYDRA_SPIT.get(), this.getSoundVolume(), this.getVoicePitch());
                     }
                     double headPosX = this.headBoxes[i].getX() + Vector3d.x;
                     double headPosY = this.headBoxes[i].getY() + 1.3F;
@@ -223,7 +225,7 @@ public class EntityHydra extends Monster implements IAnimatedEntity, IMultipartE
                 if (this.isOnFire()) {
                     this.setHeadCount(this.getHeadCount() - 1);
                 } else {
-                    this.playSound(IafSoundRegistry.HYDRA_REGEN_HEAD, this.getSoundVolume(), this.getVoicePitch());
+                    this.playSound(IafSoundRegistry.HYDRA_REGEN_HEAD.get(), this.getSoundVolume(), this.getVoicePitch());
                     if (!onlyRegrowOneHeadNotTwo) {
                         this.setHeadCount(this.getHeadCount() + 1);
                     }
@@ -474,19 +476,19 @@ public class EntityHydra extends Monster implements IAnimatedEntity, IMultipartE
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.HYDRA_IDLE;
+        return IafSoundRegistry.HYDRA_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return IafSoundRegistry.HYDRA_HURT;
+        return IafSoundRegistry.HYDRA_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.HYDRA_DIE;
+        return IafSoundRegistry.HYDRA_DIE.get();
     }
 
 }

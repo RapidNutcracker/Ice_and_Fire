@@ -9,6 +9,8 @@ import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.List;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class DreadAIRideHorse extends Goal {
     private final EntityDreadKnight knight;
     private AbstractHorse horse;

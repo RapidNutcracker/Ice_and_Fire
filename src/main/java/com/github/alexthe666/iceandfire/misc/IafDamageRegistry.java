@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.misc;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
@@ -28,7 +28,7 @@ public class IafDamageRegistry {
             int index = entityLivingBaseIn.getRandom().nextInt(2);
             String s1 = s + "." + index;
             String s2 = s + ".attacker_" + index;
-            return livingentity != null ? new TranslatableComponent(s2, entityLivingBaseIn.getDisplayName(), livingentity.getDisplayName()) : new TranslatableComponent(s1, entityLivingBaseIn.getDisplayName());
+            return livingentity != null ? Component.translatable(s2, entityLivingBaseIn.getDisplayName(), livingentity.getDisplayName()) : Component.translatable(s1, entityLivingBaseIn.getDisplayName());
         }
     }
 
@@ -45,7 +45,7 @@ public class IafDamageRegistry {
             int index = entityLivingBaseIn.getRandom().nextInt(2);
             String s1 = s + "." + index;
             String s2 = s + ".attacker_" + index;
-            return livingentity != null ? new TranslatableComponent(s2, entityLivingBaseIn.getDisplayName(), livingentity.getDisplayName()) : new TranslatableComponent(s1, entityLivingBaseIn.getDisplayName());
+            return livingentity != null ? Component.translatable(s2, entityLivingBaseIn.getDisplayName(), livingentity.getDisplayName()) : Component.translatable(s1, entityLivingBaseIn.getDisplayName());
         }
     }
 

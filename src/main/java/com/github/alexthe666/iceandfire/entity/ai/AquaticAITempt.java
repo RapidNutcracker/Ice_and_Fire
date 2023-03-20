@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class AquaticAITempt extends Goal {
     private final Mob temptedEntity;
     private final double speed;

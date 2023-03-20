@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -74,7 +75,7 @@ public class EntityTroll extends Monster implements IAnimatedEntity, IVillagerFe
         IHasCustomizableAttributes.applyAttributesForEntity(t, this);
     }
 
-    public static boolean canTrollSpawnOn(EntityType<? extends Mob> typeIn, ServerLevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
+    public static boolean canTrollSpawnOn(EntityType<? extends Mob> typeIn, ServerLevelAccessor worldIn, MobSpawnType reason, BlockPos pos, RandomSource randomIn) {
         return worldIn.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(worldIn, pos, randomIn)
             && checkMobSpawnRules(IafEntityRegistry.TROLL.get(), worldIn, reason, pos, randomIn);
     }
@@ -240,7 +241,7 @@ public class EntityTroll extends Monster implements IAnimatedEntity, IVillagerFe
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 15;
     }
 
@@ -320,19 +321,19 @@ public class EntityTroll extends Monster implements IAnimatedEntity, IVillagerFe
             this.setAnimation(ANIMATION_ROAR);
         }
         if (this.getAnimation() == ANIMATION_ROAR && this.getAnimationTick() == 5) {
-            this.playSound(IafSoundRegistry.TROLL_ROAR, 1, 1);
+            this.playSound(IafSoundRegistry.TROLL_ROAR.get(), 1, 1);
         }
         if (!stone && this.getHealth() < this.getMaxHealth() && this.tickCount % 30 == 0) {
             this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 30, 1, false, false));
         }
         setAvoidSun(this.level.isDay());
         if (this.level.isDay() && !this.level.isClientSide) {
-            float f = this.getBrightness();
             BlockPos blockpos = this.getVehicle() instanceof Boat ? (new BlockPos(this.getX(), Math.round(this.getY()), this.getZ())).above() : new BlockPos(this.getX(), Math.round(this.getY()), this.getZ());
+            float f = this.level.getBrightness(null, blockpos);
             if (f > 0.5F && this.level.canSeeSky(blockpos)) {
                 this.setDeltaMovement(0, 0, 0);
                 this.setAnimation(NO_ANIMATION);
-                this.playSound(IafSoundRegistry.TURN_STONE, 1, 1);
+                this.playSound(IafSoundRegistry.TURN_STONE.get(), 1, 1);
                 this.stoneProgress = 20;
                 EntityStoneStatue statue = EntityStoneStatue.buildStatueEntity(this);
                 statue.getTrappedTag().putFloat("StoneProgress", 20);
@@ -453,19 +454,19 @@ public class EntityTroll extends Monster implements IAnimatedEntity, IVillagerFe
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.TROLL_IDLE;
+        return IafSoundRegistry.TROLL_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return IafSoundRegistry.TROLL_HURT;
+        return IafSoundRegistry.TROLL_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.TROLL_DIE;
+        return IafSoundRegistry.TROLL_DIE.get();
     }
 
 

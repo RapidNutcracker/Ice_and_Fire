@@ -82,6 +82,6 @@ public class BiomeConfig {
         if (!init) {
             init();
         }
-        return biomeConfigValues.get(spawns.getKey()).matches(biome, biome.value().getRegistryName());
+        return biomeConfigValues.get(spawns.getKey()).matches(biome, biome.unwrapKey().get().location());
     }
 }

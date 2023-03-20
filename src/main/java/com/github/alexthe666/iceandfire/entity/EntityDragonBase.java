@@ -37,7 +37,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -79,8 +79,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+//import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
@@ -89,6 +90,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
+import net.minecraft.world.entity.Entity.RemovalReason;
 
 public abstract class EntityDragonBase extends TamableAnimal implements IPassabilityNavigator, ISyncMount, IFlyingMount, IMultipartEntity, IAnimatedEntity, IDragonFlute, IDeadMob, IVillagerFear, IAnimalFear, IDropArmor, IHasCustomizableAttributes, ICustomSizeNavigator, ICustomMoveController, ContainerListener {
 
@@ -528,7 +531,7 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
     }
 
     @Override
-    public boolean canBeRiddenInWater(Entity rider) {
+    public boolean rideableUnderWater() {
         return true;
     }
 
@@ -554,7 +557,7 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
 
     public void openInventory(Player player) {
         if (!this.level.isClientSide)
-            NetworkHooks.openGui((ServerPlayer) player, getMenuProvider());
+            NetworkHooks.openScreen((ServerPlayer) player, getMenuProvider());
         IceAndFire.PROXY.setReferencedMob(this);
     }
 
@@ -599,7 +602,7 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         switch (this.getDragonStage()) {
             case 2:
                 return 20;
@@ -863,7 +866,7 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-        if (this.isAlive() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && itemHandler != null)
+        if (this.isAlive() && capability == ForgeCapabilities.ITEM_HANDLER && itemHandler != null)
             return itemHandler.cast();
         return super.getCapability(capability, facing);
     }
@@ -1075,8 +1078,9 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
     }
 
     @Override
-    public void killed(@NotNull ServerLevel world, @NotNull LivingEntity entity) {
+    public boolean wasKilled(@NotNull ServerLevel world, @NotNull LivingEntity entity) {
         this.setHunger(this.getHunger() + FoodUtils.getFoodPoints(entity));
+        return super.wasKilled(world, entity);
     }
 
     private double calculateArmorModifier() {
@@ -1293,13 +1297,13 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
                         if (player.isShiftKeyDown()) {
                             if (this.hasHomePosition) {
                                 this.hasHomePosition = false;
-                                player.displayClientMessage(new TranslatableComponent("dragon.command.remove_home"), true);
+                                player.displayClientMessage(Component.translatable("dragon.command.remove_home"), true);
                                 return InteractionResult.SUCCESS;
                             } else {
                                 BlockPos pos = this.blockPosition();
                                 this.homePos = new HomePosition(pos, this.level);
                                 this.hasHomePosition = true;
-                                player.displayClientMessage(new TranslatableComponent("dragon.command.new_home", pos.getX(), pos.getY(), pos.getZ(), homePos.getDimension()), true);
+                                player.displayClientMessage(Component.translatable("dragon.command.new_home", pos.getX(), pos.getY(), pos.getZ(), homePos.getDimension()), true);
                                 return InteractionResult.SUCCESS;
                             }
                         } else {
@@ -1316,7 +1320,7 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
                             } else if (this.getCommand() == 2) {
                                 commandText = "escort";
                             }
-                            player.displayClientMessage(new TranslatableComponent("dragon.command." + commandText), true);
+                            player.displayClientMessage(Component.translatable("dragon.command." + commandText), true);
                             return InteractionResult.SUCCESS;
                         }
                     }
@@ -1996,10 +2000,11 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
         return false;
     }
 
-    @Override
-    public boolean canBeControlledByRider() {
-        return true;
-    }
+    // TODO canBeControlledByRider
+    // @Override
+    // public boolean canBeControlledByRider() {
+    //     return true;
+    // }
 
     @Override
     public boolean isImmobile() {
@@ -2263,7 +2268,7 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
                 if (this.isActuallyBreathingFire()) {
                     setYRot(yBodyRot);
                     if (this.tickCount % 5 == 0) {
-                        this.playSound(IafSoundRegistry.FIREDRAGON_BREATH, 4, 1);
+                        this.playSound(IafSoundRegistry.FIREDRAGON_BREATH.get(), 4, 1);
                     }
                     stimulateFire(this.getX() + distX * this.fireTicks / 40, entity.getY(), this.getZ() + distZ * this.fireTicks / 40, 1);
                 }
@@ -2321,7 +2326,7 @@ public abstract class EntityDragonBase extends TamableAnimal implements IPassabi
     }
 
     public boolean isSkeletal() {
-        return this.getDeathStage() >= (this.getAgeInDays() / 5) / 2;
+        return this.isModelDead() && this.getDeathStage() >= (this.getAgeInDays() / 5) / 2;
     }
 
     @Override

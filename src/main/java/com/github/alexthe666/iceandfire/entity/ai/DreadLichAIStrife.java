@@ -8,6 +8,8 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class DreadLichAIStrife extends Goal {
 
     private final EntityDreadLich entity;

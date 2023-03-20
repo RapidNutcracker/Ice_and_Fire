@@ -12,6 +12,9 @@ import java.util.OptionalDouble;
 
 import static com.mojang.blaze3d.vertex.DefaultVertexFormat.*;
 
+import net.minecraft.client.renderer.RenderStateShard.ShaderStateShard;
+import net.minecraft.client.renderer.RenderType.CompositeState;
+
 /**
  * Holding all kind of render types of minecolonies
  */

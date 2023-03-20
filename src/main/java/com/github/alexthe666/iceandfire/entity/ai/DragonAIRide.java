@@ -9,6 +9,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class DragonAIRide<T extends Mob & IFlyingMount> extends Goal {
 
     private final T dragon;

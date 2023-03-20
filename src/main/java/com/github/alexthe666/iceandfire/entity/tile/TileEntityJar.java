@@ -15,12 +15,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -43,17 +45,17 @@ public class TileEntityJar extends BlockEntity {
     public float prevRotationYaw;
     net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler> downHandler = PixieJarInvWrapper
         .create(this);
-    private final Random rand;
+    private final RandomSource rand;
 
     public TileEntityJar(BlockPos pos, BlockState state) {
         super(IafTileEntityRegistry.PIXIE_JAR.get(), pos, state);
-        this.rand = new Random();
+        this.rand = RandomSource.create();
         this.hasPixie = true;
     }
 
     public TileEntityJar(BlockPos pos, BlockState state, boolean empty) {
         super(IafTileEntityRegistry.PIXIE_JAR.get(), pos, state);
-        this.rand = new Random();
+        this.rand = RandomSource.create();
         this.hasPixie = !empty;
     }
 
@@ -116,7 +118,7 @@ public class TileEntityJar extends BlockEntity {
             if (!level.isClientSide) {
                 IceAndFire.sendMSGToAll(new MessageUpdatePixieJar(pos.asLong(), entityJar.hasProduced));
             } else {
-                level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, IafSoundRegistry.PIXIE_HURT, SoundSource.BLOCKS, 1, 1, false);
+                level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, IafSoundRegistry.PIXIE_HURT.get(), SoundSource.BLOCKS, 1, 1, false);
             }
         }
         entityJar.prevRotationYaw = entityJar.rotationYaw;
@@ -124,7 +126,7 @@ public class TileEntityJar extends BlockEntity {
             entityJar.rotationYaw = (entityJar.rand.nextFloat() * 360F) - 180F;
         }
         if (entityJar.hasPixie && entityJar.ticksExisted % 40 == 0 && entityJar.rand.nextInt(6) == 0 && level.isClientSide) {
-            level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, IafSoundRegistry.PIXIE_IDLE, SoundSource.BLOCKS, 1, 1, false);
+            level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, IafSoundRegistry.PIXIE_IDLE.get(), SoundSource.BLOCKS, 1, 1, false);
         }
         entityJar.prevHasProduced = entityJar.hasProduced;
     }
@@ -149,7 +151,7 @@ public class TileEntityJar extends BlockEntity {
     @Override
     public <T> net.minecraftforge.common.util.@NotNull LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.@NotNull Capability<T> capability, @Nullable Direction facing) {
         if (facing == Direction.DOWN
-            && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            && capability == ForgeCapabilities.ITEM_HANDLER)
             return downHandler.cast();
         return super.getCapability(capability, facing);
     }

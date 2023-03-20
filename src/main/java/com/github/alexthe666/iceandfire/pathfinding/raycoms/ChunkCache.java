@@ -38,6 +38,8 @@ import java.util.List;
 
 import static com.github.alexthe666.iceandfire.util.WorldUtil.isChunkLoaded;
 
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+
 public class ChunkCache implements LevelReader {
     protected int chunkX;
     protected int chunkZ;

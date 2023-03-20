@@ -271,7 +271,7 @@ public class DragonUtils {
     }
 
     public static boolean canTameDragonAttack(TamableAnimal dragon, Entity entity) {
-        if (entity.getType().is(Objects.requireNonNull(ForgeRegistries.ENTITIES.tags()).createTagKey(IafTagRegistry.VILLAGERS))) {
+        if (entity.getType().is(Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.tags()).createTagKey(IafTagRegistry.VILLAGERS))) {
             return false;
         }
         if (entity instanceof AbstractVillager || entity instanceof AbstractGolem || entity instanceof Player) {
@@ -284,7 +284,7 @@ public class DragonUtils {
     }
 
     public static boolean isVillager(Entity entity) {
-        return entity.getType().is(ForgeRegistries.ENTITIES.tags().createTagKey(IafTagRegistry.VILLAGERS));
+        return entity.getType().is(ForgeRegistries.ENTITY_TYPES.tags().createTagKey(IafTagRegistry.VILLAGERS));
     }
 
     public static boolean isAnimaniaMob(Entity entity) {
@@ -292,7 +292,7 @@ public class DragonUtils {
     }
 
     public static boolean isDragonTargetable(Entity entity, ResourceLocation tag) {
-        return entity.getType().is(ForgeRegistries.ENTITIES.tags().createTagKey(tag));
+        return entity.getType().is(ForgeRegistries.ENTITY_TYPES.tags().createTagKey(tag));
     }
 
     public static String getDimensionName(Level world) {
@@ -351,14 +351,14 @@ public class DragonUtils {
     public static boolean isBlacklistedBlock(Block block) {
         if (IafConfig.blacklistBreakBlocksIsWhiteList) {
             for (String name : IafConfig.blacklistedBreakBlocks) {
-                if (name.equalsIgnoreCase(block.getRegistryName().toString())) {
+                if (name.equalsIgnoreCase(block.getName().toString())) {
                     return false;
                 }
             }
             return true;
         } else {
             for (String name : IafConfig.blacklistedBreakBlocks) {
-                if (name.equalsIgnoreCase(block.getRegistryName().toString())) {
+                if (name.equalsIgnoreCase(block.getName().toString())) {
                     return true;
                 }
             }
@@ -407,7 +407,7 @@ public class DragonUtils {
 
     public static boolean canDropFromDragonBlockBreak(BlockState state) {
         for (String name : IafConfig.noDropBreakBlocks) {
-            if (name.equalsIgnoreCase(state.getBlock().getRegistryName().toString())) {
+            if (name.equalsIgnoreCase(state.getBlock().getName().toString())) {
                 return false;
             }
         }
@@ -418,7 +418,7 @@ public class DragonUtils {
         Block block = state.getBlock();
         return block == IafBlockRegistry.DREAD_STONE.get() || block == IafBlockRegistry.DREAD_STONE_BRICKS.get() || block == IafBlockRegistry.DREAD_STONE_BRICKS_CHISELED.get() ||
                 block == IafBlockRegistry.DREAD_STONE_BRICKS_CRACKED.get() || block == IafBlockRegistry.DREAD_STONE_BRICKS_MOSSY.get() || block == IafBlockRegistry.DREAD_STONE_TILE.get() ||
-                block == IafBlockRegistry.DREAD_STONE_FACE.get() || block == IafBlockRegistry.DREAD_TORCH.get() || block == IafBlockRegistry.DREAD_STONE_BRICKS_STAIRS.get() ||
+//                block == IafBlockRegistry.DREAD_STONE_FACE.get() || block == IafBlockRegistry.DREAD_TORCH.get() || block == IafBlockRegistry.DREAD_STONE_BRICKS_STAIRS.get() ||
                 block == IafBlockRegistry.DREAD_STONE_BRICKS_SLAB.get() || block == IafBlockRegistry.DREADWOOD_LOG.get() ||
                 block == IafBlockRegistry.DREADWOOD_PLANKS.get() || block == IafBlockRegistry.DREADWOOD_PLANKS_LOCK.get() || block == IafBlockRegistry.DREAD_PORTAL.get() ||
                 block == IafBlockRegistry.DREAD_SPAWNER.get();

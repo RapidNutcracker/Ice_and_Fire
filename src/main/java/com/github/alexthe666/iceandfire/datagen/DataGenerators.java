@@ -3,14 +3,17 @@ package com.github.alexthe666.iceandfire.datagen;
 import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.config.BiomeConfig;
 import com.github.alexthe666.iceandfire.world.IafWorldRegistry;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.event.AddPackFindersEvent;
@@ -19,11 +22,14 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = IceAndFire.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
@@ -33,27 +39,28 @@ public class DataGenerators {
     public static void addPackFinders(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.SERVER_DATA) {
             event.addRepositorySource((packConsumer, packConstructor) -> {
-                Pack pack = Pack.create(IceAndFire.MODID + ":data", true, () -> resources, packConstructor, Pack.Position.TOP, PackSource.DEFAULT);
+                Pack pack = Pack.create(IceAndFire.MODID + ":data", true, () -> resources, packConstructor,
+                        Pack.Position.TOP, PackSource.DEFAULT);
                 packConsumer.accept(pack);
             });
         }
     }
 
     public static void createResources(Registry<Biome> biomes) {
-        HashMap<TagKey<?>, Tag.Builder> builders = new HashMap<>();
-        builders.put(IafWorldRegistry.HAS_MAUSOLEUM, Tag.Builder.tag());
-        builders.put(IafWorldRegistry.HAS_GRAVEYARD, Tag.Builder.tag());
-        builders.put(IafWorldRegistry.HAS_GORGON_TEMPLE, Tag.Builder.tag());
+        HashMap<TagKey<?>, TagBuilder> builders = new HashMap<>();
+        builders.put(IafWorldRegistry.HAS_MAUSOLEUM, TagBuilder.create());
+        builders.put(IafWorldRegistry.HAS_GRAVEYARD, TagBuilder.create());
+        builders.put(IafWorldRegistry.HAS_GORGON_TEMPLE, TagBuilder.create());
 
         biomes.holders().forEach(biomeReference -> {
             if (BiomeConfig.test(BiomeConfig.gorgonTempleBiomes, biomeReference)) {
-                builders.get(IafWorldRegistry.HAS_GORGON_TEMPLE).addElement(biomeReference.key().location(), "forge");
+                builders.get(IafWorldRegistry.HAS_GORGON_TEMPLE).addElement(biomeReference.key().location());
             }
             if (BiomeConfig.test(BiomeConfig.graveyardBiomes, biomeReference)) {
-                builders.get(IafWorldRegistry.HAS_GRAVEYARD).addElement(biomeReference.key().location(), "forge");
+                builders.get(IafWorldRegistry.HAS_GRAVEYARD).addElement(biomeReference.key().location());
             }
             if (BiomeConfig.test(BiomeConfig.mausoleumBiomes, biomeReference)) {
-                builders.get(IafWorldRegistry.HAS_MAUSOLEUM).addElement(biomeReference.key().location(), "forge");
+                builders.get(IafWorldRegistry.HAS_MAUSOLEUM).addElement(biomeReference.key().location());
             }
         });
 
@@ -62,8 +69,9 @@ public class DataGenerators {
         addBiomeTag("has_structure/gorgon_temple.json", builders.get(IafWorldRegistry.HAS_GORGON_TEMPLE));
     }
 
-    static void addBiomeTag(String location, Tag.Builder builder) {
-        resources.add(new ResourceLocation(IceAndFire.MODID,"tags/worldgen/biome/" + location), builder.serializeToJson());
+    static void addBiomeTag(String location, TagBuilder builder) {
+        ResourceLocation resourceLocation = new ResourceLocation(IceAndFire.MODID,"tags/worldgen/biome/" + location);
+        // resources.add(, );
     }
 
     public static class PackResources implements net.minecraft.server.packs.PackResources {
@@ -89,15 +97,16 @@ public class DataGenerators {
         }
 
         @Override
-        public Collection<ResourceLocation> getResources(PackType pType, String pNamespace, String pPath, int pMaxDepth, Predicate<String> pFilter) {
+        public Collection<ResourceLocation> getResources(PackType pType, String pNamespace, String pPath,
+                Predicate<ResourceLocation> pFilter) {
             Collection<ResourceLocation> resources = new ArrayList<>();
             if (pType == PackType.SERVER_DATA) {
                 DATA.forEach(((resourceLocation, _jsonObject) -> {
-                    if (resourceLocation.getNamespace().equals(pNamespace) && resourceLocation.toString().startsWith(pPath) && pFilter.test(resourceLocation.getPath())) {
+                    if (resourceLocation.getNamespace().equals(pNamespace)
+                            && resourceLocation.toString().startsWith(pPath) && pFilter.test(resourceLocation)) {
                         resources.add(resourceLocation);
                     }
-                }
-                ));
+                }));
             }
             return resources;
         }
@@ -137,14 +146,17 @@ public class DataGenerators {
         @Nullable
         @Override
         public <T> T getMetadataSection(MetadataSectionSerializer<T> pDeserializer) throws IOException {
+            JsonObject object = new JsonObject();
             if (pDeserializer.getMetadataSectionName().equals("pack")) {
-                JsonObject object = new JsonObject();
                 object.addProperty("pack_format", PACK_FORMAT);
                 object.addProperty("description", "Dynamically generated tags");
                 return pDeserializer.fromJson(object);
             }
 
-            return pDeserializer.fromJson(new JsonObject());
+            // TODO: DataGenerators MetaData "block" property?
+             object.add("block", new JsonArray());
+
+            return pDeserializer.fromJson(object);
         }
     }
 }

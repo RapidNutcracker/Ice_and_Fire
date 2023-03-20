@@ -1,5 +1,6 @@
 {
   "parent": "block/torch",
+  "render_type": "cutout",
   "textures": {
     "torch": "iceandfire:block/burnt_torch"
   }

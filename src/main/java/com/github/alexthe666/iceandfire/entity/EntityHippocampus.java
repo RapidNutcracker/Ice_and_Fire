@@ -20,7 +20,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -50,6 +50,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -73,7 +74,7 @@ public class EntityHippocampus extends TamableAnimal implements ISyncMount, IAni
     // These are from TamableAnimal
     private static final int FLAG_SITTING = 1;
     private static final int FLAG_TAME = 4;
-    private static final Component CONTAINER_TITLE = new TranslatableComponent("entity.iceandfire.hippocampus");
+    private static final Component CONTAINER_TITLE = Component.translatable("entity.iceandfire.hippocampus");
 
     public static Animation ANIMATION_SPEAK;
     public float onLandProgress;
@@ -135,7 +136,7 @@ public class EntityHippocampus extends TamableAnimal implements ISyncMount, IAni
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 2;
     }
 
@@ -273,7 +274,7 @@ public class EntityHippocampus extends TamableAnimal implements ISyncMount, IAni
     }
 
     @Override
-    public boolean canBeRiddenInWater(Entity rider) {
+    public boolean rideableUnderWater() {
         return true;
     }
 
@@ -442,7 +443,7 @@ public class EntityHippocampus extends TamableAnimal implements ISyncMount, IAni
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-        if (this.isAlive() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && itemHandler != null)
+        if (this.isAlive() && capability == ForgeCapabilities.ITEM_HANDLER && itemHandler != null)
             return itemHandler.cast();
         return super.getCapability(capability, facing);
     }
@@ -691,7 +692,7 @@ public class EntityHippocampus extends TamableAnimal implements ISyncMount, IAni
 
     public void openInventory(Player player) {
         if (!this.level.isClientSide)
-            NetworkHooks.openGui((ServerPlayer) player, getMenuProvider());
+            NetworkHooks.openScreen((ServerPlayer) player, getMenuProvider());
         IceAndFire.PROXY.setReferencedMob(this);
     }
 
@@ -726,19 +727,19 @@ public class EntityHippocampus extends TamableAnimal implements ISyncMount, IAni
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.HIPPOCAMPUS_IDLE;
+        return IafSoundRegistry.HIPPOCAMPUS_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return IafSoundRegistry.HIPPOCAMPUS_HURT;
+        return IafSoundRegistry.HIPPOCAMPUS_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.HIPPOCAMPUS_DIE;
+        return IafSoundRegistry.HIPPOCAMPUS_DIE.get();
     }
 
     @Override
@@ -756,10 +757,11 @@ public class EntityHippocampus extends TamableAnimal implements ISyncMount, IAni
         return false;
     }
 
-    @Override
-    public boolean canBeControlledByRider() {
-        return true;
-    }
+    // TODO canBeControlledByRider
+    // @Override
+    // public boolean canBeControlledByRider() {
+    //     return true;
+    // }
 
     @Nullable
     public Player getRidingPlayer() {

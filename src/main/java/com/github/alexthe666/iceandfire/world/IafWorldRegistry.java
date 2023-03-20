@@ -9,8 +9,8 @@ import com.github.alexthe666.iceandfire.world.feature.*;
 import com.github.alexthe666.iceandfire.world.gen.*;
 import com.github.alexthe666.iceandfire.world.structure.DreadMausoleumStructure;
 import com.github.alexthe666.iceandfire.world.structure.DummyPiece;
-import com.github.alexthe666.iceandfire.world.structure.GorgonTempleStructure;
-import com.github.alexthe666.iceandfire.world.structure.GraveyardStructure;
+// import com.github.alexthe666.iceandfire.world.structure.GorgonTempleStructure;
+// import com.github.alexthe666.iceandfire.world.structure.GraveyardStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -30,17 +30,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+// import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
+// import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType.StructureTemplateType;
-import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
-import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
+// import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
+// import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.registries.DeferredRegister;
@@ -50,12 +50,12 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+// import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
+// import java.util.stream.IntStream;
 
 import static com.github.alexthe666.iceandfire.block.IafBlockRegistry.*;
 import static net.minecraft.world.level.block.Blocks.STONE;
@@ -66,8 +66,8 @@ public class IafWorldRegistry {
 
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES,
             IceAndFire.MODID);
-    public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister
-            .create(ForgeRegistries.STRUCTURE_FEATURES, IceAndFire.MODID);
+    // public static final DeferredRegister<StructureType<?>> STRUCTURES = DeferredRegister
+    //         .create(ForgeRegistries.STRUCTURE_FEATURES, IceAndFire.MODID);
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> FIRE_DRAGON_ROOST;
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ICE_DRAGON_ROOST;
@@ -102,9 +102,9 @@ public class IafWorldRegistry {
     //        IceAndFire.MODID
     //);
 
-    public static final RegistryObject<StructureFeature<JigsawConfiguration>> GORGON_TEMPLE = STRUCTURES.register("gorgon_temple", GorgonTempleStructure::new);
-    public static final RegistryObject<StructureFeature<JigsawConfiguration>> MAUSOLEUM = STRUCTURES.register("mausoleum", DreadMausoleumStructure::new);
-    public static final RegistryObject<StructureFeature<JigsawConfiguration>> GRAVEYARD = STRUCTURES.register("graveyard", GraveyardStructure::new);
+    // public static final RegistryObject<StructureFeature<JigsawConfiguration>> GORGON_TEMPLE = STRUCTURES.register("gorgon_temple", GorgonTempleStructure::new);
+    // public static final RegistryObject<StructureFeature<JigsawConfiguration>> MAUSOLEUM = STRUCTURES.register("mausoleum", DreadMausoleumStructure::new);
+    // public static final RegistryObject<StructureFeature<JigsawConfiguration>> GRAVEYARD = STRUCTURES.register("graveyard", GraveyardStructure::new);
 
     public static final TagKey<Biome> HAS_GORGON_TEMPLE = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(IceAndFire.MODID, "has_structure/gorgon_temple"));
     public static final TagKey<Biome> HAS_MAUSOLEUM = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(IceAndFire.MODID, "has_structure/mausoleum"));
@@ -141,9 +141,9 @@ public class IafWorldRegistry {
     public static Holder<PlacedFeature> SPAWN_SEA_SERPENT_CF;
     public static Holder<PlacedFeature> SPAWN_STYMPHALIAN_BIRD_CF;
     public static Holder<PlacedFeature> SPAWN_WANDERING_CYCLOPS_CF;
-    public static Holder<ConfiguredStructureFeature<?, ?>> GORGON_TEMPLE_CF;
-    public static Holder<ConfiguredStructureFeature<?, ?>> MAUSOLEUM_CF;
-    public static Holder<ConfiguredStructureFeature<?, ?>> GRAVEYARD_CF;
+    // public static Holder<ConfiguredStructureFeature<?, ?>> GORGON_TEMPLE_CF;
+    // public static Holder<ConfiguredStructureFeature<?, ?>> MAUSOLEUM_CF;
+    // public static Holder<ConfiguredStructureFeature<?, ?>> GRAVEYARD_CF;
 
     static {
         FIRE_DRAGON_ROOST = register("fire_dragon_roost", () -> new WorldGenFireDragonRoosts(NoneFeatureConfiguration.CODEC));
@@ -165,11 +165,11 @@ public class IafWorldRegistry {
 
         SPAWN_DEATH_WORM = register("spawn_death_worm", () -> new SpawnDeathWorm(NoneFeatureConfiguration.CODEC));
         SPAWN_DRAGON_SKELETON_L = register("spawn_dragon_skeleton_l",
-                () -> new SpawnDragonSkeleton(IafEntityRegistry.LIGHTNING_DRAGON.get(), NoneFeatureConfiguration.CODEC));
+                () -> new SpawnDragonSkeleton(() -> IafEntityRegistry.LIGHTNING_DRAGON.get(), NoneFeatureConfiguration.CODEC));
         SPAWN_DRAGON_SKELETON_F = register("spawn_dragon_skeleton_f",
-                () -> new SpawnDragonSkeleton(IafEntityRegistry.FIRE_DRAGON.get(), NoneFeatureConfiguration.CODEC));
+                () -> new SpawnDragonSkeleton(() -> IafEntityRegistry.FIRE_DRAGON.get(), NoneFeatureConfiguration.CODEC));
         SPAWN_DRAGON_SKELETON_I = register("spawn_dragon_skeleton_i",
-                () -> new SpawnDragonSkeleton(IafEntityRegistry.ICE_DRAGON.get(), NoneFeatureConfiguration.CODEC));
+                () -> new SpawnDragonSkeleton(() -> IafEntityRegistry.ICE_DRAGON.get(), NoneFeatureConfiguration.CODEC));
         SPAWN_HIPPOCAMPUS = register("spawn_hippocampus", () -> new SpawnHippocampus(NoneFeatureConfiguration.CODEC));
         SPAWN_SEA_SERPENT = register("spawn_sea_serpent", () -> new SpawnSeaSerpent(NoneFeatureConfiguration.CODEC));
         SPAWN_STYMPHALIAN_BIRD = register("spawn_stymphalian_bird",
@@ -228,7 +228,7 @@ public class IafWorldRegistry {
         );
 
         AMETHYST_ORE_CF = register("%s:amethyst_ore".formatted(IceAndFire.MODID),
-                new ConfiguredFeature<>(Feature.REPLACE_SINGLE_BLOCK, new ReplaceBlockConfiguration(STONE.defaultBlockState(), AMYTHEST_ORE.get().defaultBlockState())),
+                new ConfiguredFeature<>(Feature.REPLACE_SINGLE_BLOCK, new ReplaceBlockConfiguration(STONE.defaultBlockState(), AMETHYST_ORE.get().defaultBlockState())),
                 CountPlacement.of(UniformInt.of(3, 8))
         );
 
@@ -273,40 +273,40 @@ public class IafWorldRegistry {
 
     }
 
-    public static void registerStructureSet(Holder<ConfiguredStructureFeature<?, ?>> structure, String name, int spacing, int separation, int seed) {
-        BuiltinRegistries.register(BuiltinRegistries.STRUCTURE_SETS, new ResourceLocation(IceAndFire.MODID, name), new StructureSet(structure, new RandomSpreadStructurePlacement(spacing, separation, RandomSpreadType.LINEAR, seed)));
-        //BuiltinRegistries.register(
-        //        BuiltinRegistries.STRUCTURE_SETS,
-        //        ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation("%s/%s".formatted(IceAndFire.MODID, name))),
-        //        new StructureSet(structure,
-        //                new RandomSpreadStructurePlacement(spacing, separation, RandomSpreadType.LINEAR, seed)));
-    }
+    // public static void registerStructureSet(Holder<ConfiguredStructureFeature<?, ?>> structure, String name, int spacing, int separation, int seed) {
+    //     BuiltinRegistries.register(BuiltinRegistries.STRUCTURE_SETS, new ResourceLocation(IceAndFire.MODID, name), new StructureSet(structure, new RandomSpreadStructurePlacement(spacing, separation, RandomSpreadType.LINEAR, seed)));
+    //     //BuiltinRegistries.register(
+    //     //        BuiltinRegistries.STRUCTURE_SETS,
+    //     //        ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation("%s/%s".formatted(IceAndFire.MODID, name))),
+    //     //        new StructureSet(structure,
+    //     //                new RandomSpreadStructurePlacement(spacing, separation, RandomSpreadType.LINEAR, seed)));
+    // }
 
-    public static Holder<ConfiguredStructureFeature<?, ?>> registerConfiguredStructureFeature(String name, RegistryObject<StructureFeature<JigsawConfiguration>> structure, TagKey<Biome> biomeTag) {
-        // Placeholder pools since we haven't loaded our own json files at this stage
-        var DUMMY_CONFIG = new JigsawConfiguration(PlainVillagePools.START, 0);
-        return BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, "%s:%s".formatted(IceAndFire.MODID, name), structure.get().configured(DUMMY_CONFIG, biomeTag, false));
-    }
+    // public static Holder<ConfiguredStructureFeature<?, ?>> registerConfiguredStructureFeature(String name, RegistryObject<StructureFeature<JigsawConfiguration>> structure, TagKey<Biome> biomeTag) {
+    //     // Placeholder pools since we haven't loaded our own json files at this stage
+    //     var DUMMY_CONFIG = new JigsawConfiguration(PlainVillagePools.START, 0);
+    //     return BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, "%s:%s".formatted(IceAndFire.MODID, name), structure.get().configured(DUMMY_CONFIG, biomeTag, false));
+    // }
 
-    public static void registerStructureConfiguredFeatures()
-    {
+    // public static void registerStructureConfiguredFeatures()
+    // {
 
-        GORGON_TEMPLE_CF = registerConfiguredStructureFeature("gorgon_temple", GORGON_TEMPLE, HAS_GORGON_TEMPLE);
-        MAUSOLEUM_CF = registerConfiguredStructureFeature("mausoleum", MAUSOLEUM, HAS_MAUSOLEUM);
-        GRAVEYARD_CF = registerConfiguredStructureFeature("graveyard", GRAVEYARD, HAS_GRAVEYARD);
+    //     GORGON_TEMPLE_CF = registerConfiguredStructureFeature("gorgon_temple", GORGON_TEMPLE, HAS_GORGON_TEMPLE);
+    //     MAUSOLEUM_CF = registerConfiguredStructureFeature("mausoleum", MAUSOLEUM, HAS_MAUSOLEUM);
+    //     GRAVEYARD_CF = registerConfiguredStructureFeature("graveyard", GRAVEYARD, HAS_GRAVEYARD);
 
-        int average = (int) Math.ceil(IntStream.of(IafConfig.spawnGorgonsChance, IafConfig.generateMausoleumChance, IafConfig.generateGraveyardChance * 3).average().getAsDouble());
+    //     int average = (int) Math.ceil(IntStream.of(IafConfig.spawnGorgonsChance, IafConfig.generateMausoleumChance, IafConfig.generateGraveyardChance * 3).average().getAsDouble());
 
-        StructureSet structures = new StructureSet(
-                List.of(
-                        new StructureSet.StructureSelectionEntry(GRAVEYARD_CF, IafConfig.generateGraveyardChance * 3),
-                        new StructureSet.StructureSelectionEntry(MAUSOLEUM_CF, IafConfig.generateMausoleumChance),
-                        new StructureSet.StructureSelectionEntry(GORGON_TEMPLE_CF, IafConfig.spawnGorgonsChance)
-                ),
-                new RandomSpreadStructurePlacement(Math.max(average, 2), Math.max(average / 2, 1), RandomSpreadType.LINEAR, 342226450));
+    //     StructureSet structures = new StructureSet(
+    //             List.of(
+    //                     new StructureSet.StructureSelectionEntry(GRAVEYARD_CF, IafConfig.generateGraveyardChance * 3),
+    //                     new StructureSet.StructureSelectionEntry(MAUSOLEUM_CF, IafConfig.generateMausoleumChance),
+    //                     new StructureSet.StructureSelectionEntry(GORGON_TEMPLE_CF, IafConfig.spawnGorgonsChance)
+    //             ),
+    //             new RandomSpreadStructurePlacement(Math.max(average, 2), Math.max(average / 2, 1), RandomSpreadType.LINEAR, 342226450));
 
-        BuiltinRegistries.register(BuiltinRegistries.STRUCTURE_SETS, new ResourceLocation(IceAndFire.MODID, "structures"), structures);
-    }
+    //     BuiltinRegistries.register(BuiltinRegistries.STRUCTURE_SETS, new ResourceLocation(IceAndFire.MODID, "structures"), structures);
+    // }
 
 
     public static boolean isFarEnoughFromSpawn(LevelAccessor world, BlockPos pos) {

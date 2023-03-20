@@ -1,3 +1,4 @@
 {
-  "parent": "iceandfire:block/jar"
+  "parent": "iceandfire:block/jar",
+  "render_type": "cutout"
 }

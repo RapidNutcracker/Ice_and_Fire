@@ -80,7 +80,7 @@ public class EntityMyrmexWorker extends EntityMyrmexBase {
     }
 
     @Override
-    protected int getExperienceReward(Player player) {
+    public int getExperienceReward() {
         return 3;
     }
 

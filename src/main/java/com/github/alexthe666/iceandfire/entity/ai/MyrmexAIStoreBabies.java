@@ -9,6 +9,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIStoreBabies extends Goal {
     private final EntityMyrmexWorker myrmex;
     private BlockPos nextRoom = BlockPos.ZERO;

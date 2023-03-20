@@ -58,6 +58,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityDeathWorm extends TamableAnimal implements ISyncMount, ICustomCollisions, IBlacklistedFromStatues, IAnimatedEntity, IVillagerFear, IAnimalFear, IGroundMount, IHasCustomizableAttributes, ICustomMoveController {
 
     public static final ResourceLocation TAN_LOOT = new ResourceLocation("iceandfire", "entities/deathworm_tan");
@@ -183,7 +185,7 @@ public class EntityDeathWorm extends TamableAnimal implements ISyncMount, ICusto
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return this.getScale() > 3 ? 20 : 10;
     }
 
@@ -226,7 +228,7 @@ public class EntityDeathWorm extends TamableAnimal implements ISyncMount, ICusto
     public boolean doHurtTarget(@NotNull Entity entityIn) {
         if (this.getAnimation() != ANIMATION_BITE) {
             this.setAnimation(ANIMATION_BITE);
-            this.playSound(this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_ATTACK : IafSoundRegistry.DEATHWORM_ATTACK, 1, 1);
+            this.playSound(this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_ATTACK.get() : IafSoundRegistry.DEATHWORM_ATTACK.get(), 1, 1);
         }
         if (this.getRandom().nextInt(3) == 0 && this.getScale() > 1 && this.level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             if (!MinecraftForge.EVENT_BUS.post(new GenericGriefEvent(this, entityIn.getX(), entityIn.getY(), entityIn.getZ()))) {
@@ -504,10 +506,12 @@ public class EntityDeathWorm extends TamableAnimal implements ISyncMount, ICusto
     }
 
     @Override
-    public void killed(@NotNull ServerLevel world, @NotNull LivingEntity entity) {
+    public boolean wasKilled(@NotNull ServerLevel world, @NotNull LivingEntity entity) {
         if (this.isTame()) {
             this.heal(14);
         }
+
+        return super.wasKilled(world, entity);
     }
 
     @Override
@@ -634,20 +638,20 @@ public class EntityDeathWorm extends TamableAnimal implements ISyncMount, ICusto
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_IDLE : IafSoundRegistry.DEATHWORM_IDLE;
+        return this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_IDLE.get() : IafSoundRegistry.DEATHWORM_IDLE.get();
     }
 
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_HURT : IafSoundRegistry.DEATHWORM_HURT;
+        return this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_HURT.get() : IafSoundRegistry.DEATHWORM_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_DIE : IafSoundRegistry.DEATHWORM_DIE;
+        return this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_DIE.get() : IafSoundRegistry.DEATHWORM_DIE.get();
     }
 
     @Override
@@ -659,7 +663,7 @@ public class EntityDeathWorm extends TamableAnimal implements ISyncMount, ICusto
             LivingEntity target = DragonUtils.riderLookingAtEntity(this, (Player) this.getControllingPassenger(), 3);
             if (this.getAnimation() != ANIMATION_BITE) {
                 this.setAnimation(ANIMATION_BITE);
-                this.playSound(this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_ATTACK : IafSoundRegistry.DEATHWORM_ATTACK, 1, 1);
+                this.playSound(this.getScale() > 3 ? IafSoundRegistry.DEATHWORM_GIANT_ATTACK.get() : IafSoundRegistry.DEATHWORM_ATTACK.get(), 1, 1);
                 if (this.getRandom().nextInt(3) == 0 && this.getScale() > 1) {
                     float radius = 1.5F * this.getScale();
                     float angle = (0.01745329251F * this.yBodyRot);
@@ -796,10 +800,11 @@ public class EntityDeathWorm extends TamableAnimal implements ISyncMount, ICusto
         return false;
     }
 
-    @Override
-    public boolean canBeControlledByRider() {
-        return true;
-    }
+    // TODO canBeControlledByRider
+    // @Override
+    // public boolean canBeControlledByRider() {
+    //     return true;
+    // }
 
     @Override
     public void travel(@NotNull Vec3 vec) {

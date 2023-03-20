@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -11,8 +12,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 
 public class BlockReturningState extends Block {
     public static final BooleanProperty REVERTS = BooleanProperty.create("revert");
@@ -40,7 +39,7 @@ public class BlockReturningState extends Block {
     }
 
     @Override
-    public void tick(@NotNull BlockState state, ServerLevel worldIn, @NotNull BlockPos pos, @NotNull Random rand) {
+    public void tick(@NotNull BlockState state, ServerLevel worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         if (!worldIn.isClientSide) {
             if (!worldIn.isAreaLoaded(pos, 3))
                 return;

@@ -255,7 +255,7 @@ public class EntityDreadGhoul extends EntityDreadMob implements IAnimatedEntity,
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.DREAD_GHOUL_IDLE;
+        return IafSoundRegistry.DREAD_GHOUL_IDLE.get();
     }
 
     @Override

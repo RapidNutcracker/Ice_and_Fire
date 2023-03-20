@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.entity.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.material.Material;
@@ -20,7 +21,7 @@ public class DragonPositionGenerator {
     @Nullable
     public static Vec3 generateRandomPos(Mob mob, int xz, int y, @Nullable Vec3 vec, boolean skipWater) {
         PathNavigation pathnavigate = mob.getNavigation();
-        Random random = mob.getRandom();
+        RandomSource random = mob.getRandom();
         boolean flag;
 
         if (mob.hasRestriction()) {

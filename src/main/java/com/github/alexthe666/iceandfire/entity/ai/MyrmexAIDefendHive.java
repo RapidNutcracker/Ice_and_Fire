@@ -8,6 +8,8 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIDefendHive extends TargetGoal {
     EntityMyrmexBase myrmex;
     LivingEntity villageAgressorTarget;

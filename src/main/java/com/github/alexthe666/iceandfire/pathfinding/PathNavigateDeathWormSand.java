@@ -19,6 +19,9 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.level.ClipContext.Block;
+import net.minecraft.world.level.ClipContext.Fluid;
+
 public class PathNavigateDeathWormSand extends WaterBoundPathNavigation {
     private final EntityDeathWorm worm;
 

@@ -23,7 +23,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -32,6 +32,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -118,7 +119,7 @@ public abstract class EntityMyrmexBase extends Animal implements IAnimatedEntity
         return blockState.is(BlockTags.create(IafTagRegistry.MYRMEX_HARVESTABLES));
     }
 
-    public static int getRandomCaste(Level world, Random random, boolean royal) {
+    public static int getRandomCaste(Level world, RandomSource random, boolean royal) {
         float rand = random.nextFloat();
         if (royal) {
             if (rand > 0.9) {
@@ -175,7 +176,7 @@ public abstract class EntityMyrmexBase extends Animal implements IAnimatedEntity
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return (this.getCasteImportance() * 7) + this.level.random.nextInt(3);
     }
 
@@ -505,19 +506,19 @@ public abstract class EntityMyrmexBase extends Animal implements IAnimatedEntity
             }
         }
         if (this.getHive() == null) {
-            player.displayClientMessage(new TranslatableComponent("myrmex.message.null_hive"), true);
+            player.displayClientMessage(Component.translatable("myrmex.message.null_hive"), true);
 
         } else {
             if (staffUUID != null && staffUUID.equals(this.getHive().hiveUUID)) {
-                player.displayClientMessage(new TranslatableComponent("myrmex.message.staff_already_set"), true);
+                player.displayClientMessage(Component.translatable("myrmex.message.staff_already_set"), true);
             } else {
                 this.getHive().setWorld(this.level);
                 EntityMyrmexQueen queen = this.getHive().getQueen();
                 BlockPos center = this.getHive().getCenterGround();
                 if (queen != null && queen.hasCustomName()) {
-                    player.displayClientMessage(new TranslatableComponent("myrmex.message.staff_set_named", queen.getName(), center.getX(), center.getY(), center.getZ()), true);
+                    player.displayClientMessage(Component.translatable("myrmex.message.staff_set_named", queen.getName(), center.getX(), center.getY(), center.getZ()), true);
                 } else {
-                    player.displayClientMessage(new TranslatableComponent("myrmex.message.staff_set_unnamed", center.getX(), center.getY(), center.getZ()), true);
+                    player.displayClientMessage(Component.translatable("myrmex.message.staff_set_unnamed", center.getX(), center.getY(), center.getZ()), true);
                 }
                 itemstack.getTag().putUUID("HiveUUID", this.getHive().hiveUUID);
             }
@@ -657,31 +658,31 @@ public abstract class EntityMyrmexBase extends Animal implements IAnimatedEntity
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.MYRMEX_IDLE;
+        return IafSoundRegistry.MYRMEX_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return IafSoundRegistry.MYRMEX_HURT;
+        return IafSoundRegistry.MYRMEX_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.MYRMEX_DIE;
+        return IafSoundRegistry.MYRMEX_DIE.get();
     }
 
     protected void playStepSound(BlockPos pos, Block blockIn) {
-        this.playSound(IafSoundRegistry.MYRMEX_WALK, 0.16F * this.getMyrmexPitch() * (this.getRandom().nextFloat() * 0.6F + 0.4F), 1.0F);
+        this.playSound(IafSoundRegistry.MYRMEX_WALK.get(), 0.16F * this.getMyrmexPitch() * (this.getRandom().nextFloat() * 0.6F + 0.4F), 1.0F);
     }
 
     protected void playBiteSound() {
-        this.playSound(IafSoundRegistry.MYRMEX_BITE, this.getMyrmexPitch(), 1.0F);
+        this.playSound(IafSoundRegistry.MYRMEX_BITE.get(), this.getMyrmexPitch(), 1.0F);
     }
 
     protected void playStingSound() {
-        this.playSound(IafSoundRegistry.MYRMEX_STING, this.getMyrmexPitch(), 0.6F);
+        this.playSound(IafSoundRegistry.MYRMEX_STING.get(), this.getMyrmexPitch(), 0.6F);
     }
 
     protected void playVillagerEffect() {
@@ -778,11 +779,11 @@ public abstract class EntityMyrmexBase extends Animal implements IAnimatedEntity
 
     @Override
     public @NotNull SoundEvent getNotifyTradeSound() {
-        return IafSoundRegistry.MYRMEX_IDLE;
+        return IafSoundRegistry.MYRMEX_IDLE.get();
     }
 
     protected SoundEvent getVillagerYesNoSound(boolean getYesSound) {
-        return IafSoundRegistry.MYRMEX_IDLE;
+        return IafSoundRegistry.MYRMEX_IDLE.get();
     }
 
     public void playCelebrateSound() {

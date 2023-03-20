@@ -6,6 +6,8 @@ import com.github.alexthe666.iceandfire.item.*;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
@@ -25,7 +27,7 @@ public class CustomizeToDragon extends LootItemConditionalFunction {
     @Override
     protected @NotNull ItemStack run(ItemStack stack, @NotNull LootContext context) {
         if (!stack.isEmpty() && context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof EntityDragonBase) {
-            Random random = new Random();
+            RandomSource random = context.getRandom();
             EntityDragonBase dragon = (EntityDragonBase) context.getParamOrNull(LootContextParams.THIS_ENTITY);
             if (dragon == null) {
                 return stack;
@@ -68,7 +70,7 @@ public class CustomizeToDragon extends LootItemConditionalFunction {
 
     @Override
     public @NotNull LootItemFunctionType getType() {
-        return IafLootRegistry.CUSTOMIZE_TO_DRAGON;
+        return IafLootRegistry.CUSTOMIZE_TO_DRAGON.get();
     }
 
 

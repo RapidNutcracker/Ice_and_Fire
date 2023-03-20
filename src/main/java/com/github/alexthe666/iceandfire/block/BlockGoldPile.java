@@ -15,6 +15,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -26,6 +27,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+import com.github.alexthe666.iceandfire.misc.IafSoundRegistry;
+
 import javax.annotation.Nullable;
 
 public class BlockGoldPile extends Block {
@@ -33,13 +36,15 @@ public class BlockGoldPile extends Block {
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{Shapes.empty(), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
     public Item itemBlock;
 
+    public static final SoundType SOUND_TYPE_GOLD = new SoundType(1.0F, 1.0F, IafSoundRegistry.GOLD_PILE_BREAK.get(), IafSoundRegistry.GOLD_PILE_STEP.get(), IafSoundRegistry.GOLD_PILE_BREAK.get(), IafSoundRegistry.GOLD_PILE_STEP.get(), IafSoundRegistry.GOLD_PILE_STEP.get());
+
     public BlockGoldPile() {
         super(
             Properties
                 .of(Material.DIRT)
                 .strength(0.3F, 1)
                 .randomTicks()
-                .sound(IafBlockRegistry.SOUND_TYPE_GOLD)
+                .sound(SOUND_TYPE_GOLD)
         );
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LAYERS, 1));

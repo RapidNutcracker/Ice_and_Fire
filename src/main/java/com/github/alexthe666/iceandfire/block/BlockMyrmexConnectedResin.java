@@ -15,6 +15,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockMyrmexConnectedResin extends HalfTransparentBlock {
 
     public static final BooleanProperty UP = BooleanProperty.create("up");

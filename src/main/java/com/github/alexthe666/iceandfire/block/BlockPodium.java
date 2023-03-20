@@ -22,6 +22,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockPodium extends BaseEntityBlock {
 
     protected static final VoxelShape AABB = Block.box(2, 0, 2, 14, 23, 14);

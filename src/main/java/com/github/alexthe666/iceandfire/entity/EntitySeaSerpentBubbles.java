@@ -20,6 +20,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntitySeaSerpentBubbles extends Fireball implements IDragonProjectile {
 
     public EntitySeaSerpentBubbles(EntityType<? extends Fireball> t, Level worldIn) {

@@ -9,7 +9,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 
 public enum EnumDragonTextures {
     VARIANT1("red_", "blue_", "electric_"),
-    VARIANT2("green_", "white_", "amythest_"),
+    VARIANT2("green_", "white_", "amethyst_"),
     VARIANT3("bronze_", "sapphire_", "copper_"),
     VARIANT4("gray_", "silver_", "black_");
 
@@ -144,7 +144,6 @@ public enum EnumDragonTextures {
         LIGHTNINGSTAGE4SKELETONTEXTURE = new ResourceLocation("iceandfire:textures/models/lightningdragon/lightning_skeleton_4.png");
         LIGHTNINGSTAGE5SKELETONTEXTURE = new ResourceLocation("iceandfire:textures/models/lightningdragon/lightning_skeleton_5.png");
         LIGHTNING_MALE_OVERLAY = new ResourceLocation("iceandfire:textures/models/lightningdragon/male_" + lightningVariant.substring(0, lightningVariant.length() - 1) + ".png");
-
     }
 
 
@@ -162,50 +161,32 @@ public enum EnumDragonTextures {
     public static ResourceLocation getEyeTextureFromDragon(EntityDragonBase dragon) {
         EnumDragonTextures textures = getDragonEnum(dragon);
         if (dragon instanceof EntityIceDragon) {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.ICESTAGE1EYESTEXTURE;
-                case 2:
-                    return textures.ICESTAGE2EYESTEXTURE;
-                case 3:
-                    return textures.ICESTAGE3EYESTEXTURE;
-                case 4:
-                    return textures.ICESTAGE4EYESTEXTURE;
-                case 5:
-                    return textures.ICESTAGE5EYESTEXTURE;
-                default:
-                    return textures.ICESTAGE4EYESTEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.ICESTAGE1EYESTEXTURE;
+                case 2 -> textures.ICESTAGE2EYESTEXTURE;
+                case 3 -> textures.ICESTAGE3EYESTEXTURE;
+                case 4 -> textures.ICESTAGE4EYESTEXTURE;
+                case 5 -> textures.ICESTAGE5EYESTEXTURE;
+                default -> textures.ICESTAGE4EYESTEXTURE;
+            };
         } else if (dragon instanceof EntityLightningDragon) {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.LIGHTNINGSTAGE1EYESTEXTURE;
-                case 2:
-                    return textures.LIGHTNINGSTAGE2EYESTEXTURE;
-                case 3:
-                    return textures.LIGHTNINGSTAGE3EYESTEXTURE;
-                case 4:
-                    return textures.LIGHTNINGSTAGE4EYESTEXTURE;
-                case 5:
-                    return textures.LIGHTNINGSTAGE5EYESTEXTURE;
-                default:
-                    return textures.LIGHTNINGSTAGE4EYESTEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.LIGHTNINGSTAGE1EYESTEXTURE;
+                case 2 -> textures.LIGHTNINGSTAGE2EYESTEXTURE;
+                case 3 -> textures.LIGHTNINGSTAGE3EYESTEXTURE;
+                case 4 -> textures.LIGHTNINGSTAGE4EYESTEXTURE;
+                case 5 -> textures.LIGHTNINGSTAGE5EYESTEXTURE;
+                default -> textures.LIGHTNINGSTAGE4EYESTEXTURE;
+            };
         } else {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.FIRESTAGE1EYESTEXTURE;
-                case 2:
-                    return textures.FIRESTAGE2EYESTEXTURE;
-                case 3:
-                    return textures.FIRESTAGE3EYESTEXTURE;
-                case 4:
-                    return textures.FIRESTAGE4EYESTEXTURE;
-                case 5:
-                    return textures.FIRESTAGE5EYESTEXTURE;
-                default:
-                    return textures.FIRESTAGE4EYESTEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.FIRESTAGE1EYESTEXTURE;
+                case 2 -> textures.FIRESTAGE2EYESTEXTURE;
+                case 3 -> textures.FIRESTAGE3EYESTEXTURE;
+                case 4 -> textures.FIRESTAGE4EYESTEXTURE;
+                case 5 -> textures.FIRESTAGE5EYESTEXTURE;
+                default -> textures.FIRESTAGE4EYESTEXTURE;
+            };
         }
     }
 
@@ -213,67 +194,43 @@ public enum EnumDragonTextures {
         EnumDragonTextures textures = getDragonEnum(dragon);
         if (dragon.isModelDead()) {
             if (dragon.getDeathStage() >= (dragon.getAgeInDays() / 5) / 2) {
-                switch (dragon.getDragonStage()) {
-                    case 1:
-                        return textures.FIRESTAGE1SKELETONTEXTURE;
-                    case 2:
-                        return textures.FIRESTAGE2SKELETONTEXTURE;
-                    case 3:
-                        return textures.FIRESTAGE3SKELETONTEXTURE;
-                    case 4:
-                        return textures.FIRESTAGE4SKELETONTEXTURE;
-                    case 5:
-                        return textures.FIRESTAGE5SKELETONTEXTURE;
-                    default:
-                        return textures.FIRESTAGE4SKELETONTEXTURE;
-                }
+                return switch (dragon.getDragonStage()) {
+                    case 1 -> textures.FIRESTAGE1SKELETONTEXTURE;
+                    case 2 -> textures.FIRESTAGE2SKELETONTEXTURE;
+                    case 3 -> textures.FIRESTAGE3SKELETONTEXTURE;
+                    case 4 -> textures.FIRESTAGE4SKELETONTEXTURE;
+                    case 5 -> textures.FIRESTAGE5SKELETONTEXTURE;
+                    default -> textures.FIRESTAGE4SKELETONTEXTURE;
+                };
             } else {
-                switch (dragon.getDragonStage()) {
-                    case 1:
-                        return textures.FIRESTAGE1SLEEPINGTEXTURE;
-                    case 2:
-                        return textures.FIRESTAGE2SLEEPINGTEXTURE;
-                    case 3:
-                        return textures.FIRESTAGE3SLEEPINGTEXTURE;
-                    case 4:
-                        return textures.FIRESTAGE4SLEEPINGTEXTURE;
-                    case 5:
-                        return textures.FIRESTAGE5SLEEPINGTEXTURE;
-                    default:
-                        return textures.FIRESTAGE4SLEEPINGTEXTURE;
-                }
+                return switch (dragon.getDragonStage()) {
+                    case 1 -> textures.FIRESTAGE1SLEEPINGTEXTURE;
+                    case 2 -> textures.FIRESTAGE2SLEEPINGTEXTURE;
+                    case 3 -> textures.FIRESTAGE3SLEEPINGTEXTURE;
+                    case 4 -> textures.FIRESTAGE4SLEEPINGTEXTURE;
+                    case 5 -> textures.FIRESTAGE5SLEEPINGTEXTURE;
+                    default -> textures.FIRESTAGE4SLEEPINGTEXTURE;
+                };
             }
         }
         if (dragon.isSleeping() || dragon.isBlinking()) {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.FIRESTAGE1SLEEPINGTEXTURE;
-                case 2:
-                    return textures.FIRESTAGE2SLEEPINGTEXTURE;
-                case 3:
-                    return textures.FIRESTAGE3SLEEPINGTEXTURE;
-                case 4:
-                    return textures.FIRESTAGE4SLEEPINGTEXTURE;
-                case 5:
-                    return textures.FIRESTAGE5SLEEPINGTEXTURE;
-                default:
-                    return textures.FIRESTAGE4SLEEPINGTEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.FIRESTAGE1SLEEPINGTEXTURE;
+                case 2 -> textures.FIRESTAGE2SLEEPINGTEXTURE;
+                case 3 -> textures.FIRESTAGE3SLEEPINGTEXTURE;
+                case 4 -> textures.FIRESTAGE4SLEEPINGTEXTURE;
+                case 5 -> textures.FIRESTAGE5SLEEPINGTEXTURE;
+                default -> textures.FIRESTAGE4SLEEPINGTEXTURE;
+            };
         } else {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.FIRESTAGE1TEXTURE;
-                case 2:
-                    return textures.FIRESTAGE2TEXTURE;
-                case 3:
-                    return textures.FIRESTAGE3TEXTURE;
-                case 4:
-                    return textures.FIRESTAGE4TEXTURE;
-                case 5:
-                    return textures.FIRESTAGE5TEXTURE;
-                default:
-                    return textures.FIRESTAGE4TEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.FIRESTAGE1TEXTURE;
+                case 2 -> textures.FIRESTAGE2TEXTURE;
+                case 3 -> textures.FIRESTAGE3TEXTURE;
+                case 4 -> textures.FIRESTAGE4TEXTURE;
+                case 5 -> textures.FIRESTAGE5TEXTURE;
+                default -> textures.FIRESTAGE4TEXTURE;
+            };
         }
     }
 
@@ -281,67 +238,43 @@ public enum EnumDragonTextures {
         EnumDragonTextures textures = getDragonEnum(dragon);
         if (dragon.isModelDead()) {
             if (dragon.getDeathStage() >= (dragon.getAgeInDays() / 5) / 2) {
-                switch (dragon.getDragonStage()) {
-                    case 1:
-                        return textures.ICESTAGE1SKELETONTEXTURE;
-                    case 2:
-                        return textures.ICESTAGE2SKELETONTEXTURE;
-                    case 3:
-                        return textures.ICESTAGE3SKELETONTEXTURE;
-                    case 4:
-                        return textures.ICESTAGE4SKELETONTEXTURE;
-                    case 5:
-                        return textures.ICESTAGE5SKELETONTEXTURE;
-                    default:
-                        return textures.ICESTAGE4SKELETONTEXTURE;
-                }
+                return switch (dragon.getDragonStage()) {
+                    case 1 -> textures.ICESTAGE1SKELETONTEXTURE;
+                    case 2 -> textures.ICESTAGE2SKELETONTEXTURE;
+                    case 3 -> textures.ICESTAGE3SKELETONTEXTURE;
+                    case 4 -> textures.ICESTAGE4SKELETONTEXTURE;
+                    case 5 -> textures.ICESTAGE5SKELETONTEXTURE;
+                    default -> textures.ICESTAGE4SKELETONTEXTURE;
+                };
             } else {
-                switch (dragon.getDragonStage()) {
-                    case 1:
-                        return textures.ICESTAGE1SLEEPINGTEXTURE;
-                    case 2:
-                        return textures.ICESTAGE2SLEEPINGTEXTURE;
-                    case 3:
-                        return textures.ICESTAGE3SLEEPINGTEXTURE;
-                    case 4:
-                        return textures.ICESTAGE4SLEEPINGTEXTURE;
-                    case 5:
-                        return textures.ICESTAGE5SLEEPINGTEXTURE;
-                    default:
-                        return textures.ICESTAGE4SLEEPINGTEXTURE;
-                }
+                return switch (dragon.getDragonStage()) {
+                    case 1 -> textures.ICESTAGE1SLEEPINGTEXTURE;
+                    case 2 -> textures.ICESTAGE2SLEEPINGTEXTURE;
+                    case 3 -> textures.ICESTAGE3SLEEPINGTEXTURE;
+                    case 4 -> textures.ICESTAGE4SLEEPINGTEXTURE;
+                    case 5 -> textures.ICESTAGE5SLEEPINGTEXTURE;
+                    default -> textures.ICESTAGE4SLEEPINGTEXTURE;
+                };
             }
         }
         if (dragon.isSleeping() || dragon.isBlinking()) {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.ICESTAGE1SLEEPINGTEXTURE;
-                case 2:
-                    return textures.ICESTAGE2SLEEPINGTEXTURE;
-                case 3:
-                    return textures.ICESTAGE3SLEEPINGTEXTURE;
-                case 4:
-                    return textures.ICESTAGE4SLEEPINGTEXTURE;
-                case 5:
-                    return textures.ICESTAGE5SLEEPINGTEXTURE;
-                default:
-                    return textures.ICESTAGE4SLEEPINGTEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.ICESTAGE1SLEEPINGTEXTURE;
+                case 2 -> textures.ICESTAGE2SLEEPINGTEXTURE;
+                case 3 -> textures.ICESTAGE3SLEEPINGTEXTURE;
+                case 4 -> textures.ICESTAGE4SLEEPINGTEXTURE;
+                case 5 -> textures.ICESTAGE5SLEEPINGTEXTURE;
+                default -> textures.ICESTAGE4SLEEPINGTEXTURE;
+            };
         } else {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.ICESTAGE1TEXTURE;
-                case 2:
-                    return textures.ICESTAGE2TEXTURE;
-                case 3:
-                    return textures.ICESTAGE3TEXTURE;
-                case 4:
-                    return textures.ICESTAGE4TEXTURE;
-                case 5:
-                    return textures.ICESTAGE5TEXTURE;
-                default:
-                    return textures.ICESTAGE4TEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.ICESTAGE1TEXTURE;
+                case 2 -> textures.ICESTAGE2TEXTURE;
+                case 3 -> textures.ICESTAGE3TEXTURE;
+                case 4 -> textures.ICESTAGE4TEXTURE;
+                case 5 -> textures.ICESTAGE5TEXTURE;
+                default -> textures.ICESTAGE4TEXTURE;
+            };
         }
     }
 
@@ -349,133 +282,87 @@ public enum EnumDragonTextures {
         EnumDragonTextures textures = getDragonEnum(dragon);
         if (dragon.isModelDead()) {
             if (dragon.getDeathStage() >= (dragon.getAgeInDays() / 5) / 2) {
-                switch (dragon.getDragonStage()) {
-                    case 1:
-                        return textures.LIGHTNINGSTAGE1SKELETONTEXTURE;
-                    case 2:
-                        return textures.LIGHTNINGSTAGE2SKELETONTEXTURE;
-                    case 3:
-                        return textures.LIGHTNINGSTAGE3SKELETONTEXTURE;
-                    case 4:
-                        return textures.LIGHTNINGSTAGE4SKELETONTEXTURE;
-                    case 5:
-                        return textures.LIGHTNINGSTAGE5SKELETONTEXTURE;
-                    default:
-                        return textures.LIGHTNINGSTAGE4SKELETONTEXTURE;
-                }
+                return switch (dragon.getDragonStage()) {
+                    case 1 -> textures.LIGHTNINGSTAGE1SKELETONTEXTURE;
+                    case 2 -> textures.LIGHTNINGSTAGE2SKELETONTEXTURE;
+                    case 3 -> textures.LIGHTNINGSTAGE3SKELETONTEXTURE;
+                    case 4 -> textures.LIGHTNINGSTAGE4SKELETONTEXTURE;
+                    case 5 -> textures.LIGHTNINGSTAGE5SKELETONTEXTURE;
+                    default -> textures.LIGHTNINGSTAGE4SKELETONTEXTURE;
+                };
             } else {
-                switch (dragon.getDragonStage()) {
-                    case 1:
-                        return textures.LIGHTNINGSTAGE1SLEEPINGTEXTURE;
-                    case 2:
-                        return textures.LIGHTNINGSTAGE2SLEEPINGTEXTURE;
-                    case 3:
-                        return textures.LIGHTNINGSTAGE3SLEEPINGTEXTURE;
-                    case 4:
-                        return textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
-                    case 5:
-                        return textures.LIGHTNINGSTAGE5SLEEPINGTEXTURE;
-                    default:
-                        return textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
-                }
+                return switch (dragon.getDragonStage()) {
+                    case 1 -> textures.LIGHTNINGSTAGE1SLEEPINGTEXTURE;
+                    case 2 -> textures.LIGHTNINGSTAGE2SLEEPINGTEXTURE;
+                    case 3 -> textures.LIGHTNINGSTAGE3SLEEPINGTEXTURE;
+                    case 4 -> textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
+                    case 5 -> textures.LIGHTNINGSTAGE5SLEEPINGTEXTURE;
+                    default -> textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
+                };
             }
         }
         if (dragon.isSleeping() || dragon.isBlinking()) {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.LIGHTNINGSTAGE1SLEEPINGTEXTURE;
-                case 2:
-                    return textures.LIGHTNINGSTAGE2SLEEPINGTEXTURE;
-                case 3:
-                    return textures.LIGHTNINGSTAGE3SLEEPINGTEXTURE;
-                case 4:
-                    return textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
-                case 5:
-                    return textures.LIGHTNINGSTAGE5SLEEPINGTEXTURE;
-                default:
-                    return textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.LIGHTNINGSTAGE1SLEEPINGTEXTURE;
+                case 2 -> textures.LIGHTNINGSTAGE2SLEEPINGTEXTURE;
+                case 3 -> textures.LIGHTNINGSTAGE3SLEEPINGTEXTURE;
+                case 4 -> textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
+                case 5 -> textures.LIGHTNINGSTAGE5SLEEPINGTEXTURE;
+                default -> textures.LIGHTNINGSTAGE4SLEEPINGTEXTURE;
+            };
         } else {
-            switch (dragon.getDragonStage()) {
-                case 1:
-                    return textures.LIGHTNINGSTAGE1TEXTURE;
-                case 2:
-                    return textures.LIGHTNINGSTAGE2TEXTURE;
-                case 3:
-                    return textures.LIGHTNINGSTAGE3TEXTURE;
-                case 4:
-                    return textures.LIGHTNINGSTAGE4TEXTURE;
-                case 5:
-                    return textures.LIGHTNINGSTAGE5TEXTURE;
-                default:
-                    return textures.LIGHTNINGSTAGE4TEXTURE;
-            }
+            return switch (dragon.getDragonStage()) {
+                case 1 -> textures.LIGHTNINGSTAGE1TEXTURE;
+                case 2 -> textures.LIGHTNINGSTAGE2TEXTURE;
+                case 3 -> textures.LIGHTNINGSTAGE3TEXTURE;
+                case 4 -> textures.LIGHTNINGSTAGE4TEXTURE;
+                case 5 -> textures.LIGHTNINGSTAGE5TEXTURE;
+                default -> textures.LIGHTNINGSTAGE4TEXTURE;
+            };
         }
     }
 
 
     public static EnumDragonTextures getDragonEnum(EntityDragonBase dragon) {
-        switch (dragon.getVariant()) {
-            default:
-                return VARIANT1;
-            case 1:
-                return VARIANT2;
-            case 2:
-                return VARIANT3;
-            case 3:
-                return VARIANT4;
-        }
+        return switch (dragon.getVariant()) {
+            default -> VARIANT1;
+            case 1 -> VARIANT2;
+            case 2 -> VARIANT3;
+            case 3 -> VARIANT4;
+        };
     }
 
     public static ResourceLocation getFireDragonSkullTextures(EntityDragonSkull skull) {
-        switch (skull.getDragonStage()) {
-            case 1:
-                return VARIANT1.FIRESTAGE1SKELETONTEXTURE;
-            case 2:
-                return VARIANT1.FIRESTAGE2SKELETONTEXTURE;
-            case 3:
-                return VARIANT1.FIRESTAGE3SKELETONTEXTURE;
-            case 4:
-                return VARIANT1.FIRESTAGE4SKELETONTEXTURE;
-            case 5:
-                return VARIANT1.FIRESTAGE5SKELETONTEXTURE;
-            default:
-                return VARIANT1.FIRESTAGE4SKELETONTEXTURE;
-        }
+        return switch (skull.getDragonStage()) {
+            case 1 -> VARIANT1.FIRESTAGE1SKELETONTEXTURE;
+            case 2 -> VARIANT1.FIRESTAGE2SKELETONTEXTURE;
+            case 3 -> VARIANT1.FIRESTAGE3SKELETONTEXTURE;
+            case 4 -> VARIANT1.FIRESTAGE4SKELETONTEXTURE;
+            case 5 -> VARIANT1.FIRESTAGE5SKELETONTEXTURE;
+            default -> VARIANT1.FIRESTAGE4SKELETONTEXTURE;
+        };
     }
 
     public static ResourceLocation getIceDragonSkullTextures(EntityDragonSkull skull) {
-        switch (skull.getDragonStage()) {
-            case 1:
-                return VARIANT1.ICESTAGE1SKELETONTEXTURE;
-            case 2:
-                return VARIANT1.ICESTAGE2SKELETONTEXTURE;
-            case 3:
-                return VARIANT1.ICESTAGE3SKELETONTEXTURE;
-            case 4:
-                return VARIANT1.ICESTAGE4SKELETONTEXTURE;
-            case 5:
-                return VARIANT1.ICESTAGE5SKELETONTEXTURE;
-            default:
-                return VARIANT1.ICESTAGE4SKELETONTEXTURE;
-        }
+        return switch (skull.getDragonStage()) {
+            case 1 -> VARIANT1.ICESTAGE1SKELETONTEXTURE;
+            case 2 -> VARIANT1.ICESTAGE2SKELETONTEXTURE;
+            case 3 -> VARIANT1.ICESTAGE3SKELETONTEXTURE;
+            case 4 -> VARIANT1.ICESTAGE4SKELETONTEXTURE;
+            case 5 -> VARIANT1.ICESTAGE5SKELETONTEXTURE;
+            default -> VARIANT1.ICESTAGE4SKELETONTEXTURE;
+        };
     }
 
     public static ResourceLocation getLightningDragonSkullTextures(EntityDragonSkull skull) {
-        switch (skull.getDragonStage()) {
-            case 1:
-                return VARIANT1.LIGHTNINGSTAGE1SKELETONTEXTURE;
-            case 2:
-                return VARIANT1.LIGHTNINGSTAGE2SKELETONTEXTURE;
-            case 3:
-                return VARIANT1.LIGHTNINGSTAGE3SKELETONTEXTURE;
-            case 4:
-                return VARIANT1.LIGHTNINGSTAGE4SKELETONTEXTURE;
-            case 5:
-                return VARIANT1.LIGHTNINGSTAGE5SKELETONTEXTURE;
-            default:
-                return VARIANT1.LIGHTNINGSTAGE4SKELETONTEXTURE;
-        }
+        return switch (skull.getDragonStage()) {
+            case 1 -> VARIANT1.LIGHTNINGSTAGE1SKELETONTEXTURE;
+            case 2 -> VARIANT1.LIGHTNINGSTAGE2SKELETONTEXTURE;
+            case 3 -> VARIANT1.LIGHTNINGSTAGE3SKELETONTEXTURE;
+            case 4 -> VARIANT1.LIGHTNINGSTAGE4SKELETONTEXTURE;
+            case 5 -> VARIANT1.LIGHTNINGSTAGE5SKELETONTEXTURE;
+            default -> VARIANT1.LIGHTNINGSTAGE4SKELETONTEXTURE;
+        };
     }
 
     public enum Armor {

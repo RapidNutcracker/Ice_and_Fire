@@ -1,6 +1,7 @@
 package com.github.alexthe666.iceandfire.client.render.entity;
 
 import com.github.alexthe666.citadel.client.model.AdvancedEntityModel;
+import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.client.render.entity.layer.LayerDragonArmor;
 import com.github.alexthe666.iceandfire.client.render.entity.layer.LayerDragonBanner;
 import com.github.alexthe666.iceandfire.client.render.entity.layer.LayerDragonEyes;
@@ -55,29 +56,61 @@ public class RenderDragonBase extends MobRenderer<EntityDragonBase, AdvancedEnti
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(EntityDragonBase entity) {
-        String baseTexture = entity.getVariantName(entity.getVariant()) + entity.getDragonStage() + entity.isModelDead() + entity.isMale() + entity.isSkeletal() + entity.isSleeping() + entity.isBlinking();
-        ResourceLocation resourcelocation = LAYERED_TEXTURE_CACHE.get(baseTexture);
-        if (resourcelocation == null) {
-            resourcelocation = new ResourceLocation("iceandfire:" + "dragon_texture_" + baseTexture);
-            List<String> tex = new ArrayList<String>();
-            tex.add(EnumDragonTextures.getTextureFromDragon(entity).toString());
-            if (entity.isMale() && !entity.isSkeletal()) {
-                if (dragonType == 0) {
-                    tex.add(EnumDragonTextures.getDragonEnum(entity).FIRE_MALE_OVERLAY.toString());
-                } else if (dragonType == 1) {
-                    tex.add(EnumDragonTextures.getDragonEnum(entity).ICE_MALE_OVERLAY.toString());
-                } else if (dragonType == 2) {
-                    tex.add(EnumDragonTextures.getDragonEnum(entity).LIGHTNING_MALE_OVERLAY.toString());
-                }
-            } else {
-                tex.add(EnumDragonTextures.Armor.EMPTY.FIRETEXTURE.toString());
+        String baseTexture = getBaseTextureName(entity);
 
-            }
-            ArrayLayeredTexture layeredBase = new ArrayLayeredTexture(tex);
-            Minecraft.getInstance().getTextureManager().register(resourcelocation, layeredBase);
-            LAYERED_TEXTURE_CACHE.put(baseTexture, resourcelocation);
+        if (LAYERED_TEXTURE_CACHE.containsKey(baseTexture)) {
+            return LAYERED_TEXTURE_CACHE.get(baseTexture);
         }
-        return resourcelocation;
+
+        List<String> tex = new ArrayList<>();
+        ResourceLocation resourceLocation = new ResourceLocation(IceAndFire.MODID, "dragon_texture/" + baseTexture);
+
+        tex.add(EnumDragonTextures.getTextureFromDragon(entity).toString());
+
+        if (entity.isMale() && !entity.isSkeletal()) {
+            if (dragonType == 0) {
+                tex.add(EnumDragonTextures.getDragonEnum(entity).FIRE_MALE_OVERLAY.toString());
+            } else if (dragonType == 1) {
+                tex.add(EnumDragonTextures.getDragonEnum(entity).ICE_MALE_OVERLAY.toString());
+            } else if (dragonType == 2) {
+                tex.add(EnumDragonTextures.getDragonEnum(entity).LIGHTNING_MALE_OVERLAY.toString());
+            }
+        } else {
+            tex.add(EnumDragonTextures.Armor.EMPTY.FIRETEXTURE.toString());
+        }
+
+        ArrayLayeredTexture layeredBase = new ArrayLayeredTexture(tex);
+        Minecraft.getInstance().getTextureManager().register(resourceLocation, layeredBase);
+        LAYERED_TEXTURE_CACHE.put(baseTexture, resourceLocation);
+
+        return resourceLocation;
     }
 
+    private String getBaseTextureName(EntityDragonBase entity) {
+        String baseTexture = entity.getVariantName(entity.getVariant()) +
+                entity.getDragonStage() +
+                "_" + (entity.isMale() ? "male" : "female");
+
+        if (entity.isModelDead()) {
+            baseTexture += "_dead";
+
+            if (entity.isSkeletal()) {
+                baseTexture += "_skeletal";
+            }
+        } else {
+            baseTexture += "_alive";
+        }
+
+        if (entity.isSleeping()) {
+            baseTexture += "_sleeping";
+        } else {
+            baseTexture += "_awake";
+
+            if (entity.isBlinking()) {
+                baseTexture += "_blinking";
+            }
+        }
+
+        return baseTexture;
+    }
 }

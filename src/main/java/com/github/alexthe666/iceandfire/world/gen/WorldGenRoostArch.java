@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.world.gen;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 
@@ -15,7 +16,7 @@ public class WorldGenRoostArch {
         this.block = block;
     }
 
-    public boolean generate(LevelAccessor worldIn, Random rand, BlockPos position) {
+    public boolean generate(LevelAccessor worldIn, RandomSource rand, BlockPos position) {
         int height = 3 + rand.nextInt(3);
         int width = Math.min(3, height - 2);
         Direction direction = HORIZONTALS[rand.nextInt(HORIZONTALS.length - 1)];

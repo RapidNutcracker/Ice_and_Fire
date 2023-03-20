@@ -436,7 +436,6 @@ public class ModelCockatrice extends ModelDragonBase<EntityCockatrice> {
         this.progressPosition(lowerBody, entity.sitProgress, 0.0F, 12.9F, -2.5F);
     }
 
-
     @Override
     public void renderStatue(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, Entity living) {
         this.renderToBuffer(matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

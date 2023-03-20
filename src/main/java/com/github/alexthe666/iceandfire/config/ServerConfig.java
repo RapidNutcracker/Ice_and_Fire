@@ -236,7 +236,7 @@ public class ServerConfig {
                 .defineList("noDropBreakBlocks", Lists.newArrayList("minecraft:stone", "minecraft:dirt", "minecraft:grass_block"), o -> o instanceof String);
         builder.pop();
         builder.push("Attributes");
-        this.dragonEggTime = buildInt(builder, "Dragon Egg Hatch Time", "all", 7200, 1, Integer.MAX_VALUE, "How long it takes(in ticks) for a dragon egg to hatch");
+        this.dragonEggTime = buildInt(builder, "Dragon Egg Hatch Time", "all", 10, 1, Integer.MAX_VALUE, "How long it takes(in ticks) for a dragon egg to hatch");
         this.dragonFlapNoiseDistance = buildInt(builder, "Dragon Flap Noise Distance", "all", 4, 0, 10000, "Dragon Flap Noise Distance - Larger number, further away you can hear it");
         this.dragonFluteDistance = buildInt(builder, "Dragon Flute Distance", "all", 4, 0, 10000, "Dragon Flute Distance - how many chunks away is the dragon flute effective?");
         this.dragonHealth = buildDouble(builder, "Dragon Health", "all", 500, 1, 100000, "Max dragon health. Health is scaled to this");

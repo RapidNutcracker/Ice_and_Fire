@@ -1,4 +1,5 @@
 {
+  "render_type": "cutout",
   "textures": {
     "particle": "iceandfire:block/silverpile",
     "texture": "iceandfire:block/silverpile"

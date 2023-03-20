@@ -84,7 +84,7 @@ public class PixieAISteal extends Goal {
                 this.temptedEntity.setItemInHand(InteractionHand.MAIN_HAND, randomItem);
                 this.temptingPlayer.getInventory().removeItemNoUpdate(slot);
                 this.temptedEntity.flipAI(true);
-                this.temptedEntity.playSound(IafSoundRegistry.PIXIE_TAUNT, 1F, 1F);
+                this.temptedEntity.playSound(IafSoundRegistry.PIXIE_TAUNT.get(), 1F, 1F);
 
                 for (EntityPixie pixie : this.temptingPlayer.level.getEntitiesOfClass(EntityPixie.class, temptedEntity.getBoundingBox().inflate(40))) {
                     pixie.stealCooldown = 1000 + pixie.getRandom().nextInt(3000);

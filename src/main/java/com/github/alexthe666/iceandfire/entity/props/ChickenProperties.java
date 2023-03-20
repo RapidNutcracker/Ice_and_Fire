@@ -5,13 +5,14 @@ import com.github.alexthe666.iceandfire.IafConfig;
 import com.github.alexthe666.iceandfire.item.IafItemRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Random;
 
 public class ChickenProperties {
     private static final String CHICKEN_DATA = "TimeUntilNextEggIaf";
-    private static final Random rand = new Random();
+    private static final RandomSource rand = RandomSource.create();
 
     private static int createDefaultTime() {
         return rand.nextInt(6000) + 6000;

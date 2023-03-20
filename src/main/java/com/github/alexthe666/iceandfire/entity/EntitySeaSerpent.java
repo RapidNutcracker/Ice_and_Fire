@@ -21,6 +21,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -54,6 +55,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
+
+import net.minecraft.world.entity.Entity.RemovalReason;
 
 public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultipartEntity, IVillagerFear, IAnimalFear, IHasCustomizableAttributes {
 
@@ -150,7 +153,7 @@ public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultip
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return this.isAncient() ? 30 : 15;
     }
 
@@ -473,10 +476,10 @@ public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultip
             this.ticksSinceRoar = 0;
         }
         if (this.getAnimation() == ANIMATION_ROAR && this.getAnimationTick() == 1) {
-            this.playSound(IafSoundRegistry.SEA_SERPENT_ROAR, this.getSoundVolume() + 1, 1);
+            this.playSound(IafSoundRegistry.SEA_SERPENT_ROAR.get(), this.getSoundVolume() + 1, 1);
         }
         if (this.getAnimation() == ANIMATION_BITE && this.getAnimationTick() == 5) {
-            this.playSound(IafSoundRegistry.SEA_SERPENT_BITE, this.getSoundVolume(), 1);
+            this.playSound(IafSoundRegistry.SEA_SERPENT_BITE.get(), this.getSoundVolume(), 1);
         }
         if (isJumpingOutOfWater() && isWaterBlock(level, this.blockPosition().above(2))) {
             setJumpingOutOfWater(false);
@@ -507,7 +510,7 @@ public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultip
             jumpRot -= 0.1F;
         }
         if (prevJumping && !this.isJumpingOutOfWater()) {
-            this.playSound(IafSoundRegistry.SEA_SERPENT_SPLASH, 5F, 0.75F);
+            this.playSound(IafSoundRegistry.SEA_SERPENT_SPLASH.get(), 5F, 0.75F);
             spawnSlamParticles(ParticleTypes.BUBBLE);
             this.doSplashDamage();
         }
@@ -674,7 +677,7 @@ public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultip
         return spawnDataIn;
     }
 
-    public void onWorldSpawn(Random random) {
+    public void onWorldSpawn(RandomSource random) {
         this.setVariant(random.nextInt(7));
         boolean ancient = random.nextInt(15) == 1;
         if (ancient) {
@@ -721,19 +724,19 @@ public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultip
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.SEA_SERPENT_IDLE;
+        return IafSoundRegistry.SEA_SERPENT_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return IafSoundRegistry.SEA_SERPENT_HURT;
+        return IafSoundRegistry.SEA_SERPENT_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.SEA_SERPENT_DIE;
+        return IafSoundRegistry.SEA_SERPENT_DIE.get();
     }
 
     @Override
@@ -769,7 +772,7 @@ public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultip
             }
             if (this.isBreathing()) {
                 if (this.tickCount % 40 == 0) {
-                    this.playSound(IafSoundRegistry.SEA_SERPENT_BREATH, 4, 1);
+                    this.playSound(IafSoundRegistry.SEA_SERPENT_BREATH.get(), 4, 1);
                 }
                 if (this.tickCount % 10 == 0) {
                     setYRot(yBodyRot);
@@ -838,8 +841,9 @@ public class EntitySeaSerpent extends Animal implements IAnimatedEntity, IMultip
     }
 
     @Override
-    public void killed(@NotNull ServerLevel world, @NotNull LivingEntity entity) {
+    public boolean wasKilled(@NotNull ServerLevel world, @NotNull LivingEntity entity) {
         this.attackDecision = this.getRandom().nextBoolean();
+        return super.wasKilled(world, entity);
     }
 
     @Override

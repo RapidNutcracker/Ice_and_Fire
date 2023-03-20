@@ -16,6 +16,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -44,6 +45,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class EntityPixie extends TamableAnimal {
 
     public static final float[][] PARTICLE_RGB = new float[][]{new float[]{1F, 0.752F, 0.792F}, new float[]{0.831F, 0.662F, 1F}, new float[]{0.513F, 0.843F, 1F}, new float[]{0.654F, 0.909F, 0.615F}, new float[]{0.996F, 0.788F, 0.407F}};
@@ -68,7 +71,7 @@ public class EntityPixie extends TamableAnimal {
         this.setDropChance(EquipmentSlot.MAINHAND, 0F);
     }
 
-    public static BlockPos getPositionRelativetoGround(Entity entity, Level world, double x, double z, Random rand) {
+    public static BlockPos getPositionRelativetoGround(Entity entity, Level world, double x, double z, RandomSource rand) {
         BlockPos pos = new BlockPos(x, entity.getY(), z);
         for (int yDown = 0; yDown < 3; yDown++) {
             if (!world.isEmptyBlock(pos.below(yDown))) {
@@ -123,7 +126,7 @@ public class EntityPixie extends TamableAnimal {
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 3;
     }
 
@@ -198,7 +201,7 @@ public class EntityPixie extends TamableAnimal {
             if (player.getItemInHand(hand).getItem() == Items.SUGAR && this.getHealth() < this.getMaxHealth()) {
                 this.heal(5);
                 player.getItemInHand(hand).shrink(1);
-                this.playSound(IafSoundRegistry.PIXIE_TAUNT, 1F, 1F);
+                this.playSound(IafSoundRegistry.PIXIE_TAUNT.get(), 1F, 1F);
                 return InteractionResult.SUCCESS;
             } else {
 
@@ -419,19 +422,19 @@ public class EntityPixie extends TamableAnimal {
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.PIXIE_IDLE;
+        return IafSoundRegistry.PIXIE_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return IafSoundRegistry.PIXIE_HURT;
+        return IafSoundRegistry.PIXIE_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.PIXIE_DIE;
+        return IafSoundRegistry.PIXIE_DIE.get();
     }
 
     @Override

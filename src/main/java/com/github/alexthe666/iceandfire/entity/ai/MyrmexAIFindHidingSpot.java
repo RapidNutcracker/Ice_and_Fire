@@ -13,6 +13,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIFindHidingSpot extends Goal {
     private static final int RADIUS = 32;
     protected final DragonAITargetItems.Sorter theNearestAttackableTargetSorter;

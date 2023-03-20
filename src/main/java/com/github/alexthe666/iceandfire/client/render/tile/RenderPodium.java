@@ -46,8 +46,8 @@ public class RenderPodium<T extends TileEntityPodium> implements BlockEntityRend
                 return RenderType.entityCutout(RenderDragonEgg.EGG_SILVER);
             case ELECTRIC:
                 return RenderType.entityCutout(RenderDragonEgg.EGG_ELECTRIC);
-            case AMYTHEST:
-                return RenderType.entityCutout(RenderDragonEgg.EGG_AMYTHEST);
+            case AMETHYST:
+                return RenderType.entityCutout(RenderDragonEgg.EGG_AMETHYST);
             case COPPER:
                 return RenderType.entityCutout(RenderDragonEgg.EGG_COPPER);
             case BLACK:

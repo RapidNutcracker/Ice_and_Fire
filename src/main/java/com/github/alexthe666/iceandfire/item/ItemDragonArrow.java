@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class ItemDragonArrow extends ArrowItem {
     public ItemDragonArrow() {
         super(new Properties().tab(IceAndFire.TAB_ITEMS));

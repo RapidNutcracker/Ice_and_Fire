@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
 
 public class BlockFallingReturningState extends FallingBlock {
     public static final BooleanProperty REVERTS = BooleanProperty.create("revert");
@@ -48,7 +48,7 @@ public class BlockFallingReturningState extends FallingBlock {
     }
 
     @Override
-    public void tick(@NotNull BlockState state, @NotNull ServerLevel worldIn, @NotNull BlockPos pos, @NotNull Random rand) {
+    public void tick(@NotNull BlockState state, @NotNull ServerLevel worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         super.tick(state, worldIn, pos, rand);
         if (!worldIn.isClientSide) {
             if (!worldIn.isAreaLoaded(pos, 3))

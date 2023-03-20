@@ -20,6 +20,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIStoreItems extends Goal {
     private final EntityMyrmexBase myrmex;
     private final double movementSpeed;

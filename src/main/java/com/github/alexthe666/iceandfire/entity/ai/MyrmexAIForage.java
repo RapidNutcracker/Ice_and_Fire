@@ -24,6 +24,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MyrmexAIForage extends Goal {
 
     private static final int RADIUS = 16;

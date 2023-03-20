@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -34,6 +35,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import net.minecraft.world.level.Explosion.BlockInteraction;
 
 public class BlockBreakExplosion extends Explosion {
     private final Level world;
@@ -192,7 +195,7 @@ public class BlockBreakExplosion extends Explosion {
 
         if (flag) {
             ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
-            Collections.shuffle(this.affectedBlockPositions, this.world.random);
+            Util.shuffle(new ObjectArrayList<>(this.affectedBlockPositions), this.world.random);
 
             for (BlockPos blockpos : this.affectedBlockPositions) {
                 BlockState blockstate = this.world.getBlockState(blockpos);

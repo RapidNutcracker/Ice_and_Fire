@@ -10,7 +10,7 @@ public enum EnumDragonEgg {
     BLUE(ChatFormatting.AQUA, DragonType.ICE), WHITE(ChatFormatting.WHITE, DragonType.ICE),
     SAPPHIRE(ChatFormatting.BLUE, DragonType.ICE), SILVER(ChatFormatting.DARK_GRAY, DragonType.ICE),
     ELECTRIC(ChatFormatting.DARK_BLUE, DragonType.LIGHTNING),
-    AMYTHEST(ChatFormatting.LIGHT_PURPLE, DragonType.LIGHTNING), COPPER(ChatFormatting.GOLD, DragonType.LIGHTNING),
+    AMETHYST(ChatFormatting.LIGHT_PURPLE, DragonType.LIGHTNING), COPPER(ChatFormatting.GOLD, DragonType.LIGHTNING),
     BLACK(ChatFormatting.DARK_GRAY, DragonType.LIGHTNING);
 
     public ChatFormatting color;

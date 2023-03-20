@@ -1,13 +1,18 @@
 package com.github.alexthe666.iceandfire.recipe;
 
 import com.github.alexthe666.citadel.client.model.container.JsonUtils;
+import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.block.IafBlockRegistry;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforge;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,6 +57,10 @@ public class DragonForgeRecipe implements Recipe<TileEntityDragonforge> {
 
     @Override
     public boolean matches(TileEntityDragonforge inv, @NotNull Level worldIn) {
+        if (worldIn.isClientSide()) {
+            return false;
+        }
+        
         return this.input.test(inv.getItem(0)) && this.blood.test(inv.getItem(1)) && this.dragonType.equals(inv.getTypeID());
     }
 
@@ -65,7 +74,7 @@ public class DragonForgeRecipe implements Recipe<TileEntityDragonforge> {
 
     @Override
     public @NotNull ItemStack getResultItem() {
-        return result;
+        return result.copy();
     }
 
     @Override
@@ -90,22 +99,33 @@ public class DragonForgeRecipe implements Recipe<TileEntityDragonforge> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return IafRecipeSerializers.DRAGONFORGE_SERIALIZER.get();
+        return Serializer.INSTANCE;
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return IafRecipeRegistry.DRAGON_FORGE_TYPE;
+        return Type.INSTANCE;
     }
 
-    public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<DragonForgeRecipe> {
+    public static class Type implements RecipeType<DragonForgeRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "dragonforge";
+    }
+
+    public static class Serializer implements RecipeSerializer<DragonForgeRecipe> {
+
+        public static final Serializer INSTANCE = new Serializer();
+        public static final ResourceLocation ID = new ResourceLocation(IceAndFire.MODID, "dragonforge");
+
         @Override
         public @NotNull DragonForgeRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
+            ItemStack result = ShapedRecipe.itemStackFromJson(JsonUtils.getJsonObject(json, "result"));
+            
             String dragonType = JsonUtils.getString(json, "dragon_type");
             Ingredient input = Ingredient.fromJson(JsonUtils.getJsonObject(json, "input"));
             Ingredient blood = Ingredient.fromJson(JsonUtils.getJsonObject(json, "blood"));
             int cookTime = JsonUtils.getInt(json, "cook_time");
-            ItemStack result = ShapedRecipe.itemStackFromJson(JsonUtils.getJsonObject(json, "result"));
             return new DragonForgeRecipe(recipeId, input, blood, result, dragonType, cookTime);
         }
 

@@ -1,6 +1,7 @@
 package com.github.alexthe666.iceandfire.world.gen;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -20,7 +21,7 @@ public class WorldGenRoostBoulder {
         this.replaceAir = replaceAir;
     }
 
-    public boolean generate(LevelAccessor worldIn, Random rand, BlockPos position) {
+    public boolean generate(LevelAccessor worldIn, RandomSource rand, BlockPos position) {
         while (true) {
             label50:
             {

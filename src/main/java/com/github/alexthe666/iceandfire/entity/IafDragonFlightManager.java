@@ -18,7 +18,6 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-
 public class IafDragonFlightManager {
     private final EntityDragonBase dragon;
     private Vec3 target;

@@ -23,7 +23,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -165,7 +165,7 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 10;
     }
 
@@ -235,10 +235,11 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
         return false;
     }
 
-    @Override
-    public boolean canBeControlledByRider() {
-        return true;
-    }
+    // TODO canBeControlledByRider
+    // @Override
+    // public boolean canBeControlledByRider() {
+    //     return true;
+    // }
 
     @Override
     public void positionRider(@NotNull Entity passenger) {
@@ -293,7 +294,7 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
     @Override
     public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        String s = ChatFormatting.stripFormatting(player.getName().getContents());
+        String s = ChatFormatting.stripFormatting(player.getName().getContents().toString());
         boolean isDev = s.equals("Alexthe666") || s.equals("Raptorfarian") || s.equals("tweakbsd");
         if (this.isTame() && this.isOwnedBy(player)) {
             if (itemstack != null && itemstack.getItem() == Items.RED_DYE && this.getEnumVariant() != EnumHippogryphTypes.ALEX && isDev) {
@@ -330,13 +331,13 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
                 if (player.isShiftKeyDown()) {
                     if (this.hasHomePosition) {
                         this.hasHomePosition = false;
-                        player.displayClientMessage(new TranslatableComponent("hippogryph.command.remove_home"), true);
+                        player.displayClientMessage(Component.translatable("hippogryph.command.remove_home"), true);
                         return InteractionResult.SUCCESS;
                     } else {
                         BlockPos pos = this.blockPosition();
                         this.homePos = pos;
                         this.hasHomePosition = true;
-                        player.displayClientMessage(new TranslatableComponent("hippogryph.command.new_home", homePos.getX(), homePos.getY(), homePos.getZ()), true);
+                        player.displayClientMessage(Component.translatable("hippogryph.command.new_home", homePos.getX(), homePos.getY(), homePos.getZ()), true);
                         return InteractionResult.SUCCESS;
                     }
                 } else {
@@ -344,7 +345,7 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
                     if (this.getCommand() > 1) {
                         this.setCommand(0);
                     }
-                    player.displayClientMessage(new TranslatableComponent("hippogryph.command." + (this.getCommand() == 1 ? "sit" : "stand")), true);
+                    player.displayClientMessage(Component.translatable("hippogryph.command." + (this.getCommand() == 1 ? "sit" : "stand")), true);
 
                 }
                 return InteractionResult.SUCCESS;
@@ -386,7 +387,7 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
 
     public void openGUI(Player playerEntity) {
         if (!this.level.isClientSide && (!this.isVehicle() || this.hasPassenger(playerEntity))) {
-            NetworkHooks.openGui((ServerPlayer) playerEntity, new MenuProvider() {
+            NetworkHooks.openScreen((ServerPlayer) playerEntity, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int p_createMenu_1_, @NotNull Inventory p_createMenu_2_, @NotNull Player p_createMenu_3_) {
                     return new ContainerHippogryph(p_createMenu_1_, hippogryphInventory, p_createMenu_2_, EntityHippogryph.this);
@@ -394,7 +395,7 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
 
                 @Override
                 public @NotNull Component getDisplayName() {
-                    return new TranslatableComponent("entity.iceandfire.hippogryph");
+                    return Component.translatable("entity.iceandfire.hippogryph");
                 }
             });
         }
@@ -740,19 +741,19 @@ public class EntityHippogryph extends TamableAnimal implements ISyncMount, IAnim
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.HIPPOGRYPH_IDLE;
+        return IafSoundRegistry.HIPPOGRYPH_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return IafSoundRegistry.HIPPOGRYPH_HURT;
+        return IafSoundRegistry.HIPPOGRYPH_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.HIPPOGRYPH_DIE;
+        return IafSoundRegistry.HIPPOGRYPH_DIE.get();
     }
 
     @Override

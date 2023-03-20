@@ -4,6 +4,9 @@ import com.github.alexthe666.citadel.client.model.basic.BasicEntityModel;
 import com.github.alexthe666.citadel.client.model.basic.BasicModelPart;
 import com.github.alexthe666.iceandfire.entity.EntityChainTie;
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+
 import org.jetbrains.annotations.NotNull;
 
 public class ModelChainTie extends BasicEntityModel<EntityChainTie> {
@@ -29,4 +32,5 @@ public class ModelChainTie extends BasicEntityModel<EntityChainTie> {
     public Iterable<BasicModelPart> parts() {
         return ImmutableList.of(knotRenderer);
     }
+
 }

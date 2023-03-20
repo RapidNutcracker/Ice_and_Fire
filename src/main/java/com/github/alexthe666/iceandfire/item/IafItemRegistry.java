@@ -7,18 +7,23 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.IafEntityRegistry;
 import com.github.alexthe666.iceandfire.enums.*;
 import com.github.alexthe666.iceandfire.recipe.IafRecipeRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.lang.reflect.Field;
@@ -28,6 +33,8 @@ import static com.github.alexthe666.iceandfire.item.DragonSteelTier.*;
 
 @Mod.EventBusSubscriber(modid = IceAndFire.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IafItemRegistry {
+
+    public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IceAndFire.MODID);
 
     public static CustomArmorMaterial SILVER_ARMOR_MATERIAL = new IafArmorMaterial("silver", 15, new int[]{1, 4, 5, 2}, 20, SoundEvents.ARMOR_EQUIP_CHAIN, 0);
     public static CustomArmorMaterial COPPER_ARMOR_MATERIAL = new IafArmorMaterial("copper", 10, new int[]{1, 3, 4, 2}, 15, SoundEvents.ARMOR_EQUIP_GOLD, 0);
@@ -61,14 +68,13 @@ public class IafItemRegistry {
     public static CustomToolMaterial DREAD_KNIGHT_TOOL_MATERIAL = new CustomToolMaterial("DreadKnightSword", 0, 1200, 13F, 0F, 10);
     public static CustomToolMaterial GHOST_SWORD_TOOL_MATERIAL = new CustomToolMaterial("GhostSword", 2, 3000, 5, 10.0F, 25);
 
-    public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IceAndFire.MODID);
 
     public static final RegistryObject<Item> BESTIARY = ITEMS.register("bestiary", ItemBestiary::new);
     public static final RegistryObject<Item> MANUSCRIPT = ITEMS.register("manuscript", ItemGeneric::new);
     public static final RegistryObject<Item> SAPPHIRE_GEM = ITEMS.register("sapphire_gem", ItemGeneric::new);
     public static final RegistryObject<Item> SILVER_INGOT = ITEMS.register("silver_ingot", ItemGeneric::new);
     public static final RegistryObject<Item> SILVER_NUGGET = ITEMS.register("silver_nugget", ItemGeneric::new);
-    public static final RegistryObject<Item> AMYTHEST_GEM = ITEMS.register("amythest_gem", ItemGeneric::new);
+    public static final RegistryObject<Item> AMETHYST_GEM = ITEMS.register("amethyst_gem", ItemGeneric::new);
     public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register("copper_ingot", ItemGeneric::new);
     public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", ItemGeneric::new);
     public static final RegistryObject<Item> SILVER_HELMET = ITEMS.register("armor_silver_metal_helmet", () -> new ItemSilverArmor(SILVER_ARMOR_MATERIAL, EquipmentSlot.HEAD));
@@ -103,7 +109,7 @@ public class IafItemRegistry {
     public static final RegistryObject<Item> DRAGONEGG_SAPPHIRE = ITEMS.register("dragonegg_sapphire", () -> new ItemDragonEgg(EnumDragonEgg.SAPPHIRE));
     public static final RegistryObject<Item> DRAGONEGG_SILVER = ITEMS.register("dragonegg_silver", () -> new ItemDragonEgg(EnumDragonEgg.SILVER));
     public static final RegistryObject<Item> DRAGONEGG_ELECTRIC = ITEMS.register("dragonegg_electric", () -> new ItemDragonEgg(EnumDragonEgg.ELECTRIC));
-    public static final RegistryObject<Item> DRAGONEGG_AMYTHEST = ITEMS.register("dragonegg_amythest", () -> new ItemDragonEgg(EnumDragonEgg.AMYTHEST));
+    public static final RegistryObject<Item> DRAGONEGG_AMETHYST = ITEMS.register("dragonegg_amethyst", () -> new ItemDragonEgg(EnumDragonEgg.AMETHYST));
     public static final RegistryObject<Item> DRAGONEGG_COPPER = ITEMS.register("dragonegg_copper", () -> new ItemDragonEgg(EnumDragonEgg.COPPER));
     public static final RegistryObject<Item> DRAGONEGG_BLACK = ITEMS.register("dragonegg_black", () -> new ItemDragonEgg(EnumDragonEgg.BLACK));
     public static final RegistryObject<Item> DRAGONSCALES_RED = ITEMS.register("dragonscales_red", () -> new ItemDragonScales(EnumDragonEgg.RED));
@@ -115,7 +121,7 @@ public class IafItemRegistry {
     public static final RegistryObject<Item> DRAGONSCALES_SAPPHIRE = ITEMS.register("dragonscales_sapphire", () -> new ItemDragonScales(EnumDragonEgg.SAPPHIRE));
     public static final RegistryObject<Item> DRAGONSCALES_SILVER = ITEMS.register("dragonscales_silver", () -> new ItemDragonScales(EnumDragonEgg.SILVER));
     public static final RegistryObject<Item> DRAGONSCALES_ELECTRIC = ITEMS.register("dragonscales_electric", () -> new ItemDragonScales(EnumDragonEgg.ELECTRIC));
-    public static final RegistryObject<Item> DRAGONSCALES_AMYTHEST = ITEMS.register("dragonscales_amythest", () -> new ItemDragonScales(EnumDragonEgg.AMYTHEST));
+    public static final RegistryObject<Item> DRAGONSCALES_AMETHYST = ITEMS.register("dragonscales_amethyst", () -> new ItemDragonScales(EnumDragonEgg.AMETHYST));
     public static final RegistryObject<Item> DRAGONSCALES_COPPER = ITEMS.register("dragonscales_copper", () -> new ItemDragonScales(EnumDragonEgg.COPPER));
     public static final RegistryObject<Item> DRAGONSCALES_BLACK = ITEMS.register("dragonscales_black", () -> new ItemDragonScales(EnumDragonEgg.BLACK));
     public static final RegistryObject<Item> DRAGON_BONE = ITEMS.register("dragonbone", () -> new ItemDragonBone());
@@ -329,57 +335,77 @@ public class IafItemRegistry {
     public static final RegistryObject<Item> GHOST_SWORD = ITEMS.register("ghost_sword", () -> new ItemGhostSword());
 
     static {
+        initSpawnEggs();
+        initBannerItems();
+    }
+
+    public static void initSpawnEggs() {
+        RegistryObject<Item> SPAWN_EGG_FIRE_DRAGON = ITEMS.register("spawn_egg_fire_dragon", () -> new ForgeSpawnEggItem(IafEntityRegistry.FIRE_DRAGON, 0X340000, 0XA52929, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_ICE_DRAGON = ITEMS.register("spawn_egg_ice_dragon", () -> new ForgeSpawnEggItem(IafEntityRegistry.ICE_DRAGON, 0XB5DDFB, 0X7EBAF0, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_LIGHTNING_DRAGON = ITEMS.register("spawn_egg_lightning_dragon", () -> new ForgeSpawnEggItem(IafEntityRegistry.LIGHTNING_DRAGON, 0X422367, 0X725691, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_HIPPOGRYPH = ITEMS.register("spawn_egg_hippogryph", () -> new ForgeSpawnEggItem(IafEntityRegistry.HIPPOGRYPH, 0XD8D8D8, 0XD1B55D, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_GORGON = ITEMS.register("spawn_egg_gorgon", () -> new ForgeSpawnEggItem(IafEntityRegistry.GORGON, 0XD0D99F, 0X684530, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_PIXIE = ITEMS.register("spawn_egg_pixie", () -> new ForgeSpawnEggItem(IafEntityRegistry.PIXIE, 0XFF7F89, 0XE2CCE2, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_CYCLOPS = ITEMS.register("spawn_egg_cyclops", () -> new ForgeSpawnEggItem(IafEntityRegistry.CYCLOPS, 0XB0826E, 0X3A1F0F, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_SIREN = ITEMS.register("spawn_egg_siren", () -> new ForgeSpawnEggItem(IafEntityRegistry.SIREN, 0X8EE6CA, 0XF2DFC8, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_HIPPOCAMPUS = ITEMS.register("spawn_egg_hippocampus", () -> new ForgeSpawnEggItem(IafEntityRegistry.HIPPOCAMPUS, 0X4491C7, 0X4FC56B, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DEATH_WORM = ITEMS.register("spawn_egg_death_worm", () -> new ForgeSpawnEggItem(IafEntityRegistry.DEATH_WORM, 0XD1CDA3, 0X423A3A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_COCKATRICE = ITEMS.register("spawn_egg_cockatrice", () -> new ForgeSpawnEggItem(IafEntityRegistry.COCKATRICE, 0X8F5005, 0X4F5A23, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_STYMPHALIAN_BIRD = ITEMS.register("spawn_egg_stymphalian_bird", () -> new ForgeSpawnEggItem(IafEntityRegistry.STYMPHALIAN_BIRD, 0X744F37, 0X9E6C4B, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_TROLL = ITEMS.register("spawn_egg_troll", () -> new ForgeSpawnEggItem(IafEntityRegistry.TROLL, 0X3D413D, 0X58433A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_MYRMEX_WORKER = ITEMS.register("spawn_egg_myrmex_worker", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_WORKER, 0XA16026, 0X594520, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_MYRMEX_SOLDIER = ITEMS.register("spawn_egg_myrmex_soldier", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_SOLDIER, 0XA16026, 0X7D622D, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_MYRMEX_SENTINEL = ITEMS.register("spawn_egg_myrmex_sentinel", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_SENTINEL, 0XA16026, 0XA27F3A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_MYRMEX_ROYAL = ITEMS.register("spawn_egg_myrmex_royal", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_ROYAL, 0XA16026, 0XC79B48, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_MYRMEX_QUEEN = ITEMS.register("spawn_egg_myrmex_queen", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_QUEEN, 0XA16026, 0XECB855, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_AMPHITHERE = ITEMS.register("spawn_egg_amphithere", () -> new ForgeSpawnEggItem(IafEntityRegistry.AMPHITHERE, 0X597535, 0X00AA98, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_SEA_SERPENT = ITEMS.register("spawn_egg_sea_serpent", () -> new ForgeSpawnEggItem(IafEntityRegistry.SEA_SERPENT, 0X008299, 0XC5E6E7, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DREAD_THRALL = ITEMS.register("spawn_egg_dread_thrall", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_THRALL, 0XE0E6E6, 0X00FFFF, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DREAD_GHOUL = ITEMS.register("spawn_egg_dread_ghoul", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_GHOUL, 0XE0E6E6, 0X7B838A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DREAD_BEAST = ITEMS.register("spawn_egg_dread_beast", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_BEAST, 0XE0E6E6, 0X38373C, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DREAD_SCUTTLER = ITEMS.register("spawn_egg_dread_scuttler", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_SCUTTLER, 0XE0E6E6, 0X4D5667, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DREAD_LICH = ITEMS.register("spawn_egg_lich", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_LICH, 0XE0E6E6, 0X274860, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DREAD_KNIGHT = ITEMS.register("spawn_egg_dread_knight", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_KNIGHT, 0XE0E6E6, 0X4A6C6E, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_DREAD_HORSE = ITEMS.register("spawn_egg_dread_horse", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_HORSE, 0XE0E6E6, 0XACACAC, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_HYDRA = ITEMS.register("spawn_egg_hydra", () -> new ForgeSpawnEggItem(IafEntityRegistry.HYDRA, 0X8B8B78, 0X2E372B, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+        RegistryObject<Item> SPAWN_EGG_GHOST = ITEMS.register("spawn_egg_ghost", () -> new ForgeSpawnEggItem(IafEntityRegistry.GHOST, 0XB9EDB8, 0X73B276, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+    }
+
+    public static void initBannerItems() {
+        registerPatternItem("fire");
+        registerPatternItem("ice");
+        registerPatternItem("lightning");
+        registerPatternItem("fire_head");
+        registerPatternItem("ice_head");
+        registerPatternItem("lightning_head");
+        registerPatternItem("amphithere");
+        registerPatternItem("bird");
+        registerPatternItem("eye");
+        registerPatternItem("fae");
+        registerPatternItem("feather");
+        registerPatternItem("gorgon");
+        registerPatternItem("hippocampus");
+        registerPatternItem("hippogryph_head");
+        registerPatternItem("mermaid");
+        registerPatternItem("sea_serpent");
+        registerPatternItem("troll");
+        registerPatternItem("weezer");
+        registerPatternItem("dread");
+    }
+
+    static {
         EnumDragonArmor.initArmors();
         EnumSeaSerpent.initArmors();
         EnumSkullType.initItems();
         EnumTroll.initArmors();
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-        //Banner Patterns
-        try {
-            for (Field f : IafRecipeRegistry.class.getFields()) {
-                Object obj = f.get(null);
-                if (obj instanceof BannerPattern pattern) {
-                    String name = "banner_pattern_%s".formatted(f.getName().replace("PATTERN_", "").toLowerCase(Locale.ROOT));
-                    ITEMS.register(name, () -> new BannerPatternItem(pattern, (new Item.Properties()).stacksTo(1).tab(IceAndFire.TAB_ITEMS)));
-                }
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+    private static void registerPatternItem(String name) {
+        TagKey<BannerPattern> bannerPatternTagKey = TagKey.create(Registry.BANNER_PATTERN_REGISTRY, new ResourceLocation(IceAndFire.MODID, "patter_for_" + name));
+        ITEMS.register("banner_pattern_" + name, () -> new BannerPatternItem(bannerPatternTagKey, (new Item.Properties().tab(IceAndFire.TAB_ITEMS).stacksTo(1))));
+    }
 
-        //spawn Eggs
-        //@formatter:off
-        ITEMS.register("spawn_egg_fire_dragon", () -> new ForgeSpawnEggItem(IafEntityRegistry.FIRE_DRAGON, 0X340000, 0XA52929, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_ice_dragon", () -> new ForgeSpawnEggItem(IafEntityRegistry.ICE_DRAGON, 0XB5DDFB, 0X7EBAF0, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_lightning_dragon", () -> new ForgeSpawnEggItem(IafEntityRegistry.LIGHTNING_DRAGON, 0X422367, 0X725691, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_hippogryph", () -> new ForgeSpawnEggItem(IafEntityRegistry.HIPPOGRYPH, 0XD8D8D8, 0XD1B55D, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_gorgon", () -> new ForgeSpawnEggItem(IafEntityRegistry.GORGON, 0XD0D99F, 0X684530, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_pixie", () -> new ForgeSpawnEggItem(IafEntityRegistry.PIXIE, 0XFF7F89, 0XE2CCE2, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_cyclops", () -> new ForgeSpawnEggItem(IafEntityRegistry.CYCLOPS, 0XB0826E, 0X3A1F0F, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_siren", () -> new ForgeSpawnEggItem(IafEntityRegistry.SIREN, 0X8EE6CA, 0XF2DFC8, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_hippocampus", () -> new ForgeSpawnEggItem(IafEntityRegistry.HIPPOCAMPUS, 0X4491C7, 0X4FC56B, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_death_worm", () -> new ForgeSpawnEggItem(IafEntityRegistry.DEATH_WORM, 0XD1CDA3, 0X423A3A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_cockatrice", () -> new ForgeSpawnEggItem(IafEntityRegistry.COCKATRICE, 0X8F5005, 0X4F5A23, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_stymphalian_bird", () -> new ForgeSpawnEggItem(IafEntityRegistry.STYMPHALIAN_BIRD, 0X744F37, 0X9E6C4B, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_troll", () -> new ForgeSpawnEggItem(IafEntityRegistry.TROLL, 0X3D413D, 0X58433A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_myrmex_worker", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_WORKER, 0XA16026, 0X594520, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_myrmex_soldier", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_SOLDIER, 0XA16026, 0X7D622D, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_myrmex_sentinel", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_SENTINEL, 0XA16026, 0XA27F3A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_myrmex_royal", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_ROYAL, 0XA16026, 0XC79B48, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_myrmex_queen", () -> new ForgeSpawnEggItem(IafEntityRegistry.MYRMEX_QUEEN, 0XA16026, 0XECB855, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_amphithere", () -> new ForgeSpawnEggItem(IafEntityRegistry.AMPHITHERE, 0X597535, 0X00AA98, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_sea_serpent", () -> new ForgeSpawnEggItem(IafEntityRegistry.SEA_SERPENT, 0X008299, 0XC5E6E7, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_dread_thrall", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_THRALL, 0XE0E6E6, 0X00FFFF, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_dread_ghoul", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_GHOUL, 0XE0E6E6, 0X7B838A, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_dread_beast", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_BEAST, 0XE0E6E6, 0X38373C, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_dread_scuttler", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_SCUTTLER, 0XE0E6E6, 0X4D5667, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_lich", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_LICH, 0XE0E6E6, 0X274860, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_dread_knight", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_KNIGHT, 0XE0E6E6, 0X4A6C6E, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_dread_horse", () -> new ForgeSpawnEggItem(IafEntityRegistry.DREAD_HORSE, 0XE0E6E6, 0XACACAC, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_hydra", () -> new ForgeSpawnEggItem(IafEntityRegistry.HYDRA, 0X8B8B78, 0X2E372B, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
-        ITEMS.register("spawn_egg_ghost", () -> new ForgeSpawnEggItem(IafEntityRegistry.GHOST, 0XB9EDB8, 0X73B276, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
     }
 }

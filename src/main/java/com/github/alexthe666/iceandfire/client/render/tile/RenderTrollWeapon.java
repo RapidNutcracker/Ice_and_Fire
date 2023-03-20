@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+
 public class RenderTrollWeapon extends BlockEntityWithoutLevelRenderer {
     private static final ModelTrollWeapon MODEL = new ModelTrollWeapon();
 

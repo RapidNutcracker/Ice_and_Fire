@@ -17,6 +17,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.AABB;
 
@@ -148,7 +149,7 @@ public class WorldUtil {
      * @return true if so.
      */
     public static boolean isOverworldType(final Level world) {
-        return isOfWorldType(world, DimensionType.OVERWORLD_LOCATION);
+        return isOfWorldType(world, BuiltinDimensionTypes.OVERWORLD);
     }
 
     /**
@@ -158,7 +159,7 @@ public class WorldUtil {
      * @return true if so.
      */
     public static boolean isNetherType(final Level world) {
-        return isOfWorldType(world, DimensionType.NETHER_LOCATION);
+        return isOfWorldType(world, BuiltinDimensionTypes.NETHER);
     }
 
     /**

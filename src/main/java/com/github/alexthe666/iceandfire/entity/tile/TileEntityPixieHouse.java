@@ -12,6 +12,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +30,7 @@ public class TileEntityPixieHouse extends BlockEntity {
 
     private static final float PARTICLE_WIDTH = 0.3F;
     private static final float PARTICLE_HEIGHT = 0.6F;
-    private final Random rand;
+    private final RandomSource rand;
     public int houseType;
     public boolean hasPixie;
     public boolean tamedPixie;
@@ -40,7 +41,7 @@ public class TileEntityPixieHouse extends BlockEntity {
 
     public TileEntityPixieHouse(BlockPos pos, BlockState state) {
         super(IafTileEntityRegistry.PIXIE_HOUSE.get(), pos, state);
-        this.rand = new Random();
+        this.rand = RandomSource.create();
     }
 
     public static int getHouseTypeFromBlock(Block block) {

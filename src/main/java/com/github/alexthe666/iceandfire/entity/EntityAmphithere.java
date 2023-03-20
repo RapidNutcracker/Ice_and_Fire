@@ -15,7 +15,8 @@ import com.github.alexthe666.iceandfire.world.IafWorldRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -24,6 +25,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -109,7 +111,7 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
         switchNavigator(0);
     }
 
-    public static BlockPos getPositionRelativetoGround(Entity entity, Level world, double x, double z, Random rand) {
+    public static BlockPos getPositionRelativetoGround(Entity entity, Level world, double x, double z, RandomSource rand) {
         BlockPos pos = new BlockPos(x, entity.getY(), z);
         for (int yDown = 0; yDown < 6 + rand.nextInt(6); yDown++) {
             if (!world.isEmptyBlock(pos.below(yDown))) {
@@ -127,7 +129,7 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
         return super.checkSpawnRules(worldIn, spawnReasonIn);
     }
 
-    public static boolean canAmphithereSpawnOn(EntityType<EntityAmphithere> parrotIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, Random random) {
+    public static boolean canAmphithereSpawnOn(EntityType<EntityAmphithere> parrotIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockState = worldIn.getBlockState(p_223317_3_.below());
         Block block = blockState.getBlock();
         return (blockState.is(BlockTags.LEAVES)
@@ -151,7 +153,7 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
         return false;
     }
 
-    public static BlockPos getPositionInOrbit(EntityAmphithere entity, Level world, BlockPos orbit, Random rand) {
+    public static BlockPos getPositionInOrbit(EntityAmphithere entity, Level world, BlockPos orbit, RandomSource rand) {
         float possibleOrbitRadius = (entity.orbitRadius + 10.0F);
         float radius = 10;
         if (entity.getCommand() == 2) {
@@ -219,7 +221,7 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
                     BlockPos pos = this.blockPosition();
                     this.homePos = pos;
                     this.hasHomePosition = true;
-                    player.displayClientMessage(new TranslatableComponent("amphithere.command.new_home", homePos.getX(), homePos.getY(), homePos.getZ()), true);
+                    player.displayClientMessage(Component.translatable("amphithere.command.new_home", homePos.getX(), homePos.getY(), homePos.getZ()), true);
                     return InteractionResult.SUCCESS;
                 }
                 return InteractionResult.SUCCESS;
@@ -230,7 +232,7 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
                     if (this.getCommand() > 2) {
                         this.setCommand(0);
                     }
-                    player.displayClientMessage(new TranslatableComponent("amphithere.command." + this.getCommand()), true);
+                    player.displayClientMessage(Component.translatable("amphithere.command." + this.getCommand()), true);
                     this.playSound(SoundEvents.ZOMBIE_INFECT, 1, 1);
                     return InteractionResult.SUCCESS;
                 }
@@ -657,10 +659,10 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
             }
         }
         if (this.getAnimation() == ANIMATION_WING_BLAST && this.getAnimationTick() == 5) {
-            this.playSound(IafSoundRegistry.AMPHITHERE_GUST, 1, 1);
+            this.playSound(IafSoundRegistry.AMPHITHERE_GUST.get(), 1, 1);
         }
         if ((this.getAnimation() == ANIMATION_BITE || this.getAnimation() == ANIMATION_BITE_RIDER) && this.getAnimationTick() == 1) {
-            this.playSound(IafSoundRegistry.AMPHITHERE_BITE, 1, 1);
+            this.playSound(IafSoundRegistry.AMPHITHERE_BITE.get(), 1, 1);
         }
         if (target != null && this.getAnimation() == ANIMATION_WING_BLAST && this.getAnimationTick() > 5 && this.getAnimationTick() < 22) {
 
@@ -852,19 +854,19 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.AMPHITHERE_IDLE;
+        return IafSoundRegistry.AMPHITHERE_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return IafSoundRegistry.AMPHITHERE_HURT;
+        return IafSoundRegistry.AMPHITHERE_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.AMPHITHERE_DIE;
+        return IafSoundRegistry.AMPHITHERE_DIE.get();
     }
 
     @Override
@@ -921,7 +923,7 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
     }
 
     @Override
-    protected int getExperienceReward(@NotNull Player player) {
+    public int getExperienceReward() {
         return 10;
     }
 
@@ -997,10 +999,11 @@ public class EntityAmphithere extends TamableAnimal implements ISyncMount, IAnim
         return false;
     }
 
-    @Override
-    public boolean canBeControlledByRider() {
-        return true;
-    }
+    // TODO canBeControlledByRider
+    // @Override
+    // public boolean canBeControlledByRider() {
+    //     return true;
+    // }
 
     @Override
     public double getFlightSpeedModifier() {

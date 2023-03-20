@@ -76,19 +76,19 @@ public class EntityGhost extends Monster implements IAnimatedEntity, IVillagerFe
     @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return IafSoundRegistry.GHOST_IDLE;
+        return IafSoundRegistry.GHOST_IDLE.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return IafSoundRegistry.GHOST_HURT;
+        return IafSoundRegistry.GHOST_HURT.get();
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return IafSoundRegistry.GHOST_DIE;
+        return IafSoundRegistry.GHOST_DIE.get();
     }
 
     public static AttributeSupplier.Builder bakeAttributes() {
@@ -235,7 +235,7 @@ public class EntityGhost extends Monster implements IAnimatedEntity, IVillagerFe
             }
         } else {
             if (this.getAnimation() == ANIMATION_SCARE && this.getAnimationTick() == 3 && !this.isHauntedShoppingList() && random.nextInt(3) == 0) {
-                this.playSound(IafSoundRegistry.GHOST_JUMPSCARE, this.getSoundVolume(), this.getVoicePitch());
+                this.playSound(IafSoundRegistry.GHOST_JUMPSCARE.get(), this.getSoundVolume(), this.getVoicePitch());
                 if (level.isClientSide) {
                     IceAndFire.PROXY.spawnParticle(EnumParticles.Ghost_Appearance, this.getX(), this.getY(), this.getZ(), this.getId(), 0, 0);
                 }
@@ -243,7 +243,7 @@ public class EntityGhost extends Monster implements IAnimatedEntity, IVillagerFe
         }
         if (this.getAnimation() == ANIMATION_HIT && this.getTarget() != null) {
             if (this.distanceTo(this.getTarget()) < 1.4D && this.getAnimationTick() >= 4 && this.getAnimationTick() < 6) {
-                this.playSound(IafSoundRegistry.GHOST_ATTACK, this.getSoundVolume(), this.getVoicePitch());
+                this.playSound(IafSoundRegistry.GHOST_ATTACK.get(), this.getSoundVolume(), this.getVoicePitch());
                 this.doHurtTarget(this.getTarget());
             }
         }
@@ -263,8 +263,8 @@ public class EntityGhost extends Monster implements IAnimatedEntity, IVillagerFe
     @Override
     protected boolean isSunBurnTick() {
         if (this.level.isDay() && !this.level.isClientSide) {
-            float f = this.getBrightness();
             BlockPos blockpos = this.getVehicle() instanceof Boat ? (new BlockPos(this.getX(), (double) Math.round(this.getY()), this.getZ())).above() : new BlockPos(this.getX(), (double) Math.round(this.getY() + 4), this.getZ());
+            float f = (float) this.level.getBrightness(null, blockpos);
             return f > 0.5F && this.level.canSeeSky(blockpos);
         }
 
@@ -281,7 +281,7 @@ public class EntityGhost extends Monster implements IAnimatedEntity, IVillagerFe
         ItemStack itemstack = player.getItemInHand(hand);
         if (itemstack != null && itemstack.getItem() == IafItemRegistry.MANUSCRIPT.get() && !this.isHauntedShoppingList()) {
             this.setColor(-1);
-            this.playSound(IafSoundRegistry.BESTIARY_PAGE, 1, 1);
+            this.playSound(IafSoundRegistry.BESTIARY_PAGE.get(), 1, 1);
             if (!player.isCreative()) {
                 itemstack.shrink(1);
             }

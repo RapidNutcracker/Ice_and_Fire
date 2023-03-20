@@ -5,6 +5,7 @@ import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 import com.github.alexthe666.iceandfire.entity.EntityDragonEgg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.GameRules;
@@ -16,6 +17,8 @@ import net.minecraft.world.level.material.Material;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
+
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
 
 public class DragonAIMate extends Goal {
     private static final BlockState NEST = IafBlockRegistry.NEST.get().defaultBlockState();
@@ -117,7 +120,7 @@ public class DragonAIMate extends Goal {
 
             egg.moveTo(nestX - 0.5F, nestY + 1F, nestZ - 0.5F, 0.0F, 0.0F);
             this.theWorld.addFreshEntity(egg);
-            Random random = this.dragon.getRandom();
+            RandomSource random = this.dragon.getRandom();
 
             for (int i = 0; i < 17; ++i) {
                 final double d0 = random.nextGaussian() * 0.02D;

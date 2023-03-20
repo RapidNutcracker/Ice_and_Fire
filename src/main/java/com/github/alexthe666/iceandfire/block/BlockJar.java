@@ -32,6 +32,8 @@ import javax.annotation.Nullable;
 
 import static com.github.alexthe666.iceandfire.entity.tile.IafTileEntityRegistry.PIXIE_JAR;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockJar extends BaseEntityBlock {
     protected static final VoxelShape AABB = Block.box(3, 0, 3, 13, 16, 13);
     public Item itemBlock;
@@ -100,7 +102,7 @@ public class BlockJar extends BaseEntityBlock {
             if (!world.isClientSide) {
                 world.addFreshEntity(item);
             }
-            world.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, IafSoundRegistry.PIXIE_HURT, SoundSource.NEUTRAL, 1, 1, false);
+            world.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, IafSoundRegistry.PIXIE_HURT.get(), SoundSource.NEUTRAL, 1, 1, false);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
