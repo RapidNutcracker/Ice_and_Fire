@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#iceandfire:collections/plains",
+    "#iceandfire:collections/floral",
+    "#iceandfire:collections/meadows",
+    "#iceandfire:collections/swamps",
+    "#iceandfire:collections/any_forests"
+  ]
+}

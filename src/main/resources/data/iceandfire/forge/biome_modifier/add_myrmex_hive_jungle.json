@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:has_feature/myrmex_hives/jungle",
+  "features": "iceandfire:myrmex_hive_jungle",
+  "step": "underground_structures"
+}

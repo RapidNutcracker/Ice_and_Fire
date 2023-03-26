@@ -1,6 +1,7 @@
 package com.github.alexthe666.iceandfire.world.structure;
 
 // import com.github.alexthe666.citadel.repack.jaad.mp4.api.Track.Codec;
+
 import com.github.alexthe666.iceandfire.IafConfig;
 import com.github.alexthe666.iceandfire.world.IafStructures;
 import com.mojang.serialization.Codec;
@@ -13,10 +14,10 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ import java.util.Optional;
 
 public class DreadMausoleumStructure extends Structure {
 
-// A custom codec that changes the size limit for our code_structure_sky_fan.json's config to not be capped at 7.
+    // A custom codec that changes the size limit for our code_structure_sky_fan.json's config to not be capped at 7.
     // With this, we can have a structure with a size limit up to 30 if we want to have extremely long branches of pieces in the structure.
     public static final Codec<DreadMausoleumStructure> CODEC = RecordCodecBuilder.<DreadMausoleumStructure>mapCodec(instance ->
             instance.group(DreadMausoleumStructure.settingsCodec(instance),
@@ -34,7 +35,8 @@ public class DreadMausoleumStructure extends Structure {
                     Codec.intRange(0, 30).fieldOf("size").forGetter(structure -> structure.size),
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
-                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter)
+                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
+                    StructureSpawnOverride.CODEC.optionalFieldOf("spawn_overrides").forGetter(structure -> structure.spawnOverrides)
             ).apply(instance, DreadMausoleumStructure::new)).codec();
 
     private final Holder<StructureTemplatePool> startPool;
@@ -43,15 +45,16 @@ public class DreadMausoleumStructure extends Structure {
     private final HeightProvider startHeight;
     private final Optional<Heightmap.Types> projectStartToHeightmap;
     private final int maxDistanceFromCenter;
+    private final Optional<StructureSpawnOverride> spawnOverrides;
 
     public DreadMausoleumStructure(Structure.StructureSettings config,
-                         Holder<StructureTemplatePool> startPool,
-                         Optional<ResourceLocation> startJigsawName,
-                         int size,
-                         HeightProvider startHeight,
-                         Optional<Heightmap.Types> projectStartToHeightmap,
-                         int maxDistanceFromCenter)
-    {
+                                   Holder<StructureTemplatePool> startPool,
+                                   Optional<ResourceLocation> startJigsawName,
+                                   int size,
+                                   HeightProvider startHeight,
+                                   Optional<Heightmap.Types> projectStartToHeightmap,
+                                   int maxDistanceFromCenter,
+                                   Optional<StructureSpawnOverride> spawnOverrides) {
         super(config);
         this.startPool = startPool;
         this.startJigsawName = startJigsawName;
@@ -59,6 +62,7 @@ public class DreadMausoleumStructure extends Structure {
         this.startHeight = startHeight;
         this.projectStartToHeightmap = projectStartToHeightmap;
         this.maxDistanceFromCenter = maxDistanceFromCenter;
+        this.spawnOverrides = spawnOverrides;
     }
 
     /*
@@ -91,14 +95,21 @@ public class DreadMausoleumStructure extends Structure {
         // Grabs the chunk position we are at
         ChunkPos chunkpos = context.chunkPos();
 
+        int spawnRoll = context.random().nextInt(IafConfig.generateMausoleumChance);
+        if (spawnRoll != 0) {
+            return false;
+        }
+
         // Checks to make sure our structure does not spawn above land that's higher than y = 150
         // to demonstrate how this method is good for checking extra conditions for spawning
-        return context.chunkGenerator().getFirstOccupiedHeight(
+        boolean belowY150 = context.chunkGenerator().getFirstOccupiedHeight(
                 chunkpos.getMinBlockX(),
                 chunkpos.getMinBlockZ(),
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 context.heightAccessor(),
                 context.randomState()) < 150;
+
+        return belowY150;
     }
 
     @Override
@@ -149,60 +160,60 @@ public class DreadMausoleumStructure extends Structure {
     }
 }
 
-    // public DreadMausoleumStructure() {
-    //     super(JigsawConfiguration.CODEC, DreadMausoleumStructure::createPiecesGenerator, PostPlacementProcessor.NONE);
-    // }
+// public DreadMausoleumStructure() {
+//     super(JigsawConfiguration.CODEC, DreadMausoleumStructure::createPiecesGenerator, PostPlacementProcessor.NONE);
+// }
 
-    // public static JigsawConfiguration config(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-    //     return new JigsawConfiguration(
-    //         context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).getOrCreateHolder(dread_pool),
-    //         5
-    //     );
-    // }
+// public static JigsawConfiguration config(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+//     return new JigsawConfiguration(
+//         context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).getOrCreateHolder(dread_pool),
+//         5
+//     );
+// }
 
-    // public static @NotNull Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-    //     if (!context.validBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG) || !IafConfig.generateMausoleums)
-    //         return Optional.empty();
+// public static @NotNull Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+//     if (!context.validBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG) || !IafConfig.generateMausoleums)
+//         return Optional.empty();
 
-    //     context = replaceContext(context, config(context));
+//     context = replaceContext(context, config(context));
 
-    //     ChunkGenerator chunkGenerator = context.chunkGenerator();
-    //     ChunkPos pos = context.chunkPos();
-    //     LevelHeightAccessor height = context.heightAccessor();
-    //     Rotation rotation = Rotation.getRandom(ThreadLocalRandom.current());
-    //     int xOffset = 5;
-    //     int yOffset = 5;
-    //     if (rotation == Rotation.CLOCKWISE_90) {
-    //         xOffset = -5;
-    //     } else if (rotation == Rotation.CLOCKWISE_180) {
-    //         xOffset = -5;
-    //         yOffset = -5;
-    //     } else if (rotation == Rotation.COUNTERCLOCKWISE_90) {
-    //         yOffset = -5;
-    //     }
+//     ChunkGenerator chunkGenerator = context.chunkGenerator();
+//     ChunkPos pos = context.chunkPos();
+//     LevelHeightAccessor height = context.heightAccessor();
+//     Rotation rotation = Rotation.getRandom(ThreadLocalRandom.current());
+//     int xOffset = 5;
+//     int yOffset = 5;
+//     if (rotation == Rotation.CLOCKWISE_90) {
+//         xOffset = -5;
+//     } else if (rotation == Rotation.CLOCKWISE_180) {
+//         xOffset = -5;
+//         yOffset = -5;
+//     } else if (rotation == Rotation.COUNTERCLOCKWISE_90) {
+//         yOffset = -5;
+//     }
 
-    //     int x = pos.getMiddleBlockX();
-    //     int z = pos.getMiddleBlockZ();
-    //     int y1 = chunkGenerator.getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, height);
-    //     int y2 = chunkGenerator.getFirstOccupiedHeight(x, z + yOffset, Heightmap.Types.WORLD_SURFACE_WG, height);
-    //     int y3 = chunkGenerator.getFirstOccupiedHeight(x + xOffset, z, Heightmap.Types.WORLD_SURFACE_WG, height);
-    //     int y4 = chunkGenerator.getFirstOccupiedHeight(x + xOffset, z + yOffset, Heightmap.Types.WORLD_SURFACE_WG, height);
-    //     int yMin = Math.min(Math.min(y1, y2), Math.min(y3, y4));
-    //     BlockPos blockpos = pos.getMiddleBlockPosition(yMin + 1);
+//     int x = pos.getMiddleBlockX();
+//     int z = pos.getMiddleBlockZ();
+//     int y1 = chunkGenerator.getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, height);
+//     int y2 = chunkGenerator.getFirstOccupiedHeight(x, z + yOffset, Heightmap.Types.WORLD_SURFACE_WG, height);
+//     int y3 = chunkGenerator.getFirstOccupiedHeight(x + xOffset, z, Heightmap.Types.WORLD_SURFACE_WG, height);
+//     int y4 = chunkGenerator.getFirstOccupiedHeight(x + xOffset, z + yOffset, Heightmap.Types.WORLD_SURFACE_WG, height);
+//     int yMin = Math.min(Math.min(y1, y2), Math.min(y3, y4));
+//     BlockPos blockpos = pos.getMiddleBlockPosition(yMin + 1);
 
-    //     // All a structure has to do is call this method to turn it into a jigsaw based structure!
-    //     // No manual pieces class needed.
+//     // All a structure has to do is call this method to turn it into a jigsaw based structure!
+//     // No manual pieces class needed.
 
-    //     return JigsawPlacement.addPieces(context, PoolElementStructurePiece::new, blockpos, false, false);
-    // }
+//     return JigsawPlacement.addPieces(context, PoolElementStructurePiece::new, blockpos, false, false);
+// }
 
-    // @Override
-    // public GenerationStep.@NotNull Decoration step() {
-    //     return GenerationStep.Decoration.SURFACE_STRUCTURES;
-    // }
+// @Override
+// public GenerationStep.@NotNull Decoration step() {
+//     return GenerationStep.Decoration.SURFACE_STRUCTURES;
+// }
 
-    // @Override
-    // public boolean canGenerate(@NotNull RegistryAccess p_197172_, @NotNull ChunkGenerator p_197173_, @NotNull BiomeSource p_197174_, @NotNull StructureManager p_197175_, long p_197176_, @NotNull ChunkPos p_197177_, @NotNull JigsawConfiguration p_197178_, @NotNull LevelHeightAccessor p_197179_, @NotNull Predicate<Holder<Biome>> p_197180_) {
-    //     return super.canGenerate(p_197172_, p_197173_, p_197174_, p_197175_, p_197176_, p_197177_, p_197178_, p_197179_, p_197180_);
-    // }
+// @Override
+// public boolean canGenerate(@NotNull RegistryAccess p_197172_, @NotNull ChunkGenerator p_197173_, @NotNull BiomeSource p_197174_, @NotNull StructureManager p_197175_, long p_197176_, @NotNull ChunkPos p_197177_, @NotNull JigsawConfiguration p_197178_, @NotNull LevelHeightAccessor p_197179_, @NotNull Predicate<Holder<Biome>> p_197180_) {
+//     return super.canGenerate(p_197172_, p_197173_, p_197174_, p_197175_, p_197176_, p_197177_, p_197178_, p_197179_, p_197180_);
+// }
 // }

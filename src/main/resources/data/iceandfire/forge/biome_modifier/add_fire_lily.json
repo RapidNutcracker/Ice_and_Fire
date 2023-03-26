@@ -1,0 +1,7 @@
+{
+  "type": "iceandfire:add_features_with_exceptions_modifier",
+  "biomes": "#iceandfire:has_feature/dragons/fire_dragon",
+  "exceptions": "#iceandfire:excludes_feature/dragons/fire_dragon",
+  "feature": "iceandfire:fire_lily",
+  "step": "vegetal_decoration"
+}

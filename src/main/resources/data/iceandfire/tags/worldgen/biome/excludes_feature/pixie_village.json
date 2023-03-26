@@ -1,0 +1,15 @@
+{
+  "replace": false,
+
+  "_comment": " This biome tag can specify the biome directly. Or specify another biome tag by starting with # ",
+  "values": [
+    "#forge:is_mountain",
+    "#iceandfire:collections/hills",
+    "#forge:is_wet",
+    "#forge:is_cold",
+    "#forge:is_hot",
+    "#forge:is_dry",
+    "#iceandfire:collections/any_taiga",
+    "#forge:is_water"
+  ]
+}

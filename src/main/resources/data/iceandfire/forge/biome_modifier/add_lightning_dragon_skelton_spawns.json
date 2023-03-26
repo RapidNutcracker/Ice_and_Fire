@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:has_feature/dragons/lightning",
+  "features": "iceandfire:spawn_lightning_dragon_skeleton",
+  "step": "surface_structures"
+}

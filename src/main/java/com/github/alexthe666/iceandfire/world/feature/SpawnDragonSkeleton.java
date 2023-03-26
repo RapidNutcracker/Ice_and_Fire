@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.world.feature;
 
 import com.github.alexthe666.iceandfire.IafConfig;
 import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
+import com.github.alexthe666.iceandfire.entity.IafEntityRegistry;
 import com.github.alexthe666.iceandfire.world.IafWorldRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -18,11 +19,12 @@ import java.util.function.Supplier;
 
 public class SpawnDragonSkeleton extends Feature<NoneFeatureConfiguration> {
 
-    protected EntityType<? extends EntityDragonBase> dragonType;
+    protected int dragonType;
 
-    public SpawnDragonSkeleton(Supplier<EntityType<? extends EntityDragonBase>> dt, Codec<NoneFeatureConfiguration> configFactoryIn) {
+    // TODO Fix this always spawning Ice Dragons
+    public SpawnDragonSkeleton(int dragonType, Codec<NoneFeatureConfiguration> configFactoryIn) {
         super(configFactoryIn);
-//        dragonType = dt.get();
+        this.dragonType = dragonType;
     }
 
     @Override
@@ -37,13 +39,23 @@ public class SpawnDragonSkeleton extends Feature<NoneFeatureConfiguration> {
 
         if (IafConfig.generateDragonSkeletons) {
             if (rand.nextInt(IafConfig.generateDragonSkeletonChance + 1) == 0) {
-                EntityDragonBase dragon = dragonType.create(worldIn.getLevel());
+                EntityDragonBase dragon = switch(dragonType) {
+                    case 0 -> IafEntityRegistry.FIRE_DRAGON.get().create(worldIn.getLevel());
+                    case 1 -> IafEntityRegistry.ICE_DRAGON.get().create(worldIn.getLevel());
+                    case 2 -> IafEntityRegistry.LIGHTNING_DRAGON.get().create(worldIn.getLevel());
+                    default -> null;
+                };
+
+                if (dragon == null) {
+                    return false;
+                }
+
                 dragon.setPos(position.getX() + 0.5F, position.getY() + 1, position.getZ() + 0.5F);
-                int dragonage = 10 + rand.nextInt(100);
-                dragon.growDragon(dragonage);
+                int dragonAge = 10 + rand.nextInt(100);
+                dragon.growDragon(dragonAge);
                 dragon.modelDeadProgress = 20;
                 dragon.setModelDead(true);
-                dragon.setDeathStage((dragonage / 5) / 2);
+                dragon.setDeathStage((dragonAge / 5) / 2);
                 dragon.setYRot(rand.nextInt(360));
                 worldIn.addFreshEntity(dragon);
             }

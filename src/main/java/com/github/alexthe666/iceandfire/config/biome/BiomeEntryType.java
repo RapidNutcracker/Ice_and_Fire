@@ -3,13 +3,13 @@ package com.github.alexthe666.iceandfire.config.biome;
 public enum BiomeEntryType {
     REGISTRY_NAME(false), BIOME_TAG(false), BIOME_DICT(true), BIOME_CATEGORY(true);
 
-    private boolean depreciated;
+    private boolean deprecated;
 
-    BiomeEntryType(boolean depreciated){
-        this.depreciated = depreciated;
+    BiomeEntryType(boolean deprecated){
+        this.deprecated = deprecated;
     }
 
-    public boolean isDepreciated() {
-        return depreciated;
+    public boolean isDeprecated() {
+        return deprecated;
     }
 }

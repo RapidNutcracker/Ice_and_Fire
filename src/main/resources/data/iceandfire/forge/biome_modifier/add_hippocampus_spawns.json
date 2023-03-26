@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:collections/oceans",
+  "features": "iceandfire:spawn_hippocampus",
+  "step": "surface_structures"
+}

@@ -32,13 +32,14 @@ public class WorldGenLightningDragonCave extends WorldGenDragonCave {
         TREASURE_PILE = IafBlockRegistry.COPPER_PILE.get().defaultBlockState();
         PALETTE_ORE1 = IafBlockRegistry.AMETHYST_ORE.get().defaultBlockState();
         PALETTE_ORE2 = Blocks.EMERALD_ORE.defaultBlockState();
-        generateGemOre = IafConfig.generateAmythestOre;
+        generateGemOre = IafConfig.generateAmethystOre;
     }
 
     @Override
     EntityDragonBase createDragon(WorldGenLevel worldIn, RandomSource rand, BlockPos position, int dragonAge) {
-        EntityLightningDragon dragon = new EntityLightningDragon(IafEntityRegistry.LIGHTNING_DRAGON.get(),
-            worldIn.getLevel());
+        LOGGER.info("Creating Lightning Dragon");
+
+        EntityLightningDragon dragon = new EntityLightningDragon(IafEntityRegistry.LIGHTNING_DRAGON.get(), worldIn.getLevel());
         dragon.setGender(isMale);
         dragon.growDragon(dragonAge);
         dragon.setAgingDisabled(true);

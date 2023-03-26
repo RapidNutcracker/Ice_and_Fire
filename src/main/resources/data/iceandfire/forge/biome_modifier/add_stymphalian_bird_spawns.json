@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:collections/swamps",
+  "features": "iceandfire:spawn_stymphalian_bird",
+  "step": "surface_structures"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:has_feature/dragons/lightning_dragon",
+  "features": "iceandfire:lightning_dragon_cave",
+  "step": "underground_structures"
+}

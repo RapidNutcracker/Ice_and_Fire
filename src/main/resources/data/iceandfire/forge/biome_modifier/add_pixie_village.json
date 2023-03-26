@@ -1,0 +1,7 @@
+{
+  "type": "iceandfire:add_features_with_exceptions_modifier",
+  "biomes": "#iceandfire:has_feature/pixie_village",
+  "exceptions": "#iceandfire:excludes_feature/pixie_village",
+  "feature": "iceandfire:pixie_village",
+  "step": "surface_structures"
+}

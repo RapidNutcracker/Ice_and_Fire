@@ -1,0 +1,26 @@
+{
+  "structures": [
+    {
+      "structure": "iceandfire:dread_mausoleum",
+      "weight": 30
+    },
+    {
+      "structure": "iceandfire:gorgon_temple",
+      "weight": 16
+    },
+    {
+      "structure": "iceandfire:graveyard",
+      "weight": 48
+    }
+  ],
+  "placement": {
+    "salt": 1642136474,
+    "spacing": 30,
+    "separation": 15,
+    "type": "minecraft:random_spread",
+    "exclusion_zone": {
+      "chunk_count": 4,
+      "other_set": "#minecraft:village"
+    }
+  }
+}

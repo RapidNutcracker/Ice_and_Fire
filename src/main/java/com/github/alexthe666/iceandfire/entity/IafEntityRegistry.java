@@ -10,6 +10,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.world.MobSpawnSettingsBuilder;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -140,16 +141,18 @@ public class IafEntityRegistry {
     }
 
     public static HashMap<String, Boolean> LOADED_ENTITIES;
+
     static {
-    	LOADED_ENTITIES = new HashMap<>();
-    	LOADED_ENTITIES.put("HIPPOGRYPH", false);
-    	LOADED_ENTITIES.put("DREAD_LICH", false);
-    	LOADED_ENTITIES.put("COCKATRICE", false);
-    	LOADED_ENTITIES.put("AMPHITHERE", false);
-    	LOADED_ENTITIES.put("TROLL_F", false);
-    	LOADED_ENTITIES.put("TROLL_S", false);
-    	LOADED_ENTITIES.put("TROLL_M", false);
+        LOADED_ENTITIES = new HashMap<>();
+        LOADED_ENTITIES.put("HIPPOGRYPH", false);
+        LOADED_ENTITIES.put("DREAD_LICH", false);
+        LOADED_ENTITIES.put("COCKATRICE", false);
+        LOADED_ENTITIES.put("AMPHITHERE", false);
+        LOADED_ENTITIES.put("TROLL_F", false);
+        LOADED_ENTITIES.put("TROLL_S", false);
+        LOADED_ENTITIES.put("TROLL_M", false);
     }
+
     public static void addSpawners(Holder<Biome> biomeHolder) {
         var spawners = new MobSpawnSettingsBuilder(biomeHolder.value().getMobSettings());
         if (IafConfig.spawnHippogryphs && BiomeConfig.test(BiomeConfig.hippogryphBiomes, biomeHolder)) {
@@ -168,6 +171,25 @@ public class IafEntityRegistry {
             spawners.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(IafEntityRegistry.AMPHITHERE.get(), IafConfig.amphithereSpawnRate, 1, 3));
             LOADED_ENTITIES.put("AMPHITHERE", true);
         }
+// TODO Entity Spawns Here?
+//        if (IafConfig.spawnStymphalianBirds && BiomeConfig.test(BiomeConfig.stymphalianBiomes, biomeHolder)) {
+//            spawners.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(IafEntityRegistry.STYMPHALIAN_BIRD.get(), IafConfig.stymphalianBirdSpawnChance, 1, 3));
+//            LOADED_ENTITIES.put("STYMPHALIAN_BIRD", true);
+//        }
+//        if (IafConfig.spawnSeaSerpents && BiomeConfig.test(BiomeConfig.seaSerpentBiomes, biomeHolder)) {
+//            spawners.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(IafEntityRegistry.SEA_SERPENT.get(), IafConfig.seaSerpentSpawnChance, 1, 3));
+//            LOADED_ENTITIES.put("SEA_SERPENT", true);
+//        }
+//        if (IafConfig.spawnDeathWorm && BiomeConfig.test(BiomeConfig.deathwormBiomes, biomeHolder)) {
+//            spawners.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(IafEntityRegistry.DEATH_WORM.get(), IafConfig.amphithereSpawnRate, 1, 3));
+//            LOADED_ENTITIES.put("DEATH_WORM", true);
+//
+//        }
+//        if (IafConfig.spawnHippocampus && BiomeConfig.test(BiomeConfig.hippocampusBiomes, biomeHolder)) {
+//            spawners.getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(IafEntityRegistry.HIPPOCAMPUS.get(), IafConfig.amphithereSpawnRate, 1, 3));
+//            LOADED_ENTITIES.put("HIPPOCAMPUS", true);
+//        }
+
         if (IafConfig.spawnTrolls && (
     		BiomeConfig.test(BiomeConfig.forestTrollBiomes, biomeHolder) ||
     		BiomeConfig.test(BiomeConfig.snowyTrollBiomes, biomeHolder) ||

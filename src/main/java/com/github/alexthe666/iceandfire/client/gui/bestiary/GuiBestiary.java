@@ -274,10 +274,10 @@ public class GuiBestiary extends Screen {
                 }
                 if (bookPages == 3) {
                     int j = 18;
-                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGONARMOR_IRON_0.get(), 1), j += 16, 60, 1.5F);
-                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGONARMOR_IRON_1.get(), 1), j += 16, 60, 1.5F);
-                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGONARMOR_IRON_2.get(), 1), j += 16, 60, 1.5F);
-                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGONARMOR_IRON_3.get(), 1), j += 16, 60, 1.5F);
+                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGON_ARMOR_IRON_HEAD.get(), 1), j += 16, 60, 1.5F);
+                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGON_ARMOR_IRON_NECK.get(), 1), j += 16, 60, 1.5F);
+                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGON_ARMOR_IRON_BODY.get(), 1), j += 16, 60, 1.5F);
+                    drawItemStack(ms, new ItemStack(IafItemRegistry.DRAGON_ARMOR_IRON_TAIL.get(), 1), j += 16, 60, 1.5F);
 
                     ms.pushPose();
                     ms.scale(1.5F, 1.5F, 1F);

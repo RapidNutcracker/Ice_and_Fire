@@ -24,6 +24,8 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class WorldGenDragonCave extends Feature<NoneFeatureConfiguration> {
+
+    protected final Logger LOGGER = LogManager.getLogger();
 
     public ResourceLocation DRAGON_CHEST;
     public ResourceLocation DRAGON_MALE_CHEST;
@@ -61,6 +65,9 @@ public abstract class WorldGenDragonCave extends Feature<NoneFeatureConfiguratio
         if (!IafConfig.generateDragonDens || rand.nextInt(IafConfig.generateDragonDenChance) != 0 || !IafWorldRegistry.isFarEnoughFromSpawn(worldIn, position) || !IafWorldRegistry.isFarEnoughFromDangerousGen(worldIn, position)) {
             return false;
         }
+
+        LOGGER.info("Placing Dragon Cave @" + position.toString());
+
         isMale = rand.nextBoolean();
         ChunkPos chunkPos = worldIn.getChunk(position).getPos();
         // Center the position at the "middle" of the chunk

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:has_feature/dragons/ice_dragon",
+  "features": "iceandfire:spawn_ice_dragon_skeleton",
+  "step": "surface_structures"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:has_feature/hydra_cave",
+  "features": "iceandfire:hydra_cave",
+  "step": "surface_structures"
+}

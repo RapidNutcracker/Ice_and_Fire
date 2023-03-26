@@ -14,7 +14,7 @@ public class IafConfig {
     public static boolean generateSilverOre = true;
     public static boolean generateCopperOre = true;
     public static boolean generateSapphireOre = true;
-    public static boolean generateAmythestOre = true;
+    public static boolean generateAmethystOre = true;
     public static boolean generateDragonSkeletons = true;
     public static int generateDragonSkeletonChance = 300;
     public static boolean generateDragonDens = true;
@@ -26,7 +26,7 @@ public class IafConfig {
     public static List<? extends String> featureWhitelistedDimensions = Lists.newArrayList("minecraft:overworld");
     public static List<? extends String> featureBlacklistedDimensions = Lists.newArrayList("minecraft:nether", "minecraft:the_end");
     public static List<? extends String> dragonWhitelistedDimensions = Lists.newArrayList("minecraft:overworld");
-    public static List<? extends String> dragonBlacklistedDimensions = Lists.newArrayList("mine craft:the_nether", "minecraft:the_end");
+    public static List<? extends String> dragonBlacklistedDimensions = Lists.newArrayList("minecraft:the_nether", "minecraft:the_end");
     public static List<? extends String> mobWhitelistedDimensions = Lists.newArrayList("minecraft:overworld");
     public static List<? extends String> mobBlacklistedDimensions = Lists.newArrayList("minecraft:the_nether", "minecraft:the_end");
     public static List<? extends String> blacklistedBreakBlocks = Lists.newArrayList();
@@ -181,7 +181,7 @@ public class IafConfig {
         try {
             customMainMenu = ConfigHolder.CLIENT.customMainMenu.get();
             useVanillaFont = ConfigHolder.CLIENT.useVanillaFont.get();
-         dragonAuto3rdPerson = ConfigHolder.CLIENT.dragonAuto3rdPerson.get();
+            dragonAuto3rdPerson = ConfigHolder.CLIENT.dragonAuto3rdPerson.get();
         } catch (Exception e) {
             IceAndFire.LOGGER.warn("An exception was caused trying to load the client config for Ice and Fire.");
             e.printStackTrace();
@@ -193,7 +193,7 @@ public class IafConfig {
             generateSilverOre = ConfigHolder.SERVER.generateSilverOre.get();
             generateCopperOre = ConfigHolder.SERVER.generateCopperOre.get();
             generateSapphireOre = ConfigHolder.SERVER.generateSapphireOre.get();
-            generateAmythestOre = ConfigHolder.SERVER.generateAmythestOre.get();
+            generateAmethystOre = ConfigHolder.SERVER.generateAmethystOre.get();
             generateDragonSkeletons = ConfigHolder.SERVER.generateDragonSkeletons.get();
             generateDragonSkeletonChance = ConfigHolder.SERVER.generateDragonSkeletonChance.get();
             generateDragonDens = ConfigHolder.SERVER.generateDragonDens.get();

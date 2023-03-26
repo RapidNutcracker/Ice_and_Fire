@@ -1,0 +1,7 @@
+{
+  "type": "iceandfire:add_features_with_exceptions_modifier",
+  "biomes": "#iceandfire:has_feature/myrmex_hives/desert",
+  "exceptions": "#iceandfire:excludes_feature/myrmex_hives/desert",
+  "feature": "iceandfire:myrmex_hive_desert",
+  "step": "underground_structures"
+}

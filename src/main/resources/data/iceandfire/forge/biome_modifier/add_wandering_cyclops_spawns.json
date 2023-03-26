@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:collections/plains",
+  "features": "iceandfire:spawn_wandering_cyclops",
+  "step": "surface_structures"
+}

@@ -94,7 +94,7 @@ public class IafSpawnBiomeData extends com.github.alexthe666.citadel.config.biom
         }
 
         public boolean matches(@Nullable Holder<Biome> biomeHolder, ResourceLocation registryName) {
-            if(type.isDepreciated()){
+            if(type.isDeprecated()){
                 Citadel.LOGGER.warn("biome config: BIOME_DICT and BIOME_CATEGORY are no longer valid in 1.19+. Please use BIOME_TAG instead.");
                 return false;
             }else{

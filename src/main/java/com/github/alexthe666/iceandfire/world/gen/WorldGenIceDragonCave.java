@@ -38,6 +38,8 @@ public class WorldGenIceDragonCave extends WorldGenDragonCave {
 
     @Override
     EntityDragonBase createDragon(WorldGenLevel worldIn, RandomSource rand, BlockPos position, int dragonAge) {
+        LOGGER.info("Creating Lightning Dragon");
+
         EntityIceDragon dragon = new EntityIceDragon(IafEntityRegistry.ICE_DRAGON.get(), worldIn.getLevel());
         dragon.setGender(isMale);
         dragon.growDragon(dragonAge);

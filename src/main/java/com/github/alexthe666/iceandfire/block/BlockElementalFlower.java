@@ -15,22 +15,19 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class BlockElementalFlower extends BushBlock {
     public Item itemBlock;
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
 
     public BlockElementalFlower() {
         super(
-            Properties
-                .of(Material.REPLACEABLE_PLANT)
-                .noOcclusion()
-                .noCollission()
-                .dynamicShape()
-                .randomTicks()
-                .sound(SoundType.GRASS)
+                Properties
+                        .of(Material.REPLACEABLE_PLANT)
+                        .noOcclusion()
+                        .noCollission()
+                        .dynamicShape()
+                        .randomTicks()
+                        .sound(SoundType.GRASS)
         );
     }
 
@@ -42,7 +39,12 @@ public class BlockElementalFlower extends BushBlock {
     @Override
     protected boolean mayPlaceOn(BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos) {
         Block block = state.getBlock();
-        return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND || state.getMaterial() == Material.SAND;
+        return block == Blocks.GRASS_BLOCK ||
+                block == Blocks.DIRT ||
+                block == Blocks.COARSE_DIRT ||
+                block == Blocks.PODZOL ||
+                block == Blocks.FARMLAND ||
+                state.getMaterial() == Material.SAND;
     }
 
     public boolean canStay(Level worldIn, BlockPos pos) {

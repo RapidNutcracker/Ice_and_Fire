@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#iceandfire:has_feature/siren_island",
+  "features": "iceandfire:siren_island",
+  "step": "surface_structures"
+}

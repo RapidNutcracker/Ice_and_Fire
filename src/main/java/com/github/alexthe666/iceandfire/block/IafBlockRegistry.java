@@ -1,12 +1,9 @@
 package com.github.alexthe666.iceandfire.block;
 
-import com.github.alexthe666.iceandfire.enums.EnumDragonEgg;
 import com.github.alexthe666.iceandfire.IceAndFire;
+import com.github.alexthe666.iceandfire.enums.EnumDragonEgg;
 import com.github.alexthe666.iceandfire.item.BlockItemWithRender;
 import com.github.alexthe666.iceandfire.item.IafItemRegistry;
-import com.github.alexthe666.iceandfire.misc.IafSoundRegistry;
-
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -16,14 +13,11 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = IceAndFire.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -39,13 +33,17 @@ public class IafBlockRegistry {
     public static final RegistryObject<Block> PODIUM_DARK_OAK = registerBlock("podium_dark_oak", () -> new BlockPodium(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> PODIUM_ACACIA = registerBlock("podium_acacia", () -> new BlockPodium(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> FIRE_LILY = registerBlock("fire_lily", () -> new BlockElementalFlower(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> POTTED_FIRE_LILY = BLOCKS.register("potted_fire_lily", () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), IafBlockRegistry.FIRE_LILY, BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION)));
     public static final RegistryObject<Block> FROST_LILY = registerBlock("frost_lily", () -> new BlockElementalFlower(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> POTTED_FROST_LILY = BLOCKS.register("potted_frost_lily", () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), IafBlockRegistry.FROST_LILY, BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION)));
     public static final RegistryObject<Block> LIGHTNING_LILY = registerBlock("lightning_lily", () -> new BlockElementalFlower(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> POTTED_LIGHTNING_LILY = BLOCKS.register("potted_lightning_lily", () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), IafBlockRegistry.LIGHTNING_LILY, BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION)));
     public static final RegistryObject<Block> GOLD_PILE = registerBlock("gold_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_PILE = registerBlock("silver_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> COPPER_PILE = registerBlock("copper_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_ORE = registerBlock("silver_ore", () -> new BlockIafOre(2, 3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SAPPHIRE_ORE = registerBlock("sapphire_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DEEPSLATE_SAPPHIRE_ORE = registerBlock("deepslate_sapphire_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> COPPER_ORE = registerBlock("copper_ore", () -> new BlockIafOre(0, 3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> AMETHYST_ORE = registerBlock("amethyst_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_BLOCK = registerBlock("silver_block", () -> new BlockGeneric(Material.METAL, 3.0F, 5.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
@@ -105,12 +103,12 @@ public class IafBlockRegistry {
     public static final RegistryObject<Block> DRAGONFORGE_ICE_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(1, false), () -> new BlockDragonforgeCore(1, false), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(2, false), () -> new BlockDragonforgeCore(2, false), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> EGG_IN_ICE = registerBlock("egginice", () -> new BlockEggInIce(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> PIXIE_HOUSE_MUSHROOM_RED = registerBlock(BlockPixieHouse.name("mushroom_red"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> PIXIE_HOUSE_MUSHROOM_BROWN = registerBlock(BlockPixieHouse.name("mushroom_brown"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> PIXIE_HOUSE_OAK = registerBlock(BlockPixieHouse.name("oak"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> PIXIE_HOUSE_BIRCH = registerBlock(BlockPixieHouse.name("birch"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> PIXIE_HOUSE_SPRUCE = registerBlock(BlockPixieHouse.name("spruce"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> PIXIE_HOUSE_DARK_OAK = registerBlock(BlockPixieHouse.name("dark_oak"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> PIXIE_HOUSE_MUSHROOM_RED = registerBlockWithRender(BlockPixieHouse.name("mushroom_red"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> PIXIE_HOUSE_MUSHROOM_BROWN = registerBlockWithRender(BlockPixieHouse.name("mushroom_brown"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> PIXIE_HOUSE_OAK = registerBlockWithRender(BlockPixieHouse.name("oak"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> PIXIE_HOUSE_BIRCH = registerBlockWithRender(BlockPixieHouse.name("birch"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> PIXIE_HOUSE_SPRUCE = registerBlockWithRender(BlockPixieHouse.name("spruce"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> PIXIE_HOUSE_DARK_OAK = registerBlockWithRender(BlockPixieHouse.name("dark_oak"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> JAR_EMPTY = registerBlock(BlockJar.name(-1), () -> new BlockJar(-1), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> JAR_PIXIE_0 = registerBlock(BlockJar.name(0), () -> new BlockJar(0), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> JAR_PIXIE_1 = registerBlock(BlockJar.name(1), () -> new BlockJar(1), IceAndFire.TAB_BLOCKS);
@@ -139,18 +137,18 @@ public class IafBlockRegistry {
     public static final RegistryObject<BlockDreadBase> DREAD_STONE_BRICKS_MOSSY = registerBlock("dread_stone_bricks_mossy", () -> new BlockDreadBase(Material.STONE, -1.0F, 100000.0F, SoundType.STONE), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<BlockDreadBase> DREAD_STONE_TILE = registerBlock("dread_stone_tile", () -> new BlockDreadBase(Material.STONE, -1.0F, 100000.0F, SoundType.STONE), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DREAD_STONE_FACE = registerBlock("dread_stone_face", () -> new BlockDreadStoneFace(), IceAndFire.TAB_BLOCKS);
-//    public static final RegistryObject<Block> DREAD_TORCH = registerBlock("dread_torch", () -> new BlockDreadTorch(), IceAndFire.TAB_BLOCKS);
-//    public static final RegistryObject<Block> DREAD_TORCH_WALL = registerBlock("dread_torch_wall", () -> new BlockDreadTorchWall(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DREAD_TORCH = registerStandingAndWallBlock("dread_torch", () -> new BlockDreadTorch(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DREAD_TORCH_WALL = BLOCKS.register("dread_torch_wall", () -> new BlockDreadTorchWall());
     public static final RegistryObject<Block> DREAD_STONE_BRICKS_STAIRS = registerBlock("dread_stone_stairs", () -> new BlockGenericStairs(DREAD_STONE_BRICKS.get().defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DREAD_STONE_BRICKS_SLAB = registerBlock("dread_stone_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(10F, 10000F)), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DREADWOOD_LOG = registerBlock("dreadwood_log", () -> new BlockDreadWoodLog(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<BlockDreadBase> DREADWOOD_PLANKS = registerBlock("dreadwood_planks", () -> new BlockDreadBase(Material.WOOD, -1.0F, 100000.0F, SoundType.WOOD), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DREADWOOD_PLANKS_LOCK = registerBlock("dreadwood_planks_lock", () -> new BlockDreadWoodLock(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DREAD_PORTAL = registerBlock("dread_portal", () -> new BlockDreadPortal(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DREAD_PORTAL = registerBlockWithRender("dread_portal", () -> new BlockDreadPortal(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DREAD_SPAWNER = registerBlock("dread_spawner", () -> new BlockDreadSpawner(), IceAndFire.TAB_BLOCKS);
-//    public static final RegistryObject<Block> BURNT_TORCH = registerBlock("burnt_torch", () -> new BlockBurntTorch(), IceAndFire.TAB_BLOCKS);
-//    public static final RegistryObject<Block> BURNT_TORCH_WALL = registerBlock("burnt_torch_wall", () -> new BlockBurntTorchWall(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> GHOST_CHEST = registerBlock("ghost_chest", () -> new BlockGhostChest(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> BURNT_TORCH = registerStandingAndWallBlock("burnt_torch", () -> new BlockBurntTorch(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> BURNT_TORCH_WALL = BLOCKS.register("burnt_torch_wall", () -> new BlockBurntTorchWall());
+    public static final RegistryObject<Block> GHOST_CHEST = registerBlockWithRender("ghost_chest", () -> new BlockGhostChest(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> GRAVEYARD_SOIL = registerBlock("graveyard_soil", () -> new BlockGraveyardSoil(), IceAndFire.TAB_BLOCKS);
 
 
@@ -160,8 +158,28 @@ public class IafBlockRegistry {
         return toReturn;
     }
 
+    public static <T extends Block> RegistryObject<T> registerStandingAndWallBlock(String name, Supplier<T> block, CreativeModeTab tab) {
+        RegistryObject<T> toReturn = BLOCKS.register(name, block);
+        registerStandingAndWallBlockItem(name, toReturn, tab);
+        return toReturn;
+    }
+
+    public static <T extends Block> RegistryObject<T> registerBlockWithRender(String name, Supplier<T> block, CreativeModeTab tab) {
+        RegistryObject<T> toReturn = BLOCKS.register(name, block);
+        registerBlockItemWithRender(name, toReturn, tab);
+        return toReturn;
+    }
+
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block, CreativeModeTab tab) {
         return IafItemRegistry.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+    }
+
+    private static <T extends Block> RegistryObject<Item> registerStandingAndWallBlockItem(String name, RegistryObject<T> block, CreativeModeTab tab) {
+        return IafItemRegistry.ITEMS.register(name, () -> new StandingAndWallBlockItem(block.get(), ((IWallBlock) block.get()).wallBlock(), new Item.Properties().tab(tab)));
+    }
+
+    private static <T extends Block> RegistryObject<Item> registerBlockItemWithRender(String name, RegistryObject<T> block, CreativeModeTab tab) {
+        return IafItemRegistry.ITEMS.register(name, () -> new BlockItemWithRender(block.get(), new Item.Properties().tab(tab)));
     }
 
     public static void register(IEventBus eventBus) {

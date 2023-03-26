@@ -46,6 +46,7 @@ public class DataGenerators {
         }
     }
 
+    /*
     public static void createResources(Registry<Biome> biomes) {
         HashMap<TagKey<?>, TagBuilder> builders = new HashMap<>();
         builders.put(IafWorldRegistry.HAS_MAUSOLEUM, TagBuilder.create());
@@ -73,6 +74,7 @@ public class DataGenerators {
         ResourceLocation resourceLocation = new ResourceLocation(IceAndFire.MODID,"tags/worldgen/biome/" + location);
         // resources.add(, );
     }
+    */
 
     public static class PackResources implements net.minecraft.server.packs.PackResources {
         public static final int PACK_FORMAT = 9;

@@ -10,7 +10,7 @@ public class ServerConfig {
     public final ForgeConfigSpec.BooleanValue generateSilverOre;
     public final ForgeConfigSpec.BooleanValue generateCopperOre;
     public final ForgeConfigSpec.BooleanValue generateSapphireOre;
-    public final ForgeConfigSpec.BooleanValue generateAmythestOre;
+    public final ForgeConfigSpec.BooleanValue generateAmethystOre;
     public final ForgeConfigSpec.BooleanValue generateDragonSkeletons;
     public final ForgeConfigSpec.IntValue generateDragonSkeletonChance;
     public final ForgeConfigSpec.BooleanValue generateDragonDens;
@@ -196,7 +196,7 @@ public class ServerConfig {
         this.generateCopperOre = buildBoolean(builder, "Generate Copper Ore", "all", true, "Whether to generate copper ore or not");
         this.generateSilverOre = buildBoolean(builder, "Generate Silver Ore", "all", true, "Whether to generate silver ore or not");
         this.generateSapphireOre = buildBoolean(builder, "Generate Sapphire Ore", "all", true, "Whether to generate sapphire ore or not");
-        this.generateAmythestOre = buildBoolean(builder, "Generate Amethyst Ore", "all", true, "Whether to generate amethyst ore or not");
+        this.generateAmethystOre = buildBoolean(builder, "Generate Amethyst Ore", "all", true, "Whether to generate amethyst ore or not");
         builder.pop();
         builder.push("Dragon");
         this.generateDragonSkeletons = buildBoolean(builder, "Generate Dragon Skeletons", "all", true, "Whether to generate dragon skeletons or not");
@@ -270,7 +270,7 @@ public class ServerConfig {
 
         builder.push("Pixies");
         this.spawnPixies = buildBoolean(builder, "Spawn Pixies", "all", true, "True if pixie villages are allowed to spawn");
-        this.spawnPixiesChance = buildInt(builder, "Spawn Pixies Chance", "all", 60, 1, 10000, "1 out of this number chance per chunk for generation");
+        this.spawnPixiesChance = buildInt(builder, "Spawn Pixies Chance", "all", 120, 1, 10000, "1 out of this number chance per chunk for generation");
         this.pixieVillageSize = buildInt(builder, "Pixie Village Size", "all", 5, 1, 10000, "size of pixie villages");
         this.pixiesStealItems = buildBoolean(builder, "Pixies Steal Items", "all", true, "True if pixies are allowed to steal from players");
         builder.pop();

@@ -1,36 +1,122 @@
-// package com.github.alexthe666.iceandfire.world.structure;
+ package com.github.alexthe666.iceandfire.world.structure;
 
-// import net.minecraft.core.BlockPos;
-// import net.minecraft.core.Registry;
-// import net.minecraft.world.level.ChunkPos;
-// import net.minecraft.world.level.LevelHeightAccessor;
-// import net.minecraft.world.level.StructureFeatureManager;
-// import net.minecraft.world.level.WorldGenLevel;
-// import net.minecraft.world.level.block.Rotation;
-// import net.minecraft.world.level.chunk.ChunkGenerator;
-// import net.minecraft.world.level.levelgen.GenerationStep;
-// import net.minecraft.world.level.levelgen.Heightmap;
-// import net.minecraft.world.level.levelgen.feature.StructureFeature;
-// import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-// import net.minecraft.world.level.levelgen.structure.BoundingBox;
-// import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
-// import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
-// import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
-// import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
-// import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
-// import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
-// import org.jetbrains.annotations.NotNull;
+ import com.github.alexthe666.iceandfire.world.IafStructures;
+ import com.mojang.serialization.Codec;
+ import com.mojang.serialization.codecs.RecordCodecBuilder;
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Holder;
+ import net.minecraft.resources.ResourceLocation;
+ import net.minecraft.world.level.ChunkPos;
+ import net.minecraft.world.level.levelgen.Heightmap;
+ import net.minecraft.world.level.levelgen.WorldGenerationContext;
+ import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
+ import net.minecraft.world.level.levelgen.structure.Structure;
+ import net.minecraft.world.level.levelgen.structure.StructureType;
+ import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
+ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
-// import java.util.Optional;
-// import java.util.Random;
-// import java.util.concurrent.ThreadLocalRandom;
+ import java.util.Optional;
 
-// public class GraveyardStructure extends StructureFeature<JigsawConfiguration> {
+ public class GraveyardStructure extends Structure {
 
+     public static final Codec<GraveyardStructure> CODEC = RecordCodecBuilder.<GraveyardStructure>mapCodec(instance ->
+             instance.group(GraveyardStructure.settingsCodec(instance),
+                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
+                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
+                     Codec.intRange(0, 30).fieldOf("size").forGetter(structure -> structure.size),
+                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
+                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
+                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter)
+             ).apply(instance, GraveyardStructure::new)).codec();
+
+     private final Holder<StructureTemplatePool> startPool;
+     private final Optional<ResourceLocation> startJigsawName;
+     private final int size;
+     private final HeightProvider startHeight;
+     private final Optional<Heightmap.Types> projectStartToHeightmap;
+     private final int maxDistanceFromCenter;
+
+     public GraveyardStructure(Structure.StructureSettings config,
+                                  Holder<StructureTemplatePool> startPool,
+                                  Optional<ResourceLocation> startJigsawName,
+                                  int size,
+                                  HeightProvider startHeight,
+                                  Optional<Heightmap.Types> projectStartToHeightmap,
+                                  int maxDistanceFromCenter)
+     {
+         super(config);
+         this.startPool = startPool;
+         this.startJigsawName = startJigsawName;
+         this.size = size;
+         this.startHeight = startHeight;
+         this.projectStartToHeightmap = projectStartToHeightmap;
+         this.maxDistanceFromCenter = maxDistanceFromCenter;
+     }
+
+     private static boolean extraSpawningChecks(Structure.GenerationContext context) {
+         // Grabs the chunk position we are at
+         ChunkPos chunkpos = context.chunkPos();
+
+         // Checks to make sure our structure does not spawn above land that's higher than y = 150
+         // to demonstrate how this method is good for checking extra conditions for spawning
+         return context.chunkGenerator().getFirstOccupiedHeight(
+                 chunkpos.getMinBlockX(),
+                 chunkpos.getMinBlockZ(),
+                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                 context.heightAccessor(),
+                 context.randomState()) < 150;
+     }
+
+     @Override
+     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
+
+         // Check if the spot is valid for our structure. This is just as another method for cleanness.
+         // Returning an empty optional tells the game to skip this spot as it will not generate the structure.
+         if (!GraveyardStructure.extraSpawningChecks(context)) {
+             return Optional.empty();
+         }
+
+         // Set's our spawning blockpos's y offset to be 60 blocks up.
+         // Since we are going to have heightmap/terrain height spawning set to true further down, this will make it so we spawn 60 blocks above terrain.
+         // If we wanted to spawn on ocean floor, we would set heightmap/terrain height spawning to false and the grab the y value of the terrain with OCEAN_FLOOR_WG heightmap.
+         int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
+
+         // Turns the chunk coordinates into actual coordinates we can use. (Gets corner of that chunk)
+         ChunkPos chunkPos = context.chunkPos();
+         BlockPos blockPos = new BlockPos(chunkPos.getMinBlockX(), startY, chunkPos.getMinBlockZ());
+
+         Optional<Structure.GenerationStub> structurePiecesGenerator =
+                 JigsawPlacement.addPieces(
+                         context, // Used for JigsawPlacement to get all the proper behaviors done.
+                         this.startPool, // The starting pool to use to create the structure layout from
+                         this.startJigsawName, // Can be used to only spawn from one Jigsaw block. But we don't need to worry about this.
+                         this.size, // How deep a branch of pieces can go away from center piece. (5 means branches cannot be longer than 5 pieces from center piece)
+                         blockPos, // Where to spawn the structure.
+                         false, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always.
+                         this.projectStartToHeightmap, // Adds the terrain height's y value to the passed in blockpos's y value. (This uses WORLD_SURFACE_WG heightmap which stops at top water too)
+                         // Here, blockpos's y value is 60 which means the structure spawn 60 blocks above terrain height.
+                         // Set this to false for structure to be place only at the passed in blockpos's Y value instead.
+                         // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
+                         this.maxDistanceFromCenter); // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
+
+         /*
+          * Note, you are always free to make your own JigsawPlacement class and implementation of how the structure
+          * should generate. It is tricky but extremely powerful if you are doing something that vanilla's jigsaw system cannot do.
+          * Such as for example, forcing 3 pieces to always spawn every time, limiting how often a piece spawns, or remove the intersection limitation of pieces.
+          */
+
+         // Return the pieces generator that is now set up so that the game runs it when it needs to create the layout of structure pieces.
+         return structurePiecesGenerator;
+     }
+
+     @Override
+     public StructureType<?> type() {
+         return IafStructures.GRAVEYARD_STRUCTURE.get(); // Helps the game know how to turn this structure back to json to save to chunks
+     }
 //     public GraveyardStructure() {
 //         super(JigsawConfiguration.CODEC, GraveyardStructure::createPiecesGenerator, new PlacementProcessor());
 //     }
-
+//
 //     public static @NotNull Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
 //         ChunkGenerator chunkGenerator = context.chunkGenerator();
 //         ChunkPos pos = context.chunkPos();
@@ -46,7 +132,7 @@
 //         } else if (rotation == Rotation.COUNTERCLOCKWISE_90) {
 //             yOffset = -5;
 //         }
-
+//
 //         int x = pos.getMiddleBlockX();
 //         int z = pos.getMiddleBlockZ();
 //         int y1 = chunkGenerator.getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, height);
@@ -59,21 +145,21 @@
 //             context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
 //                 .getOrCreateHolder(Pool.graveyard_pool),
 //             2));
-
+//
 //         // All a structure has to do is call this method to turn it into a jigsaw based structure!
 //         // No manual pieces class needed.
 //         return JigsawPlacement.addPieces(context, PoolElementStructurePiece::new, blockpos, false, false);
 //     }
-
+//
 //     @Override
 //     public GenerationStep.@NotNull Decoration step() {
 //         return GenerationStep.Decoration.SURFACE_STRUCTURES;
 //     }
-
+//
 //     public static class PlacementProcessor implements PostPlacementProcessor {
 //         @Override
 //         public void afterPlace(@NotNull WorldGenLevel level, @NotNull StructureFeatureManager structureFeatureManager, @NotNull ChunkGenerator generator, @NotNull Random random, @NotNull BoundingBox box, @NotNull ChunkPos pos, PiecesContainer container) {
 //             container.calculateBoundingBox();
 //         }
 //     }
-// }
+ }
