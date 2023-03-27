@@ -2,9 +2,7 @@ package com.github.alexthe666.iceandfire.world;
 
 import com.github.alexthe666.iceandfire.IafConfig;
 import com.github.alexthe666.iceandfire.IceAndFire;
-import com.github.alexthe666.iceandfire.config.BiomeConfig;
-import com.github.alexthe666.iceandfire.config.biome.IafSpawnBiomeData;
-import com.github.alexthe666.iceandfire.entity.IafEntityRegistry;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import com.github.alexthe666.iceandfire.world.biomemodifiers.AddFeaturesWithExceptionsModifier;
 import com.github.alexthe666.iceandfire.world.feature.*;
 import com.github.alexthe666.iceandfire.world.gen.*;
@@ -14,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -23,9 +20,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -36,16 +31,12 @@ import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType.StructureTemplateType;
 import net.minecraft.world.level.storage.LevelData;
-import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -134,9 +125,9 @@ public class IafWorldRegistry {
     public static Holder<PlacedFeature> MYRMEX_HIVE_DESERT_CF;
     public static Holder<PlacedFeature> MYRMEX_HIVE_JUNGLE_CF;
     public static Holder<PlacedFeature> SPAWN_DEATH_WORM_CF;
-    public static Holder<PlacedFeature> SPAWN_DRAGON_SKELETON_L_CF;
     public static Holder<PlacedFeature> SPAWN_DRAGON_SKELETON_F_CF;
     public static Holder<PlacedFeature> SPAWN_DRAGON_SKELETON_I_CF;
+    public static Holder<PlacedFeature> SPAWN_DRAGON_SKELETON_L_CF;
     public static Holder<PlacedFeature> SPAWN_HIPPOCAMPUS_CF;
     public static Holder<PlacedFeature> SPAWN_SEA_SERPENT_CF;
     public static Holder<PlacedFeature> SPAWN_STYMPHALIAN_BIRD_CF;
@@ -164,12 +155,12 @@ public class IafWorldRegistry {
                 () -> new WorldGenMyrmexHive(false, true, NoneFeatureConfiguration.CODEC));
 
         SPAWN_DEATH_WORM = register("spawn_death_worm", () -> new SpawnDeathWorm(NoneFeatureConfiguration.CODEC));
-        SPAWN_DRAGON_SKELETON_L = register("spawn_dragon_skeleton_l",
-                () -> new SpawnDragonSkeleton(0, NoneFeatureConfiguration.CODEC));
         SPAWN_DRAGON_SKELETON_F = register("spawn_dragon_skeleton_f",
-                () -> new SpawnDragonSkeleton(1, NoneFeatureConfiguration.CODEC));
+                () -> new SpawnDragonSkeleton(EnumDragonType.FIRE, NoneFeatureConfiguration.CODEC));
         SPAWN_DRAGON_SKELETON_I = register("spawn_dragon_skeleton_i",
-                () -> new SpawnDragonSkeleton(2, NoneFeatureConfiguration.CODEC));
+                () -> new SpawnDragonSkeleton(EnumDragonType.ICE, NoneFeatureConfiguration.CODEC));
+        SPAWN_DRAGON_SKELETON_L = register("spawn_dragon_skeleton_l",
+                () -> new SpawnDragonSkeleton(EnumDragonType.LIGHTNING, NoneFeatureConfiguration.CODEC));
         SPAWN_HIPPOCAMPUS = register("spawn_hippocampus", () -> new SpawnHippocampus(NoneFeatureConfiguration.CODEC));
         SPAWN_SEA_SERPENT = register("spawn_seaserpent", () -> new SpawnSeaSerpent(NoneFeatureConfiguration.CODEC));
         SPAWN_STYMPHALIAN_BIRD = register("spawn_stymphalian_bird",
@@ -261,9 +252,9 @@ public class IafWorldRegistry {
         MYRMEX_HIVE_DESERT_CF = registerSimple.apply("myrmex_hive_desert", MYRMEX_HIVE_DESERT.get());
         MYRMEX_HIVE_JUNGLE_CF = registerSimple.apply("myrmex_hive_jungle", MYRMEX_HIVE_JUNGLE.get());
         SPAWN_DEATH_WORM_CF = registerSimple.apply("spawn_death_worm", SPAWN_DEATH_WORM.get());
-        SPAWN_DRAGON_SKELETON_L_CF = registerSimple.apply("spawn_lightning_dragon_skeleton", SPAWN_DRAGON_SKELETON_L.get());
         SPAWN_DRAGON_SKELETON_F_CF = registerSimple.apply("spawn_fire_dragon_skeleton", SPAWN_DRAGON_SKELETON_F.get());
         SPAWN_DRAGON_SKELETON_I_CF = registerSimple.apply("spawn_ice_dragon_skeleton", SPAWN_DRAGON_SKELETON_I.get());
+        SPAWN_DRAGON_SKELETON_L_CF = registerSimple.apply("spawn_lightning_dragon_skeleton", SPAWN_DRAGON_SKELETON_L.get());
         SPAWN_HIPPOCAMPUS_CF = registerSimple.apply("spawn_hippocampus", SPAWN_HIPPOCAMPUS.get());
         SPAWN_SEA_SERPENT_CF = registerSimple.apply("spawn_seaserpent", SPAWN_SEA_SERPENT.get());
         SPAWN_STYMPHALIAN_BIRD_CF = registerSimple.apply("spawn_stymphalian_bird", SPAWN_STYMPHALIAN_BIRD.get());

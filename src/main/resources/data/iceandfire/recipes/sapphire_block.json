@@ -1,36 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
-      "tag": "forge:gems/sapphire"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
       "tag": "forge:gems/sapphire"
     }
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
   ],
   "result": {
-    "item": "iceandfire:sapphire_block",
-    "count": 1
+    "item": "iceandfire:sapphire_block"
   }
 }

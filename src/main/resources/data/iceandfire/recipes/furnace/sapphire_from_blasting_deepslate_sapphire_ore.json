@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "iceandfire:deepslate_sapphire_ore"
+  },
+  "result": "iceandfire:sapphire",
+  "experience": 0.35,
+  "cookingtime": 100
+}

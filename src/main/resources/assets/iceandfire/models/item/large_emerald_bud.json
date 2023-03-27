@@ -1,0 +1,11 @@
+  {
+  "parent": "iceandfire:item/emerald_bud",
+  "textures": {
+    "layer0": "iceandfire:block/large_emerald_bud"
+  },
+  "display": {
+    "fixed": {
+      "translation": [ 0, 4, 0 ]
+    }
+  }
+}

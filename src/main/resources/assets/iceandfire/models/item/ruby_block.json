@@ -1,0 +1,6 @@
+{
+  "parent": "iceandfire:block/ruby_block",
+  "textures": {
+    "layer0": "iceandfire:block/ruby_block"
+  }
+}

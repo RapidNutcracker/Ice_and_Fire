@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "iceandfire:crackled_amethyst_ore"
+  },
+  "result": "iceandfire:amethyst",
+  "experience": 0.35,
+  "cookingtime": 100
+}

@@ -1,0 +1,11 @@
+  {
+  "parent": "iceandfire:item/crystal_bud",
+  "textures": {
+    "layer0": "iceandfire:block/large_crystal_bud"
+  },
+  "display": {
+    "fixed": {
+      "translation": [ 0, 4, 0 ]
+    }
+  }
+}

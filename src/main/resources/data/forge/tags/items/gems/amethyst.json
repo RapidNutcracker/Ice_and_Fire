@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "iceandfire:amethyst",
     "iceandfire:amethyst_gem"
   ]
 }

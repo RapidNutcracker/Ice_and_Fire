@@ -59,10 +59,20 @@ public class IafItemRegistry {
     public static CustomToolMaterial DREAD_SWORD_TOOL_MATERIAL = new CustomToolMaterial("DreadSword", 0, 100, 1F, 10F, 0);
     public static CustomToolMaterial DREAD_KNIGHT_TOOL_MATERIAL = new CustomToolMaterial("DreadKnightSword", 0, 1200, 13F, 0F, 10);
     public static CustomToolMaterial GHOST_SWORD_TOOL_MATERIAL = new CustomToolMaterial("GhostSword", 2, 3000, 5, 10.0F, 25);
-
-
     public static final RegistryObject<Item> BESTIARY = ITEMS.register("bestiary", ItemBestiary::new);
     public static final RegistryObject<Item> MANUSCRIPT = ITEMS.register("manuscript", ItemGeneric::new);
+
+    public static final RegistryObject<Item> AMETHYST = ITEMS.register("amethyst", ItemGeneric::new);
+    public static final RegistryObject<Item> CRYSTAL_SHARD = ITEMS.register("crystal_shard", ItemGeneric::new);
+    public static final RegistryObject<Item> CRYSTAL = ITEMS.register("crystal", ItemGeneric::new);
+    public static final RegistryObject<Item> EMERALD_SHARD = ITEMS.register("emerald_shard", ItemGeneric::new);
+    public static final RegistryObject<Item> RUBY_SHARD = ITEMS.register("ruby_shard", ItemGeneric::new);
+    public static final RegistryObject<Item> RUBY = ITEMS.register("ruby", ItemGeneric::new);
+    public static final RegistryObject<Item> SAPPHIRE_SHARD = ITEMS.register("sapphire_shard", ItemGeneric::new);
+    public static final RegistryObject<Item> SAPPHIRE = ITEMS.register("sapphire", ItemGeneric::new);
+    public static final RegistryObject<Item> TOPAZ_SHARD = ITEMS.register("topaz_shard", ItemGeneric::new);
+    public static final RegistryObject<Item> TOPAZ = ITEMS.register("topaz", ItemGeneric::new);
+
     public static final RegistryObject<Item> SAPPHIRE_GEM = ITEMS.register("sapphire_gem", ItemGeneric::new);
     public static final RegistryObject<Item> SILVER_INGOT = ITEMS.register("silver_ingot", ItemGeneric::new);
     public static final RegistryObject<Item> SILVER_NUGGET = ITEMS.register("silver_nugget", ItemGeneric::new);

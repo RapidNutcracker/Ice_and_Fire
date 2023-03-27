@@ -1,0 +1,11 @@
+  {
+  "parent": "iceandfire:item/sapphire_bud",
+  "textures": {
+    "layer0": "iceandfire:block/large_sapphire_bud"
+  },
+  "display": {
+    "fixed": {
+      "translation": [ 0, 4, 0 ]
+    }
+  }
+}

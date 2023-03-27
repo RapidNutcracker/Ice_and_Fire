@@ -1,0 +1,6 @@
+{
+  "parent": "iceandfire:block/topaz_block",
+  "textures": {
+    "layer0": "iceandfire:block/topaz_block"
+  }
+}

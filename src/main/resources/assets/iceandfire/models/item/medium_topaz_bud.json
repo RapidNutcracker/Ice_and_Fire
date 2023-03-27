@@ -1,0 +1,11 @@
+  {
+  "parent": "iceandfire:item/topaz_bud",
+  "textures": {
+    "layer0": "iceandfire:block/medium_topaz_bud"
+  },
+  "display": {
+    "fixed": {
+      "translation": [ 0, 6, 0 ]
+    }
+  }
+}

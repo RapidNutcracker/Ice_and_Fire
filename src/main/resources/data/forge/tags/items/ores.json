@@ -2,8 +2,11 @@
   "replace": false,
   "values": [
     "iceandfire:silver_ore",
-    "iceandfire:sapphire_ore",
     "iceandfire:copper_ore",
-    "iceandfire:amethyst_ore"
+    "iceandfire:amethyst_ore",
+    "iceandfire:crystal_ore",
+    "iceandfire:ruby_ore",
+    "iceandfire:sapphire_ore",
+    "iceandfire:topaz_ore"
   ]
 }

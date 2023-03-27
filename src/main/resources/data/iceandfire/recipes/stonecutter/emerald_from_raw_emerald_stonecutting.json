@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "iceandfire:raw_emerald_block"
+  },
+  "result": "minecraft:emerald"
+}

@@ -31,8 +31,8 @@ public class WorldGenIceDragonCave extends WorldGenDragonCave {
         PALETTE_BLOCK1 = IafBlockRegistry.FROZEN_STONE.get().defaultBlockState();
         PALETTE_BLOCK2 = IafBlockRegistry.FROZEN_COBBLESTONE.get().defaultBlockState();
         TREASURE_PILE = IafBlockRegistry.SILVER_PILE.get().defaultBlockState();
-        PALETTE_ORE1 = IafBlockRegistry.SAPPHIRE_ORE.get().defaultBlockState();
-        PALETTE_ORE2 = Blocks.EMERALD_ORE.defaultBlockState();
+        PALETTE_ORE1 = IafBlockRegistry.FROZEN_SAPPHIRE_ORE.get().defaultBlockState();
+        PALETTE_ORE2 = IafBlockRegistry.FROZEN_EMERALD_ORE.get().defaultBlockState();
         generateGemOre = IafConfig.generateSapphireOre;
     }
 

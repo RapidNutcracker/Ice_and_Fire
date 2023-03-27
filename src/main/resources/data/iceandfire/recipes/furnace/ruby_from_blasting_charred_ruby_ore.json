@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "iceandfire:charred_ruby_ore"
+  },
+  "result": "iceandfire:ruby",
+  "experience": 0.35,
+  "cookingtime": 100
+}

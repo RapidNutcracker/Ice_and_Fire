@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "iceandfire:sapphire",
     "iceandfire:sapphire_gem"
   ]
 }

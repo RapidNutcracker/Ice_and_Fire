@@ -1,0 +1,6 @@
+{
+  "parent": "iceandfire:block/raw_emerald_block",
+  "textures": {
+    "layer0": "iceandfire:block/raw_emerald_block"
+  }
+}

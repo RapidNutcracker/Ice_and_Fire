@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "iceandfire:charred_amethyst_ore"
+  },
+  "result": "iceandfire:amethyst",
+  "experience": 0.35,
+  "cookingtime": 200
+}

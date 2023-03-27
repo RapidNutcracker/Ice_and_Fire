@@ -1,36 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
-      "tag": "forge:gems/amethyst"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
       "tag": "forge:gems/amethyst"
     }
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
   ],
   "result": {
-    "item": "iceandfire:amethyst_block",
-    "count": 1
+    "item": "iceandfire:amethyst_block"
   }
 }

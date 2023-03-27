@@ -1,0 +1,6 @@
+{
+  "parent": "iceandfire:block/crystal_block",
+  "textures": {
+    "layer0": "iceandfire:block/crystal_block"
+  }
+}

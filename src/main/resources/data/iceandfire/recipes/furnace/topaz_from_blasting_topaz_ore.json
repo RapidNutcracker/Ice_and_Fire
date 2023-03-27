@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "iceandfire:topaz_ore"
+  },
+  "result": "iceandfire:topaz",
+  "experience": 0.35,
+  "cookingtime": 100
+}

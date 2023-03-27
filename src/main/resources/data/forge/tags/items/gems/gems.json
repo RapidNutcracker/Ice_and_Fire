@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "iceandfire:amethyst",
+    "iceandfire:crystal",
+    "iceandfire:ruby",
+    "iceandfire:sapphire",
+    "iceandfire:topaz"
+  ]
+}

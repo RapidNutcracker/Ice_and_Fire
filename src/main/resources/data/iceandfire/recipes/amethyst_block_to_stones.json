@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "iceandfire:amethyst_block"
+    }
+  ],
+  "result": {
+    "item": "iceandfire:amethyst_gem",
+    "count": 9
+  }
+}

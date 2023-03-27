@@ -12,7 +12,7 @@ import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 public class IafBlockRegistry {
 
     public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, IceAndFire.MODID);
-    
+
     public static final RegistryObject<Block> LECTERN = registerBlock("lectern", () -> new BlockLectern(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> PODIUM_OAK = registerBlock("podium_oak", () -> new BlockPodium(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> PODIUM_BIRCH = registerBlock("podium_birch", () -> new BlockPodium(), IceAndFire.TAB_BLOCKS);
@@ -42,15 +42,82 @@ public class IafBlockRegistry {
     public static final RegistryObject<Block> GOLD_PILE = registerBlock("gold_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_PILE = registerBlock("silver_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> COPPER_PILE = registerBlock("copper_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> SILVER_ORE = registerBlock("silver_ore", () -> new BlockIafOre(2, 3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> SAPPHIRE_ORE = registerBlock("sapphire_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DEEPSLATE_SAPPHIRE_ORE = registerBlock("deepslate_sapphire_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> COPPER_ORE = registerBlock("copper_ore", () -> new BlockIafOre(0, 3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> AMETHYST_ORE = registerBlock("amethyst_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SILVER_ORE = registerBlock("silver_ore", () -> new BlockIafOre(3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_BLOCK = registerBlock("silver_block", () -> new BlockGeneric(Material.METAL, 3.0F, 5.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> SAPPHIRE_BLOCK = registerBlock("sapphire_block", () -> new BlockGeneric(Material.METAL, 3.0F, 6.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> COPPER_ORE = registerBlock("copper_ore", () -> new BlockIafOre(3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> COPPER_BLOCK = registerBlock("copper_block", () -> new BlockGeneric(Material.METAL, 4.0F, 5.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> AMETHYST_BLOCK = registerBlock("amethyst_block", () -> new BlockGeneric(Material.METAL, 5.0F, 6.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
+
+    // region Gemstones
+    public static final RegistryObject<Block> AMETHYST_BLOCK = registerBlock("amethyst_block", () -> new BlockGeneric(Material.METAL, 3.0F, 6.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> AMETHYST_ORE = registerBlock("amethyst_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DEEPSLATE_AMETHYST_ORE = registerBlock("deepslate_amethyst_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CHARRED_AMETHYST_ORE = registerBlock("charred_amethyst_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> FROZEN_AMETHYST_ORE = registerBlock("frozen_amethyst_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRACKLED_AMETHYST_ORE = registerBlock("crackled_amethyst_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+
+    public static final RegistryObject<Block> RAW_CRYSTAL_BLOCK = registerBlock("raw_crystal_block", () -> new BlockIafGem(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK).color(MaterialColor.COLOR_LIGHT_GRAY)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> BUDDING_CRYSTAL = registerBlock("budding_crystal", () -> new BlockBuddingCrystal(BlockBehaviour.Properties.copy(Blocks.BUDDING_AMETHYST)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRYSTAL_CLUSTER = registerBlock("crystal_cluster", () -> new BlockIafGemCluster(7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> LARGE_CRYSTAL_BUD = registerBlock("large_crystal_bud", () -> new BlockIafGemCluster(5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> MEDIUM_CRYSTAL_BUD = registerBlock("medium_crystal_bud", () -> new BlockIafGemCluster(4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SMALL_CRYSTAL_BUD = registerBlock("small_crystal_bud", () -> new BlockIafGemCluster(3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRYSTAL_BLOCK = registerBlock("crystal_block", () -> new BlockGeneric(Material.METAL, 3.0F, 6.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRYSTAL_ORE = registerBlock("crystal_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DEEPSLATE_CRYSTAL_ORE = registerBlock("deepslate_crystal_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CHARRED_CRYSTAL_ORE = registerBlock("charred_crystal_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> FROZEN_CRYSTAL_ORE = registerBlock("frozen_crystal_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRACKLED_CRYSTAL_ORE = registerBlock("crackled_crystal_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+
+    public static final RegistryObject<Block> RAW_EMERALD_BLOCK = registerBlock("raw_emerald_block", () -> new BlockIafGem(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK).color(MaterialColor.COLOR_LIGHT_GREEN)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> BUDDING_EMERALD = registerBlock("budding_emerald", () -> new BlockBuddingEmerald(BlockBehaviour.Properties.copy(Blocks.BUDDING_AMETHYST)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> EMERALD_CLUSTER = registerBlock("emerald_cluster", () -> new BlockIafGemCluster(7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> LARGE_EMERALD_BUD = registerBlock("large_emerald_bud", () -> new BlockIafGemCluster(5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> MEDIUM_EMERALD_BUD = registerBlock("medium_emerald_bud", () -> new BlockIafGemCluster(4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SMALL_EMERALD_BUD = registerBlock("small_emerald_bud", () -> new BlockIafGemCluster(3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CHARRED_EMERALD_ORE = registerBlock("charred_emerald_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> FROZEN_EMERALD_ORE = registerBlock("frozen_emerald_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRACKLED_EMERALD_ORE = registerBlock("crackled_emerald_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+
+    public static final RegistryObject<Block> RAW_RUBY_BLOCK = registerBlock("raw_ruby_block", () -> new BlockIafGem(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK).color(MaterialColor.COLOR_RED)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> BUDDING_RUBY = registerBlock("budding_ruby", () -> new BlockBuddingRuby(BlockBehaviour.Properties.copy(Blocks.BUDDING_AMETHYST)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> RUBY_CLUSTER = registerBlock("ruby_cluster", () -> new BlockIafGemCluster(7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> LARGE_RUBY_BUD = registerBlock("large_ruby_bud", () -> new BlockIafGemCluster(5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> MEDIUM_RUBY_BUD = registerBlock("medium_ruby_bud", () -> new BlockIafGemCluster(4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SMALL_RUBY_BUD = registerBlock("small_ruby_bud", () -> new BlockIafGemCluster(3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> RUBY_BLOCK = registerBlock("ruby_block", () -> new BlockGeneric(Material.METAL, 3.0F, 6.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> RUBY_ORE = registerBlock("ruby_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DEEPSLATE_RUBY_ORE = registerBlock("deepslate_ruby_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CHARRED_RUBY_ORE = registerBlock("charred_ruby_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> FROZEN_RUBY_ORE = registerBlock("frozen_ruby_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRACKLED_RUBY_ORE = registerBlock("crackled_ruby_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+
+    public static final RegistryObject<Block> RAW_SAPPHIRE_BLOCK = registerBlock("raw_sapphire_block", () -> new BlockIafGem(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK).color(MaterialColor.COLOR_BLUE)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> BUDDING_SAPPHIRE = registerBlock("budding_sapphire", () -> new BlockBuddingSapphire(BlockBehaviour.Properties.copy(Blocks.BUDDING_AMETHYST)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SAPPHIRE_CLUSTER = registerBlock("sapphire_cluster", () -> new BlockIafGemCluster(7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> LARGE_SAPPHIRE_BUD = registerBlock("large_sapphire_bud", () -> new BlockIafGemCluster(5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> MEDIUM_SAPPHIRE_BUD = registerBlock("medium_sapphire_bud", () -> new BlockIafGemCluster(4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SMALL_SAPPHIRE_BUD = registerBlock("small_sapphire_bud", () -> new BlockIafGemCluster(3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SAPPHIRE_BLOCK = registerBlock("sapphire_block", () -> new BlockGeneric(Material.METAL, 3.0F, 6.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SAPPHIRE_ORE = registerBlock("sapphire_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DEEPSLATE_SAPPHIRE_ORE = registerBlock("deepslate_sapphire_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CHARRED_SAPPHIRE_ORE = registerBlock("charred_sapphire_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> FROZEN_SAPPHIRE_ORE = registerBlock("frozen_sapphire_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRACKLED_SAPPHIRE_ORE = registerBlock("crackled_sapphire_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+
+    public static final RegistryObject<Block> RAW_TOPAZ_BLOCK = registerBlock("raw_topaz_block", () -> new BlockIafGem(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK).color(MaterialColor.COLOR_YELLOW)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> BUDDING_TOPAZ = registerBlock("budding_topaz", () -> new BlockBuddingTopaz(BlockBehaviour.Properties.copy(Blocks.BUDDING_AMETHYST)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> TOPAZ_CLUSTER = registerBlock("topaz_cluster", () -> new BlockIafGemCluster(7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> LARGE_TOPAZ_BUD = registerBlock("large_topaz_bud", () -> new BlockIafGemCluster(5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> MEDIUM_TOPAZ_BUD = registerBlock("medium_topaz_bud", () -> new BlockIafGemCluster(4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SMALL_TOPAZ_BUD = registerBlock("small_topaz_bud", () -> new BlockIafGemCluster(3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER)), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> TOPAZ_BLOCK = registerBlock("topaz_block", () -> new BlockGeneric(Material.METAL, 3.0F, 6.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> TOPAZ_ORE = registerBlock("topaz_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DEEPSLATE_TOPAZ_ORE = registerBlock("deepslate_topaz_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CHARRED_TOPAZ_ORE = registerBlock("charred_topaz_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> FROZEN_TOPAZ_ORE = registerBlock("frozen_topaz_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRACKLED_TOPAZ_ORE = registerBlock("crackled_topaz_ore", () -> new BlockIafOre(4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
+    // endregion
+
     public static final RegistryObject<Block> CHARRED_DIRT = registerBlock("charred_dirt", () -> new BlockReturningState(Material.DIRT, 0.5F, 0.0F, SoundType.GRAVEL, Blocks.DIRT.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> CHARRED_GRASS = registerBlock("charred_grass", () -> new BlockReturningState(Material.GRASS, 0.6F, 0.0F, SoundType.GRAVEL, Blocks.GRASS_BLOCK.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> CHARRED_STONE = registerBlock("charred_stone", () -> new BlockReturningState(Material.STONE, 1.5F, 10.0F, SoundType.STONE, Blocks.STONE.defaultBlockState()), IceAndFire.TAB_BLOCKS);
