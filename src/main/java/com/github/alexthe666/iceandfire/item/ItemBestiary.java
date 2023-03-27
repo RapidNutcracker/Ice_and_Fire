@@ -34,7 +34,6 @@ public class ItemBestiary extends Item {
     public void onCraftedBy(ItemStack stack, @NotNull Level worldIn, @NotNull Player playerIn) {
         stack.setTag(new CompoundTag());
         stack.getTag().putIntArray("Pages", new int[]{0});
-
     }
 
     @Override
@@ -66,7 +65,6 @@ public class ItemBestiary extends Item {
         if (stack.getTag() == null) {
             stack.setTag(new CompoundTag());
             stack.getTag().putIntArray("Pages", new int[]{EnumBestiaryPages.INTRODUCTION.ordinal()});
-
         }
     }
 
@@ -75,16 +73,13 @@ public class ItemBestiary extends Item {
         if (stack.getTag() != null) {
             if (IceAndFire.PROXY.shouldSeeBestiaryContents()) {
                 tooltip.add(Component.translatable("bestiary.contains").withStyle(ChatFormatting.GRAY));
-                final Set<EnumBestiaryPages> pages = EnumBestiaryPages
-                    .containedPages(Ints.asList(stack.getTag().getIntArray("Pages")));
+                final Set<EnumBestiaryPages> pages = EnumBestiaryPages.containedPages(Ints.asList(stack.getTag().getIntArray("Pages")));
                 for (EnumBestiaryPages page : pages) {
                     tooltip.add(Component.literal(ChatFormatting.WHITE + "-").append(Component.translatable("bestiary." + EnumBestiaryPages.values()[page.ordinal()].toString().toLowerCase())).withStyle(ChatFormatting.GRAY));
                 }
             } else {
                 tooltip.add(Component.translatable("bestiary.hold_shift").withStyle(ChatFormatting.GRAY));
             }
-
         }
     }
-
 }

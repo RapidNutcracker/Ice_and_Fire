@@ -127,11 +127,11 @@ public class DragonType {
                 }
                 dragon.setTame(true);
                 dragon.setOwnerUUID(egg.getOwnerId());
-                LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(egg.level);
-                lightningboltentity.setPos(egg.getX(), egg.getY(), egg.getZ());
-                lightningboltentity.setVisualOnly(true);
+                LightningBolt lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(egg.level);
+                lightningBoltEntity.setPos(egg.getX(), egg.getY(), egg.getZ());
+                lightningBoltEntity.setVisualOnly(true);
                 if (!egg.level.isClientSide) {
-                    egg.level.addFreshEntity(lightningboltentity);
+                    egg.level.addFreshEntity(lightningBoltEntity);
                 }
                 egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, egg.getSoundSource(), 2.5F, 1.0F, false);
                 egg.level.playLocalSound(egg.getX(), egg.getY() + egg.getEyeHeight(), egg.getZ(), IafSoundRegistry.EGG_HATCH.get(), egg.getSoundSource(), 2.5F, 1.0F, false);

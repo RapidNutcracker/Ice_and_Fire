@@ -5,7 +5,7 @@ import com.github.alexthe666.iceandfire.entity.tile.TileEntityLectern;
 import com.github.alexthe666.iceandfire.enums.EnumBestiaryPages;
 import com.github.alexthe666.iceandfire.item.IafItemRegistry;
 import com.github.alexthe666.iceandfire.item.ItemBestiary;
-import com.github.alexthe666.iceandfire.message.MessageUpdateLectern;
+import com.github.alexthe666.iceandfire.message.MessageUpdateBestiary;
 import com.github.alexthe666.iceandfire.misc.IafSoundRegistry;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -27,7 +27,6 @@ public class ContainerLectern extends AbstractContainerMenu {
     public ContainerLectern(int i, Inventory playerInventory) {
         this(i, new SimpleContainer(2), playerInventory, new SimpleContainerData(0));
     }
-
 
     public ContainerLectern(int id, Container furnaceInventory, Inventory playerInventory, ContainerData vars) {
         super(IafContainerRegistry.IAF_LECTERN_CONTAINER.get(), id);
@@ -55,8 +54,7 @@ public class ContainerLectern extends AbstractContainerMenu {
     }
 
     private static int getPageField(int i) {
-        if (IceAndFire.PROXY.getRefrencedTE() instanceof TileEntityLectern) {
-            TileEntityLectern lectern = (TileEntityLectern) IceAndFire.PROXY.getRefrencedTE();
+        if (IceAndFire.PROXY.getRefrencedTE() instanceof TileEntityLectern lectern) {
             return lectern.selectedPages[i] == null ? -1 : lectern.selectedPages[i].ordinal();
         }
         return -1;
@@ -158,20 +156,20 @@ public class ContainerLectern extends AbstractContainerMenu {
         }
 
         if ((itemstack1.isEmpty() ||
-            itemstack1.getCount() < i ||
-            itemstack1.getItem() != IafItemRegistry.MANUSCRIPT.get())
-            && !playerIn.isCreative()) {
+                itemstack1.getCount() < i ||
+                itemstack1.getItem() != IafItemRegistry.MANUSCRIPT.get())
+                && !playerIn.isCreative()) {
             return false;
         } else if (this.possiblePagesInt[id] > 0 && !itemstack.isEmpty()) {
             EnumBestiaryPages page = getPossiblePages()[Mth.clamp(id, 0, 2)];
             if (page != null) {
                 if (itemstack.getItem() == IafItemRegistry.BESTIARY.get()) {
                     this.tileFurnace.setItem(0, itemstack);
-                    if (IceAndFire.PROXY.getRefrencedTE() instanceof TileEntityLectern) {
+                    if (IceAndFire.PROXY.getRefrencedTE() instanceof TileEntityLectern lectern) {
                         if (playerIn.level.isClientSide) {
-                            IceAndFire.sendMSGToServer(new MessageUpdateLectern(IceAndFire.PROXY.getRefrencedTE().getBlockPos().asLong(), 0, 0, 0, true, page.ordinal()));
+                            IceAndFire.sendMSGToServer(new MessageUpdateBestiary(lectern.getBlockPos(), itemstack, page.ordinal()));
                         }
-                        ((TileEntityLectern) IceAndFire.PROXY.getRefrencedTE()).randomizePages(itemstack, itemstack1);
+                        lectern.randomizePages(itemstack);
                     }
                 }
 

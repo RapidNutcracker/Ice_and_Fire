@@ -82,15 +82,14 @@ public class IceAndFire {
     };
 
     static {
-        NetworkRegistry.ChannelBuilder channel = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main_channel"));
         String version = PROTOCOL_VERSION;
-        version.getClass();
-        channel = channel.clientAcceptedVersions(version::equals);
-        version = PROTOCOL_VERSION;
-        version.getClass();
-        NETWORK_WRAPPER = channel.serverAcceptedVersions(version::equals).networkProtocolVersion(() -> {
-            return PROTOCOL_VERSION;
-        }).simpleChannel();
+
+        NETWORK_WRAPPER = NetworkRegistry.ChannelBuilder
+                .named(new ResourceLocation(MODID, "main_channel"))
+                .networkProtocolVersion(() -> PROTOCOL_VERSION)
+                .clientAcceptedVersions(version::equals)
+                .serverAcceptedVersions(version::equals)
+                .simpleChannel();
     }
 
     public IceAndFire() {
@@ -106,7 +105,8 @@ public class IceAndFire {
         try {
             ModContainer mod = ModList.get().getModContainerById(IceAndFire.MODID).orElseThrow(NullPointerException::new);
             VERSION = mod.getModInfo().getVersion().toString();
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
 
         IafBlockRegistry.register(modBus);
         IafEntityRegistry.register(modBus);
@@ -212,7 +212,8 @@ public class IceAndFire {
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageUpdatePixieJar.class, MessageUpdatePixieJar::write, MessageUpdatePixieJar::read, MessageUpdatePixieJar.Handler::handle);
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageUpdatePodium.class, MessageUpdatePodium::write, MessageUpdatePodium::read, MessageUpdatePodium.Handler::handle);
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageUpdateDragonforge.class, MessageUpdateDragonforge::write, MessageUpdateDragonforge::read, MessageUpdateDragonforge.Handler::handle);
-        NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageUpdateLectern.class, MessageUpdateLectern::write, MessageUpdateLectern::read, MessageUpdateLectern.Handler::handle);
+        NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageUpdateLectern.class, MessageUpdateLectern::write, MessageUpdateLectern::read, MessageUpdateLectern::handle);
+        NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageUpdateBestiary.class, MessageUpdateBestiary::write, MessageUpdateBestiary::read, MessageUpdateBestiary::handle);
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageSyncPath.class, MessageSyncPath::write, MessageSyncPath::read, MessageSyncPath.Handler::handle);
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageSyncPathReached.class, MessageSyncPathReached::write, MessageSyncPathReached::read, MessageSyncPathReached.Handler::handle);
         NETWORK_WRAPPER.registerMessage(packetsRegistered++, MessageSwingArm.class, MessageSwingArm::write, MessageSwingArm::read, MessageSwingArm.Handler::handle);

@@ -1,5 +1,6 @@
 package com.github.alexthe666.iceandfire.block;
 
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -19,16 +20,16 @@ import org.jetbrains.annotations.NotNull;
 public class BlockCharredPath extends DirtPathBlock {
     public static final BooleanProperty REVERTS = BooleanProperty.create("revert");
     public Item itemBlock;
-    public int dragonType;
+    public EnumDragonType dragonType;
 
     @SuppressWarnings("deprecation")
-    public BlockCharredPath(int dragonType) {
+    public BlockCharredPath(EnumDragonType dragonType) {
         super(
             BlockBehaviour.Properties
                 .of(Material.PLANT)
-                .sound(dragonType != 1 ? SoundType.GRAVEL : SoundType.GLASS)
+                .sound(dragonType != EnumDragonType.FIRE ? SoundType.GRAVEL : SoundType.GLASS)
                 .strength(0.6F)
-                .friction(dragonType != 1 ? 0.6F : 0.98F)
+                .friction(dragonType != EnumDragonType.FIRE ? 0.6F : 0.98F)
                 .randomTicks()
                 .requiresCorrectToolForDrops()
 		);
@@ -38,22 +39,22 @@ public class BlockCharredPath extends DirtPathBlock {
         this.registerDefaultState(stateDefinition.any().setValue(REVERTS, Boolean.FALSE));
     }
 
-    public static String getNameFromType(int dragonType){
+    public static String getNameFromType(EnumDragonType dragonType){
         return switch (dragonType) {
-            case 0 -> "charred_dirt_path";
-            case 1 -> "frozen_dirt_path";
-            case 2 -> "crackled_dirt_path";
+            case FIRE -> "charred_dirt_path";
+            case ICE -> "frozen_dirt_path";
+            case LIGHTNING -> "crackled_dirt_path";
             default -> "";
         };
     }
 
-    public BlockState getSmushedState(int dragonType){
+    public BlockState getSmushedState(EnumDragonType dragonType){
         switch (dragonType){
-            case 0:
+            case FIRE:
                 return IafBlockRegistry.CHARRED_DIRT.get().defaultBlockState();
-            case 1:
+            case ICE:
                 return IafBlockRegistry.FROZEN_DIRT.get().defaultBlockState();
-            case 2:
+            case LIGHTNING:
                 return IafBlockRegistry.CRACKLED_DIRT.get().defaultBlockState();
         }
         return null;

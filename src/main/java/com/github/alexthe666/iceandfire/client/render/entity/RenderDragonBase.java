@@ -9,6 +9,7 @@ import com.github.alexthe666.iceandfire.client.render.entity.layer.LayerDragonRi
 import com.github.alexthe666.iceandfire.client.texture.ArrayLayeredTexture;
 import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 import com.github.alexthe666.iceandfire.enums.EnumDragonTextures;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
@@ -28,14 +29,14 @@ import java.util.Map;
 public class RenderDragonBase extends MobRenderer<EntityDragonBase, AdvancedEntityModel<EntityDragonBase>> {
 
     private final Map<String, ResourceLocation> LAYERED_TEXTURE_CACHE = Maps.newHashMap();
-    private final int dragonType;
+    private final EnumDragonType dragonType;
 
-    public RenderDragonBase(EntityRendererProvider.Context context, AdvancedEntityModel<EntityDragonBase> model, int dragonType) {
+    public RenderDragonBase(EntityRendererProvider.Context context, AdvancedEntityModel<EntityDragonBase> model, EnumDragonType dragonType) {
         super(context, model, 0.15F);
         this.addLayer(new LayerDragonEyes(this));
         this.addLayer(new LayerDragonRider(this, false));
         this.addLayer(new LayerDragonBanner(this));
-        this.addLayer(new LayerDragonArmor(this, dragonType));
+        this.addLayer(new LayerDragonArmor(this, dragonType.ordinal()));
         this.dragonType = dragonType;
     }
 
@@ -68,11 +69,11 @@ public class RenderDragonBase extends MobRenderer<EntityDragonBase, AdvancedEnti
         tex.add(EnumDragonTextures.getTextureFromDragon(entity).toString());
 
         if (entity.isMale() && !entity.isSkeletal()) {
-            if (dragonType == 0) {
+            if (dragonType == EnumDragonType.FIRE) {
                 tex.add(EnumDragonTextures.getDragonEnum(entity).FIRE_MALE_OVERLAY.toString());
-            } else if (dragonType == 1) {
+            } else if (dragonType == EnumDragonType.ICE) {
                 tex.add(EnumDragonTextures.getDragonEnum(entity).ICE_MALE_OVERLAY.toString());
-            } else if (dragonType == 2) {
+            } else if (dragonType == EnumDragonType.LIGHTNING) {
                 tex.add(EnumDragonTextures.getDragonEnum(entity).LIGHTNING_MALE_OVERLAY.toString());
             }
         } else {

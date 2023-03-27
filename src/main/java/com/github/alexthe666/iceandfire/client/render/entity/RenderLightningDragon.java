@@ -5,6 +5,7 @@ import com.github.alexthe666.iceandfire.client.particle.LightningBoltData;
 import com.github.alexthe666.iceandfire.client.particle.LightningRender;
 import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 import com.github.alexthe666.iceandfire.entity.EntityLightningDragon;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -18,7 +19,7 @@ public class RenderLightningDragon extends RenderDragonBase {
 
     private final LightningRender lightningRender = new LightningRender();
 
-    public RenderLightningDragon(EntityRendererProvider.Context context, AdvancedEntityModel model, int dragonType) {
+    public RenderLightningDragon(EntityRendererProvider.Context context, AdvancedEntityModel model, EnumDragonType dragonType) {
         super(context, model, dragonType);
     }
 

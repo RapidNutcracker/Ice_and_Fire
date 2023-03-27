@@ -1,6 +1,7 @@
 package com.github.alexthe666.iceandfire.block;
 
 import com.github.alexthe666.iceandfire.IceAndFire;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import com.github.alexthe666.iceandfire.enums.EnumDragonEgg;
 import com.github.alexthe666.iceandfire.item.BlockItemWithRender;
 import com.github.alexthe666.iceandfire.item.IafItemRegistry;
@@ -55,14 +56,14 @@ public class IafBlockRegistry {
     public static final RegistryObject<Block> CHARRED_STONE = registerBlock("charred_stone", () -> new BlockReturningState(Material.STONE, 1.5F, 10.0F, SoundType.STONE, Blocks.STONE.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> CHARRED_COBBLESTONE = registerBlock("charred_cobblestone", () -> new BlockReturningState(Material.STONE, 2F, 10.0F, SoundType.STONE, Blocks.COBBLESTONE.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> CHARRED_GRAVEL = registerBlock("charred_gravel", () -> new BlockFallingReturningState(Material.DIRT, 0.6F, 0F, SoundType.GRAVEL, Blocks.GRAVEL.defaultBlockState()), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> CHARRED_DIRT_PATH = registerBlock(BlockCharredPath.getNameFromType(0), () -> new BlockCharredPath(0), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CHARRED_DIRT_PATH = registerBlock(BlockCharredPath.getNameFromType(EnumDragonType.FIRE), () -> new BlockCharredPath(EnumDragonType.FIRE), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> ASH = registerBlock("ash", () -> new BlockFallingGeneric(Material.SAND, 0.5F, 0F, SoundType.SAND), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> FROZEN_DIRT = registerBlock("frozen_dirt", () -> new BlockReturningState(Material.DIRT, 0.5F, 0.0F, SoundType.GLASS, true, Blocks.DIRT.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> FROZEN_GRASS = registerBlock("frozen_grass", () -> new BlockReturningState(Material.GRASS, 0.6F, 0.0F, SoundType.GLASS, true, Blocks.GRASS_BLOCK.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> FROZEN_STONE = registerBlock("frozen_stone", () -> new BlockReturningState(Material.STONE, 1.5F, 1.0F, SoundType.GLASS, true, Blocks.STONE.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> FROZEN_COBBLESTONE = registerBlock("frozen_cobblestone", () -> new BlockReturningState(Material.STONE, 2F, 2.0F, SoundType.GLASS, true, Blocks.COBBLESTONE.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> FROZEN_GRAVEL = registerBlock("frozen_gravel", () -> new BlockFallingReturningState(Material.DIRT, 0.6F, 0F, SoundType.GLASS, true, Blocks.GRAVEL.defaultBlockState()), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> FROZEN_DIRT_PATH = registerBlock(BlockCharredPath.getNameFromType(1), () -> new BlockCharredPath(1), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> FROZEN_DIRT_PATH = registerBlock(BlockCharredPath.getNameFromType(EnumDragonType.ICE), () -> new BlockCharredPath(EnumDragonType.ICE), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> FROZEN_SPLINTERS = registerBlock("frozen_splinters", () -> new BlockGeneric(Material.WOOD, 2.0F, 1.0F, SoundType.GLASS, true), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DRAGON_ICE = registerBlock("dragon_ice", () -> new BlockGeneric(Material.ICE_SOLID, 0.5F, 0F, SoundType.GLASS, true), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DRAGON_ICE_SPIKES = registerBlock("dragon_ice_spikes", () -> new BlockIceSpikes(), IceAndFire.TAB_BLOCKS);
@@ -71,7 +72,7 @@ public class IafBlockRegistry {
     public static final RegistryObject<Block> CRACKLED_STONE = registerBlock("crackled_stone", () -> new BlockReturningState(Material.STONE, 1.5F, 1.0F, SoundType.STONE, Blocks.STONE.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> CRACKLED_COBBLESTONE = registerBlock("crackled_cobblestone", () -> new BlockReturningState(Material.STONE, 2F, 2F, SoundType.STONE, Blocks.COBBLESTONE.defaultBlockState()), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> CRACKLED_GRAVEL = registerBlock("crackled_gravel", () -> new BlockFallingReturningState(Material.DIRT, 0.6F, 0F, SoundType.GRAVEL, Blocks.GRAVEL.defaultBlockState()), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> CRACKLED_DIRT_PATH = registerBlock(BlockCharredPath.getNameFromType(2), () -> new BlockCharredPath(2), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> CRACKLED_DIRT_PATH = registerBlock(BlockCharredPath.getNameFromType(EnumDragonType.LIGHTNING), () -> new BlockCharredPath(EnumDragonType.LIGHTNING), IceAndFire.TAB_BLOCKS);
 
     public static final RegistryObject<Block> NEST = registerBlock("nest", () -> new BlockGeneric(Material.PLANT, 0.5F, 0F, SoundType.GRAVEL, false), IceAndFire.TAB_BLOCKS);
 
@@ -90,18 +91,18 @@ public class IafBlockRegistry {
 
     public static final RegistryObject<Block> DRAGON_BONE_BLOCK = registerBlock("dragon_bone_block", () -> new BlockDragonBone(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> DRAGON_BONE_BLOCK_WALL = registerBlock("dragon_bone_wall", () -> new BlockDragonBoneWall(BlockBehaviour.Properties.copy(IafBlockRegistry.DRAGON_BONE_BLOCK.get())), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_FIRE_BRICK = registerBlock(BlockDragonforgeBricks.name(0), () -> new BlockDragonforgeBricks(0), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_ICE_BRICK = registerBlock(BlockDragonforgeBricks.name(1), () -> new BlockDragonforgeBricks(1), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_BRICK = registerBlock(BlockDragonforgeBricks.name(2), () -> new BlockDragonforgeBricks(2), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_FIRE_INPUT = registerBlock(BlockDragonforgeInput.name(0), () -> new BlockDragonforgeInput(0), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_ICE_INPUT = registerBlock(BlockDragonforgeInput.name(1), () -> new BlockDragonforgeInput(1), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_INPUT = registerBlock(BlockDragonforgeInput.name(2), () -> new BlockDragonforgeInput(2), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_FIRE_CORE = registerBlock(BlockDragonforgeCore.name(0, true), () -> new BlockDragonforgeCore(0, true), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_ICE_CORE = registerBlock(BlockDragonforgeCore.name(1, true), () -> new BlockDragonforgeCore(1, true), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_CORE = registerBlock(BlockDragonforgeCore.name(2, true), () -> new BlockDragonforgeCore(2, true), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_FIRE_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(0, false), () -> new BlockDragonforgeCore(0, false), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_ICE_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(1, false), () -> new BlockDragonforgeCore(1, false), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(2, false), () -> new BlockDragonforgeCore(2, false), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_FIRE_BRICK = registerBlock(BlockDragonforgeBricks.name(EnumDragonType.FIRE), () -> new BlockDragonforgeBricks(EnumDragonType.FIRE), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_ICE_BRICK = registerBlock(BlockDragonforgeBricks.name(EnumDragonType.ICE), () -> new BlockDragonforgeBricks(EnumDragonType.ICE), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_BRICK = registerBlock(BlockDragonforgeBricks.name(EnumDragonType.LIGHTNING), () -> new BlockDragonforgeBricks(EnumDragonType.LIGHTNING), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_FIRE_INPUT = registerBlock(BlockDragonforgeInput.name(EnumDragonType.FIRE), () -> new BlockDragonforgeInput(EnumDragonType.FIRE), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_ICE_INPUT = registerBlock(BlockDragonforgeInput.name(EnumDragonType.ICE), () -> new BlockDragonforgeInput(EnumDragonType.ICE), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_INPUT = registerBlock(BlockDragonforgeInput.name(EnumDragonType.LIGHTNING), () -> new BlockDragonforgeInput(EnumDragonType.LIGHTNING), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_FIRE_CORE = registerBlock(BlockDragonforgeCore.name(EnumDragonType.FIRE, true), () -> new BlockDragonforgeCore(EnumDragonType.FIRE, true), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_ICE_CORE = registerBlock(BlockDragonforgeCore.name(EnumDragonType.ICE, true), () -> new BlockDragonforgeCore(EnumDragonType.ICE, true), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_CORE = registerBlock(BlockDragonforgeCore.name(EnumDragonType.LIGHTNING, true), () -> new BlockDragonforgeCore(EnumDragonType.LIGHTNING, true), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_FIRE_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(EnumDragonType.FIRE, false), () -> new BlockDragonforgeCore(EnumDragonType.FIRE, false), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_ICE_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(EnumDragonType.ICE, false), () -> new BlockDragonforgeCore(EnumDragonType.ICE, false), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> DRAGONFORGE_LIGHTNING_CORE_DISABLED = registerBlock(BlockDragonforgeCore.name(EnumDragonType.LIGHTNING, false), () -> new BlockDragonforgeCore(EnumDragonType.LIGHTNING, false), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> EGG_IN_ICE = registerBlock("egginice", () -> new BlockEggInIce(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> PIXIE_HOUSE_MUSHROOM_RED = registerBlockWithRender(BlockPixieHouse.name("mushroom_red"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> PIXIE_HOUSE_MUSHROOM_BROWN = registerBlockWithRender(BlockPixieHouse.name("mushroom_brown"), () -> new BlockPixieHouse(), IceAndFire.TAB_BLOCKS);
@@ -185,35 +186,4 @@ public class IafBlockRegistry {
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
-
-    // @SubscribeEvent(priority = EventPriority.HIGHEST)
-    // public static void registerBlockItems(RegisterEvent event) {
-    //     IafBlockRegistry.BLOCKS.getEntries().stream()
-    //     .map(RegistryObject::get)
-    //     .forEach(block -> {
-    //         Optional<Item> item = registerItemBlock(block);
-    //         if (item.isPresent())
-    //                 IafItemRegistry.ITEMS.register(new ResourceLocation(IceAndFire.MODID, block.getName().getString()).toString(), () -> item.get());
-    //         });
-
-    // }
-
-    // public static Optional<Item> registerItemBlock(Block block) {
-    //     if (!(block instanceof WallTorchBlock)) {
-    //         Item.Properties props = new Item.Properties();
-    //         if (!(block instanceof INoTab) || ((INoTab) block).shouldBeInTab()) {
-    //             props.tab(IceAndFire.TAB_BLOCKS);
-    //         }
-    //         BlockItem itemBlock;
-    //         if (block instanceof IWallBlock) {
-    //             itemBlock = new StandingAndWallBlockItem(block, ((IWallBlock) block).wallBlock(), props);
-    //         } else if (block instanceof BlockGhostChest || block instanceof BlockDreadPortal || block instanceof BlockPixieHouse) {
-    //             itemBlock = new BlockItemWithRender(block, props);
-    //         } else {
-    //             itemBlock = new BlockItem(block, props);
-    //         }
-    //         return Optional.of(itemBlock);
-    //     }
-    //     return Optional.empty();
-    // }
 }

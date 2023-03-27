@@ -1,9 +1,9 @@
 package com.github.alexthe666.iceandfire.block;
 
 import com.github.alexthe666.iceandfire.IceAndFire;
-import com.github.alexthe666.iceandfire.entity.DragonType;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforge;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforgeBrick;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -26,14 +26,12 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class BlockDragonforgeBricks extends BaseEntityBlock implements IDragonProof {
 
     public static final BooleanProperty GRILL = BooleanProperty.create("grill");
-    private final int isFire;
+    private final EnumDragonType fireType;
 
-    public BlockDragonforgeBricks(int isFire) {
+    public BlockDragonforgeBricks(EnumDragonType fireType) {
         super(
             Properties
                 .of(Material.STONE)
@@ -42,12 +40,12 @@ public class BlockDragonforgeBricks extends BaseEntityBlock implements IDragonPr
     			.sound(SoundType.METAL)
 		);
 
-        this.isFire = isFire;
+        this.fireType = fireType;
         this.registerDefaultState(this.getStateDefinition().any().setValue(GRILL, Boolean.FALSE));
     }
 
-    static String name(int dragonType) {
-        return "dragonforge_%s_brick".formatted(DragonType.getNameFromInt(dragonType));
+    static String name(EnumDragonType dragonType) {
+        return "dragonforge_%s_brick".formatted(dragonType.name);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class BlockDragonforgeBricks extends BaseEntityBlock implements IDragonPr
     public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, BlockHitResult resultIn) {
         if (this.getConnectedTileEntity(worldIn, resultIn.getBlockPos()) != null) {
             TileEntityDragonforge forge = this.getConnectedTileEntity(worldIn, resultIn.getBlockPos());
-            if (forge != null && forge.fireType == isFire) {
+            if (forge != null && forge.fireType == fireType) {
                 if (worldIn.isClientSide) {
                     IceAndFire.PROXY.setRefrencedTE(worldIn.getBlockEntity(forge.getBlockPos()));
                 } else {

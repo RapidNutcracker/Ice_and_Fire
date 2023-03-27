@@ -3,6 +3,7 @@ package com.github.alexthe666.iceandfire.item;
 import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.EntityDragonSkull;
 import com.github.alexthe666.iceandfire.entity.IafEntityRegistry;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,25 +24,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemDragonSkull extends Item {
-    private final int dragonType;
+    private final EnumDragonType dragonType;
 
-    public ItemDragonSkull(int dragonType) {
+    public ItemDragonSkull(EnumDragonType dragonType) {
         super(new Item.Properties().tab(IceAndFire.TAB_ITEMS).stacksTo(1));
         this.dragonType = dragonType;
     }
 
-    static String getName(int type) {
-        return "dragon_skull_%s".formatted(getType(type));
-    }
-
-    private static String getType(int type) {
-        if (type == 2) {
-            return "lightning";
-        } else if (type == 1) {
-            return "ice";
-        } else {
-            return "fire";
-        }
+    public static String getName(EnumDragonType type) {
+        return "dragon_skull_%s".formatted(type.name);
     }
 
     @Override
@@ -60,8 +51,8 @@ public class ItemDragonSkull extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, @NotNull TooltipFlag flagIn) {
-        String iceorfire = "dragon." + getType(dragonType);
-        tooltip.add(Component.translatable(iceorfire).withStyle(ChatFormatting.GRAY));
+        String dragonTypeTextKey = "dragon." + dragonType.name;
+        tooltip.add(Component.translatable(dragonTypeTextKey).withStyle(ChatFormatting.GRAY));
         if (stack.getTag() != null) {
             tooltip.add(Component.translatable("dragon.stage").withStyle(ChatFormatting.GRAY).append(Component.literal(" " + stack.getTag().getInt("Stage"))));
         }
@@ -77,7 +68,7 @@ public class ItemDragonSkull extends Item {
          */
         if (stack.getTag() != null) {
             EntityDragonSkull skull = new EntityDragonSkull(IafEntityRegistry.DRAGON_SKULL.get(), context.getLevel());
-            skull.setDragonType(dragonType);
+            skull.setDragonType(dragonType.ordinal());
             skull.setStage(stack.getTag().getInt("Stage"));
             skull.setDragonAge(stack.getTag().getInt("DragonAge"));
             BlockPos offset = context.getClickedPos().relative(context.getClickedFace(), 1);

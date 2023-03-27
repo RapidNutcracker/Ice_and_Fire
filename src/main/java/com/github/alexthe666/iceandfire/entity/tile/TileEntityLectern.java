@@ -6,7 +6,6 @@ import com.github.alexthe666.iceandfire.inventory.ContainerLectern;
 import com.github.alexthe666.iceandfire.item.IafItemRegistry;
 import com.github.alexthe666.iceandfire.item.ItemBestiary;
 import com.github.alexthe666.iceandfire.message.MessageUpdateLectern;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -15,7 +14,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -34,9 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class TileEntityLectern extends BaseContainerBlockEntity implements WorldlyContainer {
     private static final int[] slotsTop = new int[]{0};
@@ -117,16 +113,14 @@ public class TileEntityLectern extends BaseContainerBlockEntity implements World
             if (this.stacks.get(index).getCount() <= count) {
                 itemstack = this.stacks.get(index);
                 this.stacks.set(index, ItemStack.EMPTY);
-                return itemstack;
             } else {
                 itemstack = this.stacks.get(index).split(count);
 
                 if (this.stacks.get(index).getCount() == 0) {
                     this.stacks.set(index, ItemStack.EMPTY);
                 }
-
-                return itemstack;
             }
+            return itemstack;
         } else {
             return ItemStack.EMPTY;
         }
@@ -152,11 +146,11 @@ public class TileEntityLectern extends BaseContainerBlockEntity implements World
         }
         if (index == 0 && !flag) {
             this.setChanged();
-            selectedPages = randomizePages(getItem(0), getItem(1));
+            selectedPages = randomizePages(getItem(0));
         }
     }
 
-    public EnumBestiaryPages[] randomizePages(ItemStack bestiary, ItemStack manuscript) {
+    public EnumBestiaryPages[] randomizePages(ItemStack bestiary) {
         if (!level.isClientSide) {
             if (bestiary.getItem() == IafItemRegistry.BESTIARY.get()) {
                 List<EnumBestiaryPages> possibleList = getPossiblePages();
@@ -181,7 +175,7 @@ public class TileEntityLectern extends BaseContainerBlockEntity implements World
             int page1 = selectedPages[0] == null ? -1 : selectedPages[0].ordinal();
             int page2 = selectedPages[1] == null ? -1 : selectedPages[1].ordinal();
             int page3 = selectedPages[2] == null ? -1 : selectedPages[2].ordinal();
-            IceAndFire.sendMSGToAll(new MessageUpdateLectern(worldPosition.asLong(), page1, page2, page3, false, 0));
+            IceAndFire.sendMSGToAll(new MessageUpdateLectern(worldPosition, page1, page2, page3));
         }
         return selectedPages;
     }

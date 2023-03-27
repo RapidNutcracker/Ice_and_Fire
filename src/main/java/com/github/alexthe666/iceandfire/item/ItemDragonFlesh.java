@@ -1,5 +1,6 @@
 package com.github.alexthe666.iceandfire.item;
 
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -10,18 +11,18 @@ import net.minecraft.world.level.Level;
 
 public class ItemDragonFlesh extends ItemGenericFood {
 
-    int dragonType;
+    EnumDragonType dragonType;
 
-    public ItemDragonFlesh(int dragonType) {
+    public ItemDragonFlesh(EnumDragonType dragonType) {
         super(8, 0.8F, true, false, false);
         this.dragonType = dragonType;
     }
 
-    static String getNameForType(int dragonType) {
+    static String getNameForType(EnumDragonType dragonType) {
         return switch (dragonType) {
-            case 0 -> "fire_dragon_flesh";
-            case 1 -> "ice_dragon_flesh";
-            case 2 -> "lightning_dragon_flesh";
+            case FIRE -> "fire_dragon_flesh";
+            case ICE -> "ice_dragon_flesh";
+            case LIGHTNING -> "lightning_dragon_flesh";
             default -> "fire_dragon_flesh";
         };
     }
@@ -29,16 +30,16 @@ public class ItemDragonFlesh extends ItemGenericFood {
     @Override
     public void onFoodEaten(ItemStack stack, Level worldIn, LivingEntity livingEntity) {
         if (!worldIn.isClientSide) {
-            if (dragonType == 0) {
+            if (dragonType == EnumDragonType.FIRE) {
                 livingEntity.setSecondsOnFire(5);
-            } else if (dragonType == 1) {
+            } else if (dragonType == EnumDragonType.ICE) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
             } else {
                 if (!livingEntity.level.isClientSide) {
-                    LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(livingEntity.level);
-                    lightningboltentity.moveTo(livingEntity.position());
+                    LightningBolt lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(livingEntity.level);
+                    lightningBoltEntity.moveTo(livingEntity.position());
                     if (!livingEntity.level.isClientSide) {
-                        livingEntity.level.addFreshEntity(lightningboltentity);
+                        livingEntity.level.addFreshEntity(lightningBoltEntity);
                     }
                 }
             }

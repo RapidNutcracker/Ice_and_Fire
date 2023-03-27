@@ -130,9 +130,9 @@ public class IafItemRegistry {
     public static final RegistryObject<Item> DRAGONBONE_SWORD_LIGHTNING = ITEMS.register("dragonbone_sword_lightning", () -> new ItemAlchemySword(LIGHTNING_DRAGONBONE_TOOL_MATERIAL));
     public static final RegistryObject<Item> DRAGONBONE_ARROW = ITEMS.register("dragonbone_arrow", () -> new ItemDragonArrow());
     public static final RegistryObject<Item> DRAGON_BOW = ITEMS.register("dragonbone_bow", () -> new ItemDragonBow());
-    public static final RegistryObject<Item> DRAGON_SKULL_FIRE = ITEMS.register(ItemDragonSkull.getName(0), () -> new ItemDragonSkull(0));
-    public static final RegistryObject<Item> DRAGON_SKULL_ICE = ITEMS.register(ItemDragonSkull.getName(1), () -> new ItemDragonSkull(1));
-    public static final RegistryObject<Item> DRAGON_SKULL_LIGHTNING = ITEMS.register(ItemDragonSkull.getName(2), () -> new ItemDragonSkull(2));
+    public static final RegistryObject<Item> DRAGON_SKULL_FIRE = ITEMS.register(ItemDragonSkull.getName(EnumDragonType.FIRE), () -> new ItemDragonSkull(EnumDragonType.FIRE));
+    public static final RegistryObject<Item> DRAGON_SKULL_ICE = ITEMS.register(ItemDragonSkull.getName(EnumDragonType.ICE), () -> new ItemDragonSkull(EnumDragonType.ICE));
+    public static final RegistryObject<Item> DRAGON_SKULL_LIGHTNING = ITEMS.register(ItemDragonSkull.getName(EnumDragonType.LIGHTNING), () -> new ItemDragonSkull(EnumDragonType.LIGHTNING));
     public static final RegistryObject<ItemDragonArmor> DRAGON_ARMOR_IRON_HEAD = ITEMS.register("dragonarmor_iron_" + ItemDragonArmor.getNameForSlot(0), () -> new ItemDragonArmor(ItemDragonArmor.DragonArmorType.IRON, 0));
     public static final RegistryObject<ItemDragonArmor> DRAGON_ARMOR_IRON_NECK = ITEMS.register("dragonarmor_iron_" + ItemDragonArmor.getNameForSlot(1), () -> new ItemDragonArmor(ItemDragonArmor.DragonArmorType.IRON, 1));
     public static final RegistryObject<ItemDragonArmor> DRAGON_ARMOR_IRON_BODY = ITEMS.register("dragonarmor_iron_" + ItemDragonArmor.getNameForSlot(2), () -> new ItemDragonArmor(ItemDragonArmor.DragonArmorType.IRON, 2));
@@ -168,9 +168,9 @@ public class IafItemRegistry {
     public static final RegistryObject<Item> DRAGON_MEAL = ITEMS.register("dragon_meal", ItemGeneric::new);
     public static final RegistryObject<Item> SICKLY_DRAGON_MEAL = ITEMS.register("sickly_dragon_meal", () -> new ItemGeneric(1));
     public static final RegistryObject<Item> CREATIVE_DRAGON_MEAL = ITEMS.register("creative_dragon_meal", () -> new ItemGeneric(2));
-    public static final RegistryObject<Item> FIRE_DRAGON_FLESH = ITEMS.register(ItemDragonFlesh.getNameForType(0), () -> new ItemDragonFlesh(0));
-    public static final RegistryObject<Item> ICE_DRAGON_FLESH = ITEMS.register(ItemDragonFlesh.getNameForType(1), () -> new ItemDragonFlesh(1));
-    public static final RegistryObject<Item> LIGHTNING_DRAGON_FLESH = ITEMS.register(ItemDragonFlesh.getNameForType(2), () -> new ItemDragonFlesh(2));
+    public static final RegistryObject<Item> FIRE_DRAGON_FLESH = ITEMS.register(ItemDragonFlesh.getNameForType(EnumDragonType.FIRE), () -> new ItemDragonFlesh(EnumDragonType.FIRE));
+    public static final RegistryObject<Item> ICE_DRAGON_FLESH = ITEMS.register(ItemDragonFlesh.getNameForType(EnumDragonType.ICE), () -> new ItemDragonFlesh(EnumDragonType.ICE));
+    public static final RegistryObject<Item> LIGHTNING_DRAGON_FLESH = ITEMS.register(ItemDragonFlesh.getNameForType(EnumDragonType.LIGHTNING), () -> new ItemDragonFlesh(EnumDragonType.LIGHTNING));
     public static final RegistryObject<Item> FIRE_DRAGON_HEART = ITEMS.register("fire_dragon_heart", ItemGeneric::new);
     public static final RegistryObject<Item> ICE_DRAGON_HEART = ITEMS.register("ice_dragon_heart", ItemGeneric::new);
     public static final RegistryObject<Item> LIGHTNING_DRAGON_HEART = ITEMS.register("lightning_dragon_heart", ItemGeneric::new);

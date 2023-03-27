@@ -1,8 +1,8 @@
 package com.github.alexthe666.iceandfire.block;
 
 import com.github.alexthe666.iceandfire.IceAndFire;
-import com.github.alexthe666.iceandfire.entity.DragonType;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforge;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -28,14 +28,12 @@ import javax.annotation.Nullable;
 
 import static com.github.alexthe666.iceandfire.entity.tile.IafTileEntityRegistry.DRAGONFORGE_CORE;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class BlockDragonforgeCore extends BaseEntityBlock implements IDragonProof, INoTab {
     private static boolean keepInventory;
-    private final int isFire;
+    private final EnumDragonType dragonType;
     private final boolean activated;
 
-    public BlockDragonforgeCore(int isFire, boolean activated) {
+    public BlockDragonforgeCore(EnumDragonType dragonType, boolean activated) {
         super(
             Properties
                 .of(Material.METAL)
@@ -47,37 +45,37 @@ public class BlockDragonforgeCore extends BaseEntityBlock implements IDragonProo
                 })
         );
 
-        this.isFire = isFire;
+        this.dragonType = dragonType;
         this.activated = activated;
     }
 
-    static String name(int dragonType, boolean activated) {
-        return "dragonforge_%s_core%s".formatted(DragonType.getNameFromInt(dragonType), activated ? "": "_disabled");
+    static String name(EnumDragonType dragonType, boolean activated) {
+        return "dragonforge_%s_core%s".formatted(dragonType.name, activated ? "": "_disabled");
     }
 
-    public static void setState(int dragonType, boolean active, Level worldIn, BlockPos pos) {
-        BlockEntity tileentity = worldIn.getBlockEntity(pos);
+    public static void setState(EnumDragonType dragonType, boolean active, Level worldIn, BlockPos pos) {
+        BlockEntity tileEntity = worldIn.getBlockEntity(pos);
         keepInventory = true;
 
         if (active) {
-            if (dragonType == 0) {
+            if (dragonType == EnumDragonType.FIRE) {
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_FIRE_CORE.get().defaultBlockState(), 3);
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_FIRE_CORE.get().defaultBlockState(), 3);
-            } else if (dragonType == 1) {
+            } else if (dragonType == EnumDragonType.ICE) {
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_ICE_CORE.get().defaultBlockState(), 3);
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_ICE_CORE.get().defaultBlockState(), 3);
-            } else if (dragonType == 2) {
+            } else if (dragonType == EnumDragonType.LIGHTNING) {
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_LIGHTNING_CORE.get().defaultBlockState(), 3);
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_LIGHTNING_CORE.get().defaultBlockState(), 3);
             }
         } else {
-            if (dragonType == 0) {
+            if (dragonType == EnumDragonType.FIRE) {
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_FIRE_CORE_DISABLED.get().defaultBlockState(), 3);
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_FIRE_CORE_DISABLED.get().defaultBlockState(), 3);
-            } else if(dragonType == 1) {
+            } else if(dragonType == EnumDragonType.ICE) {
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_ICE_CORE_DISABLED.get().defaultBlockState(), 3);
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_ICE_CORE_DISABLED.get().defaultBlockState(), 3);
-            }else if(dragonType == 2) {
+            }else if(dragonType == EnumDragonType.LIGHTNING) {
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_LIGHTNING_CORE_DISABLED.get().defaultBlockState(), 3);
                 worldIn.setBlock(pos, IafBlockRegistry.DRAGONFORGE_LIGHTNING_CORE_DISABLED.get().defaultBlockState(), 3);
             }
@@ -85,9 +83,9 @@ public class BlockDragonforgeCore extends BaseEntityBlock implements IDragonProo
 
         keepInventory = false;
 
-        if (tileentity != null) {
-            tileentity.clearRemoved();
-            worldIn.setBlockEntity(tileentity);
+        if (tileEntity != null) {
+            tileEntity.clearRemoved();
+            worldIn.setBlockEntity(tileEntity);
         }
     }
 
@@ -113,13 +111,13 @@ public class BlockDragonforgeCore extends BaseEntityBlock implements IDragonProo
     }
 
     public ItemStack getItem(Level worldIn, BlockPos pos, BlockState state) {
-        if (isFire == 0) {
+        if (dragonType == EnumDragonType.FIRE) {
             return new ItemStack(IafBlockRegistry.DRAGONFORGE_FIRE_CORE_DISABLED.get().asItem());
         }
-        if (isFire == 1) {
+        if (dragonType == EnumDragonType.ICE) {
             return new ItemStack(IafBlockRegistry.DRAGONFORGE_ICE_CORE_DISABLED.get().asItem());
         }
-        if (isFire == 2) {
+        if (dragonType == EnumDragonType.LIGHTNING) {
             return new ItemStack(IafBlockRegistry.DRAGONFORGE_LIGHTNING_CORE_DISABLED.get().asItem());
         }
         return new ItemStack(IafBlockRegistry.DRAGONFORGE_FIRE_CORE_DISABLED.get().asItem());
@@ -165,6 +163,6 @@ public class BlockDragonforgeCore extends BaseEntityBlock implements IDragonProo
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new TileEntityDragonforge(pos, state, isFire);
+        return new TileEntityDragonforge(pos, state, dragonType);
     }
 }

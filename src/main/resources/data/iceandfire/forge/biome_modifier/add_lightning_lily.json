@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "minecraft:plains",
+  "biomes": "#iceandfire:has_feature/dragons/lightning_dragon",
   "features": "iceandfire:lightning_lily",
   "step": "vegetal_decoration"
 }

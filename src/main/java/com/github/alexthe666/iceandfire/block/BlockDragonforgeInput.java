@@ -4,6 +4,7 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.DragonType;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforge;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforgeInput;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -34,9 +35,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockDragonforgeInput extends BaseEntityBlock implements IDragonProof {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
-    private final int dragonType;
+    private final EnumDragonType dragonType;
 
-    public BlockDragonforgeInput(int dragonType) {
+    public BlockDragonforgeInput(EnumDragonType dragonType) {
         super(
             Properties
                 .of(Material.STONE)
@@ -49,8 +50,8 @@ public class BlockDragonforgeInput extends BaseEntityBlock implements IDragonPro
         this.registerDefaultState(this.getStateDefinition().any().setValue(ACTIVE, Boolean.FALSE));
     }
 
-    static String name(int dragonType) {
-        return "dragonforge_%s_input".formatted(DragonType.getNameFromInt(dragonType));
+    static String name(EnumDragonType dragonType) {
+        return "dragonforge_%s_input".formatted(dragonType.name);
     }
 
 
@@ -67,9 +68,9 @@ public class BlockDragonforgeInput extends BaseEntityBlock implements IDragonPro
                 if (worldIn.isClientSide) {
                     IceAndFire.PROXY.setRefrencedTE(worldIn.getBlockEntity(forge.getBlockPos()));
                 } else {
-                    MenuProvider inamedcontainerprovider = this.getMenuProvider(forge.getBlockState(), worldIn, forge.getBlockPos());
-                    if (inamedcontainerprovider != null) {
-                        player.openMenu(inamedcontainerprovider);
+                    MenuProvider iNamedContainerProvider = this.getMenuProvider(forge.getBlockState(), worldIn, forge.getBlockPos());
+                    if (iNamedContainerProvider != null) {
+                        player.openMenu(iNamedContainerProvider);
                     }
                 }
                 return InteractionResult.SUCCESS;

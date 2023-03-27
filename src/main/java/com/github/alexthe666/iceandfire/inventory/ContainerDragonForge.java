@@ -2,6 +2,7 @@ package com.github.alexthe666.iceandfire.inventory;
 
 import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforge;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class ContainerDragonForge extends AbstractContainerMenu {
 
     private final Container tileFurnace;
-    public int fireType;
+    public EnumDragonType fireType;
     protected final Level world;
 
     public ContainerDragonForge(int i, Inventory playerInventory) {
@@ -67,7 +68,7 @@ public class ContainerDragonForge extends AbstractContainerMenu {
                 }
                 slot.onQuickCraft(itemstack1, itemstack);
             } else if (index != 1 && index != 0) {
-                if (fireType == 0) {
+                if (fireType == EnumDragonType.FIRE) {
                     if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

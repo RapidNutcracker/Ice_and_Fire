@@ -47,8 +47,20 @@ public class IafVillagerRegistry {
     public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, IceAndFire.MODID);
     public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, IceAndFire.MODID);
     
-    public static final RegistryObject<PoiType> LECTERN_POI = POI_TYPES.register("lectern", () -> new PoiType(ImmutableSet.copyOf(IafBlockRegistry.LECTERN.get().getStateDefinition().getPossibleStates()), 1, 1));
-    public static final RegistryObject<VillagerProfession> SCRIBE = VILLAGER_PROFESSIONS.register("scribe", () -> new VillagerProfession("scribe", x -> x.get() == LECTERN_POI.get(), x -> x.get() == LECTERN_POI.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.VILLAGER_WORK_LIBRARIAN));
+    public static final RegistryObject<PoiType> LECTERN_POI = POI_TYPES.register(
+            "lectern_poi",
+            () -> new PoiType(
+                    ImmutableSet.copyOf(IafBlockRegistry.LECTERN.get().getStateDefinition().getPossibleStates()),
+                    1, 1));
+    public static final RegistryObject<VillagerProfession> SCRIBE = VILLAGER_PROFESSIONS.register(
+            "scribe",
+            () -> new VillagerProfession(
+                    "scribe",
+                    x -> x.get() == LECTERN_POI.get(),
+                    x -> x.get() == LECTERN_POI.get(),
+                    ImmutableSet.of(),
+                    ImmutableSet.of(),
+                    SoundEvents.VILLAGER_WORK_LIBRARIAN));
 
     public static void setup() {
         if (IafConfig.villagerHouseWeight > 0) {
@@ -69,7 +81,6 @@ public class IafVillagerRegistry {
     public static void registerPOIs() {
         try {
             ObfuscationReflectionHelper.findMethod(PoiType.class, "registerBlockStates", PoiType.class).invoke(null, LECTERN_POI.get());
-
         } catch (InvocationTargetException | IllegalAccessException exception) {
             exception.printStackTrace();
         }

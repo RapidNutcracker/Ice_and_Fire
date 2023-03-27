@@ -3,26 +3,23 @@ package com.github.alexthe666.iceandfire.world.feature;
 import com.github.alexthe666.iceandfire.IafConfig;
 import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 import com.github.alexthe666.iceandfire.entity.IafEntityRegistry;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import com.github.alexthe666.iceandfire.world.IafWorldRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.function.Supplier;
-
 
 public class SpawnDragonSkeleton extends Feature<NoneFeatureConfiguration> {
 
-    protected int dragonType;
+    protected EnumDragonType dragonType;
 
-    // TODO Fix this always spawning Ice Dragons
-    public SpawnDragonSkeleton(int dragonType, Codec<NoneFeatureConfiguration> configFactoryIn) {
+    public SpawnDragonSkeleton(EnumDragonType dragonType, Codec<NoneFeatureConfiguration> configFactoryIn) {
         super(configFactoryIn);
         this.dragonType = dragonType;
     }
@@ -40,9 +37,9 @@ public class SpawnDragonSkeleton extends Feature<NoneFeatureConfiguration> {
         if (IafConfig.generateDragonSkeletons) {
             if (rand.nextInt(IafConfig.generateDragonSkeletonChance + 1) == 0) {
                 EntityDragonBase dragon = switch(dragonType) {
-                    case 0 -> IafEntityRegistry.FIRE_DRAGON.get().create(worldIn.getLevel());
-                    case 1 -> IafEntityRegistry.ICE_DRAGON.get().create(worldIn.getLevel());
-                    case 2 -> IafEntityRegistry.LIGHTNING_DRAGON.get().create(worldIn.getLevel());
+                    case FIRE -> IafEntityRegistry.FIRE_DRAGON.get().create(worldIn.getLevel());
+                    case ICE -> IafEntityRegistry.ICE_DRAGON.get().create(worldIn.getLevel());
+                    case LIGHTNING -> IafEntityRegistry.LIGHTNING_DRAGON.get().create(worldIn.getLevel());
                     default -> null;
                 };
 

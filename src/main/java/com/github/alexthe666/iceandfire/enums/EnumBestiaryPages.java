@@ -97,6 +97,7 @@ public enum EnumBestiaryPages {
             final List<Integer> already = new ArrayList<>(Ints.asList(tag.getIntArray("Pages")));
             if (!already.contains(page.ordinal())) {
                 already.add(page.ordinal());
+                Collections.sort(already);
                 flag = true;
             }
             tag.putIntArray("Pages", Ints.toArray(already));

@@ -3,6 +3,7 @@ package com.github.alexthe666.iceandfire.client.gui;
 import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.DragonType;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityDragonforge;
+import com.github.alexthe666.iceandfire.enums.EnumDragonType;
 import com.github.alexthe666.iceandfire.inventory.ContainerDragonForge;
 import com.github.alexthe666.iceandfire.recipe.DragonForgeRecipe;
 import com.github.alexthe666.iceandfire.recipe.IafRecipeRegistry;
@@ -25,7 +26,7 @@ public class GuiDragonForge extends AbstractContainerScreen<ContainerDragonForge
     private static final ResourceLocation TEXTURE_ICE = new ResourceLocation("iceandfire:textures/gui/dragonforge_ice.png");
     private static final ResourceLocation TEXTURE_LIGHTNING = new ResourceLocation("iceandfire:textures/gui/dragonforge_lightning.png");
     private final ContainerDragonForge tileFurnace;
-    private final int dragonType;
+    private final EnumDragonType dragonType;
 
     public GuiDragonForge(ContainerDragonForge container, Inventory inv, Component name) {
         super(container, inv, name);
@@ -37,7 +38,7 @@ public class GuiDragonForge extends AbstractContainerScreen<ContainerDragonForge
     protected void renderLabels(@NotNull PoseStack stack, int mouseX, int mouseY) {
         Font font = this.getMinecraft().font;
         if (tileFurnace != null) {
-            String s = I18n.get("block.iceandfire.dragonforge_" + DragonType.getNameFromInt(dragonType) + "_core");
+            String s = I18n.get("block.iceandfire.dragonforge_" + dragonType.name + "_core");
             font.draw(stack, s, this.imageWidth / 2 - font.width(s) / 2, 6, 4210752);
         }
         font.draw(stack, this.playerInventoryTitle, 8, this.imageHeight - 96 + 2, 4210752);
@@ -46,9 +47,9 @@ public class GuiDragonForge extends AbstractContainerScreen<ContainerDragonForge
     @Override
     protected void renderBg(@NotNull PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        if (dragonType == 0) {
+        if (dragonType == EnumDragonType.FIRE) {
             RenderSystem.setShaderTexture(0, TEXTURE_FIRE);
-        } else if (dragonType == 1) {
+        } else if (dragonType == EnumDragonType.ICE) {
             RenderSystem.setShaderTexture(0, TEXTURE_ICE);
         } else {
             RenderSystem.setShaderTexture(0, TEXTURE_LIGHTNING);
