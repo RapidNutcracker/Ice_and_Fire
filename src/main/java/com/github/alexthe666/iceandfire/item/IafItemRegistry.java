@@ -28,6 +28,11 @@ public class IafItemRegistry {
 
     public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IceAndFire.MODID);
 
+    static {
+        initSpawnEggs();
+        initBannerItems();
+    }
+
     public static CustomArmorMaterial SILVER_ARMOR_MATERIAL = new IafArmorMaterial("silver", 15, new int[]{1, 4, 5, 2}, 20, SoundEvents.ARMOR_EQUIP_CHAIN, 0);
     public static CustomArmorMaterial COPPER_ARMOR_MATERIAL = new IafArmorMaterial("copper", 10, new int[]{1, 3, 4, 2}, 15, SoundEvents.ARMOR_EQUIP_GOLD, 0);
     public static CustomArmorMaterial BLINDFOLD_ARMOR_MATERIAL = new IafArmorMaterial("blindfold", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_LEATHER, 0);
@@ -41,7 +46,7 @@ public class IafItemRegistry {
     public static CustomArmorMaterial TROLL_MOUNTAIN_ARMOR_MATERIAL = new IafArmorMaterial("mountain troll", 20, new int[]{2, 5, 7, 3}, 10, SoundEvents.ARMOR_EQUIP_LEATHER, 1F);
     public static CustomArmorMaterial TROLL_FOREST_ARMOR_MATERIAL = new IafArmorMaterial("forest troll", 20, new int[]{2, 5, 7, 3}, 10, SoundEvents.ARMOR_EQUIP_LEATHER, 1F);
     public static CustomArmorMaterial TROLL_FROST_ARMOR_MATERIAL = new IafArmorMaterial("frost troll", 20, new int[]{2, 5, 7, 3}, 10, SoundEvents.ARMOR_EQUIP_LEATHER, 1F);
-    public static CustomArmorMaterial DRAGONSTEEL_FIRE_ARMOR_MATERIAL = new DragonsteelArmorMaterial("dragonsteel fire", (int) (0.02D * IafConfig.dragonsteelBaseDurabilityEquipment), new int[]{IafConfig.dragonsteelBaseArmor - 6, IafConfig.dragonsteelBaseArmor - 3, IafConfig.dragonsteelBaseArmor, IafConfig.dragonsteelBaseArmor - 5}, 30, SoundEvents.ARMOR_EQUIP_DIAMOND, 6.0F);
+    public static CustomArmorMaterial DRAGONSTEEL_FIRE_ARMOR_MATERIAL = new DragonsteelArmorMaterial("dragonsteel_fire", (int) (0.02D * IafConfig.dragonsteelBaseDurabilityEquipment), new int[]{IafConfig.dragonsteelBaseArmor - 6, IafConfig.dragonsteelBaseArmor - 3, IafConfig.dragonsteelBaseArmor, IafConfig.dragonsteelBaseArmor - 5}, 30, SoundEvents.ARMOR_EQUIP_DIAMOND, 6.0F);
     public static CustomArmorMaterial DRAGONSTEEL_ICE_ARMOR_MATERIAL = new DragonsteelArmorMaterial("dragonsteel_ice", (int) (0.02D * IafConfig.dragonsteelBaseDurabilityEquipment), new int[]{IafConfig.dragonsteelBaseArmor - 6, IafConfig.dragonsteelBaseArmor - 3, IafConfig.dragonsteelBaseArmor, IafConfig.dragonsteelBaseArmor - 5}, 30, SoundEvents.ARMOR_EQUIP_DIAMOND, 6.0F);
     public static CustomArmorMaterial DRAGONSTEEL_LIGHTNING_ARMOR_MATERIAL = new DragonsteelArmorMaterial("dragonsteel_lightning", (int) (0.02D * IafConfig.dragonsteelBaseDurabilityEquipment), new int[]{IafConfig.dragonsteelBaseArmor - 6, IafConfig.dragonsteelBaseArmor - 3, IafConfig.dragonsteelBaseArmor, IafConfig.dragonsteelBaseArmor - 5}, 30, SoundEvents.ARMOR_EQUIP_DIAMOND, 6.0F);
     public static CustomToolMaterial SILVER_TOOL_MATERIAL = new CustomToolMaterial("silver", 2, 460, 1.0F, 11.0F, 18);
@@ -59,7 +64,6 @@ public class IafItemRegistry {
     public static CustomToolMaterial DREAD_SWORD_TOOL_MATERIAL = new CustomToolMaterial("DreadSword", 0, 100, 1F, 10F, 0);
     public static CustomToolMaterial DREAD_KNIGHT_TOOL_MATERIAL = new CustomToolMaterial("DreadKnightSword", 0, 1200, 13F, 0F, 10);
     public static CustomToolMaterial GHOST_SWORD_TOOL_MATERIAL = new CustomToolMaterial("GhostSword", 2, 3000, 5, 10.0F, 25);
-
 
     public static final RegistryObject<Item> BESTIARY = ITEMS.register("bestiary", ItemBestiary::new);
     public static final RegistryObject<Item> MANUSCRIPT = ITEMS.register("manuscript", ItemGeneric::new);
@@ -326,10 +330,25 @@ public class IafItemRegistry {
     public static final RegistryObject<Item> GHOST_INGOT = ITEMS.register("ghost_ingot", () -> new ItemGeneric(1));
     public static final RegistryObject<Item> GHOST_SWORD = ITEMS.register("ghost_sword", () -> new ItemGhostSword());
 
-    static {
-        initSpawnEggs();
-        initBannerItems();
-    }
+    // public static final RegistryObject<BannerPatternItem> PATTERN_FIRE = ITEMS.register("banner_pattern_fire_dragon", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_FIRE, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_ICE = ITEMS.register("banner_pattern_ice_dragon", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_ICE, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_LIGHTNING = ITEMS.register("banner_pattern_lightning_dragon", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_LIGHTNING, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_FIRE_HEAD = ITEMS.register("banner_pattern_fire_dragon_head", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_FIRE_HEAD, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_ICE_HEAD = ITEMS.register("banner_pattern_ice_dragon_head", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_ICE_HEAD, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_LIGHTNING_HEAD = ITEMS.register("banner_pattern_lightning_dragon_head", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_LIGHTNING_HEAD, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_AMPHITHERE = ITEMS.register("banner_pattern_amphithere", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_AMPHITHERE, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_BIRD = ITEMS.register("banner_pattern_bird", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_BIRD, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_EYE = ITEMS.register("banner_pattern_eye", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_EYE, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_FAE = ITEMS.register("banner_pattern_fae", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_FAE, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_FEATHER = ITEMS.register("banner_pattern_feather", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_FEATHER, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_GORGON = ITEMS.register("banner_pattern_gorgon_head", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_GORGON, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_HIPPOCAMPUS = ITEMS.register("banner_pattern_hippocampus", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_HIPPOCAMPUS, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_HIPPOGRYPH_HEAD = ITEMS.register("banner_pattern_hippogryph_head", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_HIPPOGRYPH_HEAD, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_MERMAID = ITEMS.register("banner_pattern_mermaid", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_MERMAID, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_SEA_SERPENT = ITEMS.register("banner_pattern_sea_serpent", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_SEA_SERPENT, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_TROLL = ITEMS.register("banner_pattern_troll", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_TROLL, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_WEEZER = ITEMS.register("banner_pattern_weezer", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_WEEZER, unstackable()));
+    // public static final RegistryObject<BannerPatternItem> PATTERN_DREAD = ITEMS.register("banner_pattern_dread", () -> new BannerPatternItem(IafRecipeRegistry.PATTERN_DREAD, unstackable()));
 
     public static void initSpawnEggs() {
         RegistryObject<Item> SPAWN_EGG_FIRE_DRAGON = ITEMS.register("spawn_egg_fire_dragon", () -> new ForgeSpawnEggItem(IafEntityRegistry.FIRE_DRAGON, 0X340000, 0XA52929, new Item.Properties().tab(IceAndFire.TAB_ITEMS)));
@@ -364,25 +383,25 @@ public class IafItemRegistry {
     }
 
     public static void initBannerItems() {
-        registerPatternItem("fire");
-        registerPatternItem("ice");
-        registerPatternItem("lightning");
-        registerPatternItem("fire_head");
-        registerPatternItem("ice_head");
-        registerPatternItem("lightning_head");
+        registerPatternItem("fire_dragon");
+        registerPatternItem("ice_dragon");
+        registerPatternItem("lightning_dragon");
+        registerPatternItem("fire_dragon_head");
+        registerPatternItem("ice_dragon_head");
+        registerPatternItem("lightning_dragon_head");
         registerPatternItem("amphithere");
         registerPatternItem("bird");
         registerPatternItem("eye");
         registerPatternItem("fae");
         registerPatternItem("feather");
-        registerPatternItem("gorgon");
+        registerPatternItem("gorgon_head");
         registerPatternItem("hippocampus");
         registerPatternItem("hippogryph_head");
         registerPatternItem("mermaid");
         registerPatternItem("sea_serpent");
         registerPatternItem("troll");
-        registerPatternItem("weezer");
         registerPatternItem("dread");
+        registerPatternItem("weezer");
     }
 
     static {
@@ -393,8 +412,8 @@ public class IafItemRegistry {
     }
 
     private static void registerPatternItem(String name) {
-        TagKey<BannerPattern> bannerPatternTagKey = TagKey.create(Registry.BANNER_PATTERN_REGISTRY, new ResourceLocation(IceAndFire.MODID, "patter_for_" + name));
-        ITEMS.register("banner_pattern_" + name, () -> new BannerPatternItem(bannerPatternTagKey, (new Item.Properties().tab(IceAndFire.TAB_ITEMS).stacksTo(1))));
+        TagKey<BannerPattern> bannerPatternTagKey = TagKey.create(Registry.BANNER_PATTERN_REGISTRY, new ResourceLocation(IceAndFire.MODID, "pattern_for_" + name));
+        ITEMS.register("banner_pattern_" + name, () -> new BannerPatternItem(bannerPatternTagKey, (new Item.Properties()).tab(IceAndFire.TAB_ITEMS).stacksTo(1)));
     }
 
     public static void register(IEventBus eventBus) {

@@ -44,7 +44,6 @@ public class IafBlockRegistry {
     public static final RegistryObject<Block> COPPER_PILE = registerBlock("copper_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_ORE = registerBlock("silver_ore", () -> new BlockIafOre(2, 3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SAPPHIRE_ORE = registerBlock("sapphire_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> DEEPSLATE_SAPPHIRE_ORE = registerBlock("deepslate_sapphire_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> COPPER_ORE = registerBlock("copper_ore", () -> new BlockIafOre(0, 3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> AMETHYST_ORE = registerBlock("amethyst_ore", () -> new BlockIafOre(2, 4.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_BLOCK = registerBlock("silver_block", () -> new BlockGeneric(Material.METAL, 3.0F, 5.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);

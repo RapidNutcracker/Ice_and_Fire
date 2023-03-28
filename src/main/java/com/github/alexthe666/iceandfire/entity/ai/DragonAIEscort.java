@@ -43,12 +43,15 @@ public class DragonAIEscort extends Goal {
                 this.dragon.flyTicks = 0;
             }
         }
-
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.dragon.canMove() && this.dragon.getTarget() == null && this.dragon.getOwner() != null && this.dragon.getOwner().isAlive() && (this.dragon.distanceTo(this.dragon.getOwner()) > 15 || !this.dragon.getNavigation().isDone());
+        return this.dragon.getCommand() == 2 &&
+                this.dragon.canMove() &&
+                this.dragon.getTarget() == null &&
+                this.dragon.getOwner() != null &&
+                this.dragon.getOwner().isAlive() &&
+                (this.dragon.distanceTo(this.dragon.getOwner()) > 15 || !this.dragon.getNavigation().isDone());
     }
-
 }

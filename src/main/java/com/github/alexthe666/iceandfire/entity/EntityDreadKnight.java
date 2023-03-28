@@ -10,7 +10,7 @@ import com.github.alexthe666.iceandfire.entity.util.IAnimalFear;
 import com.github.alexthe666.iceandfire.entity.util.IDreadMob;
 import com.github.alexthe666.iceandfire.entity.util.IVillagerFear;
 import com.github.alexthe666.iceandfire.item.IafItemRegistry;
-import com.github.alexthe666.iceandfire.recipe.IafRecipeRegistry;
+import com.github.alexthe666.iceandfire.misc.IafBannerRegistry;
 import com.google.common.base.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -40,6 +40,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,28 +59,27 @@ public class EntityDreadKnight extends EntityDreadMob implements IAnimatedEntity
     }
 
     private static ItemStack generateShield() {
-        ItemStack itemstack = new ItemStack(Items.CYAN_BANNER);
-        CompoundTag compoundnbt = itemstack.getOrCreateTagElement("BlockEntityTag");
-        // TODO Banner Pattern
-        // ListTag listnbt = (new BannerPattern.Builder()).addPattern(BannerPattern.BASE, DyeColor.CYAN).addPattern(IafRecipeRegistry.PATTERN_DREAD, DyeColor.WHITE).toListTag();
-        // compoundnbt.put("Patterns", listnbt);
+        ItemStack itemStack = new ItemStack(Items.CYAN_BANNER);
+        CompoundTag compoundNbt = itemStack.getOrCreateTagElement("BlockEntityTag");
+        ListTag listNbt = new BannerPattern.Builder().addPattern(BannerPatterns.BASE, DyeColor.CYAN).addPattern(IafBannerRegistry.PATTERN_DREAD.getKey(), DyeColor.WHITE).toListTag();
+        compoundNbt.put("Patterns", listNbt);
         ItemStack shield = new ItemStack(Items.SHIELD, 1);
-        shield.setTag(itemstack.getTag());
+        shield.setTag(itemStack.getTag());
         return shield;
     }
 
     public static AttributeSupplier.Builder bakeAttributes() {
         return Mob.createMobAttributes()
-            //HEALTH
-            .add(Attributes.MAX_HEALTH, 40.0D)
-            //SPEED
-            .add(Attributes.MOVEMENT_SPEED, 0.25D)
-            //ATTACK
-            .add(Attributes.ATTACK_DAMAGE, 2.0D)
-            //FOLLOW RANGE
-            .add(Attributes.FOLLOW_RANGE, 128.0D)
-            //ARMOR
-            .add(Attributes.ARMOR, 20.0D);
+                //HEALTH
+                .add(Attributes.MAX_HEALTH, 40.0D)
+                //SPEED
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                //ATTACK
+                .add(Attributes.ATTACK_DAMAGE, 2.0D)
+                //FOLLOW RANGE
+                .add(Attributes.FOLLOW_RANGE, 128.0D)
+                //ARMOR
+                .add(Attributes.ARMOR, 20.0D);
     }
 
     @Override
@@ -130,9 +130,9 @@ public class EntityDreadKnight extends EntityDreadMob implements IAnimatedEntity
     protected void populateDefaultEquipmentSlots(RandomSource random, @NotNull DifficultyInstance difficulty) {
         super.populateDefaultEquipmentSlots(random, difficulty);
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(IafItemRegistry.DREAD_KNIGHT_SWORD.get()));
-        if (random.nextBoolean()) {
+//        if (random.nextBoolean()) {
             this.setItemSlot(EquipmentSlot.OFFHAND, SHIELD.copy());
-        }
+//        }
         setArmorVariant(random.nextInt(3));
     }
 
@@ -141,7 +141,7 @@ public class EntityDreadKnight extends EntityDreadMob implements IAnimatedEntity
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         SpawnGroupData data = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
         this.setAnimation(ANIMATION_SPAWN);
-        this.populateDefaultEquipmentSlots(RandomSource.create(), difficultyIn);
+        this.populateDefaultEquipmentSlots(worldIn.getRandom(), difficultyIn);
         return data;
     }
 
