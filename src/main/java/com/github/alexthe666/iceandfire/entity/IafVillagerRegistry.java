@@ -8,10 +8,15 @@ import com.github.alexthe666.iceandfire.world.gen.processor.VillageHouseProcesso
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Lifecycle;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.*;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -36,6 +41,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = IceAndFire.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -71,7 +77,7 @@ public class IafVillagerRegistry {
             TaigaVillagePools.bootstrap();
 
             for (String type : VILLAGE_TYPES) {
-                addStructureToPool(new ResourceLocation("village/" + type + "/houses"), new ResourceLocation("village/" + type + "/terminators"), new ResourceLocation("iceandfire", "village/" + type + "_scriber_1"), IafConfig.villagerHouseWeight);
+                addStructureToPool(new ResourceLocation("village/" + type + "/houses"), new ResourceLocation("iceandfire", "village/" + type + "_scriber_1"), IafConfig.villagerHouseWeight);
             }
         }
 
@@ -139,12 +145,30 @@ public class IafVillagerRegistry {
         return StructurePoolElement.legacy(new ResourceLocation("iceandfire", name).toString()).apply(StructureTemplatePool.Projection.RIGID);
     }
 
-    private static void addStructureToPool(ResourceLocation pool, ResourceLocation terminatorPool, ResourceLocation toAdd, int weight) {
+    private static void addStructureToPool(ResourceLocation pool, ResourceLocation toAdd, int weight) {
         StructureTemplatePool old = BuiltinRegistries.TEMPLATE_POOL.get(pool);
         List<StructurePoolElement> shuffled = old != null ? old.getShuffledTemplates(RandomSource.create()) : ImmutableList.of();
-        List<Pair<StructurePoolElement, Integer>> newPieces = shuffled.stream().map(p -> new Pair<>(p, 1)).collect(Collectors.toList());
+        Object2IntMap<StructurePoolElement> recomputedPieces = new Object2IntLinkedOpenHashMap<>();
+
+        // Recompute the weights
+        for (StructurePoolElement p : shuffled)
+            recomputedPieces.computeInt(p, (StructurePoolElement pTemp, Integer i) -> (i == null ? 0 : i) + 1);
+
+        // Create the needed list
+        List<Pair<StructurePoolElement, Integer>> newPieces = recomputedPieces.object2IntEntrySet().stream()
+                .map(e -> Pair.of(e.getKey(), e.getIntValue()))
+                .collect(Collectors.toList());
+
+        // Add the element with the appropriate weight
         newPieces.add(new Pair<>(StructurePoolElement.legacy(toAdd.toString(), HOUSE_PROCESSOR).apply(StructureTemplatePool.Projection.RIGID), weight));
-        Pools.register(new StructureTemplatePool(pool, terminatorPool, newPieces));
+
+        ResourceLocation name = old.getName();
+        int id = BuiltinRegistries.TEMPLATE_POOL.getId(old);
+        ((WritableRegistry<StructureTemplatePool>) BuiltinRegistries.TEMPLATE_POOL).registerOrOverride(
+                OptionalInt.of(id),
+                ResourceKey.create(BuiltinRegistries.TEMPLATE_POOL.key(), name),
+                new StructureTemplatePool(pool, name, newPieces),
+                Lifecycle.stable());
     }
 
 }
