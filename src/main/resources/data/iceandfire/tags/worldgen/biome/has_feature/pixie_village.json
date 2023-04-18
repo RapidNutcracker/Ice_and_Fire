@@ -3,9 +3,9 @@
 
   "_comment": " This biome tag can specify the biome directly. Or specify another biome tag by starting with # ",
   "values": [
-    "#forge:is_overworld",
     "#forge:is_rare",
-    "#forge:is_dense",
+    "#forge:is_magical",
+    "#forge:is_dense/overworld",
     "#iceandfire:collections/any_forests"
   ]
 }

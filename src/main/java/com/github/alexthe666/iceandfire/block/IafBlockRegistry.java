@@ -39,9 +39,9 @@ public class IafBlockRegistry {
     public static final RegistryObject<Block> POTTED_FROST_LILY = BLOCKS.register("potted_frost_lily", () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), IafBlockRegistry.FROST_LILY, BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION)));
     public static final RegistryObject<Block> LIGHTNING_LILY = registerBlock("lightning_lily", () -> new BlockElementalFlower(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> POTTED_LIGHTNING_LILY = BLOCKS.register("potted_lightning_lily", () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), IafBlockRegistry.LIGHTNING_LILY, BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION)));
-    public static final RegistryObject<Block> GOLD_PILE = registerBlock("gold_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> SILVER_PILE = registerBlock("silver_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
-    public static final RegistryObject<Block> COPPER_PILE = registerBlock("copper_pile", () -> new BlockGoldPile(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> GOLD_PILE = registerBlock("gold_pile", () -> new BlockTreasurePile(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> SILVER_PILE = registerBlock("silver_pile", () -> new BlockTreasurePile(), IceAndFire.TAB_BLOCKS);
+    public static final RegistryObject<Block> COPPER_PILE = registerBlock("copper_pile", () -> new BlockTreasurePile(), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_ORE = registerBlock("silver_ore", () -> new BlockIafOre(3.0F, 3.0F), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> SILVER_BLOCK = registerBlock("silver_block", () -> new BlockGeneric(Material.METAL, 3.0F, 5.0F, SoundType.METAL), IceAndFire.TAB_BLOCKS);
     public static final RegistryObject<Block> COPPER_ORE = registerBlock("copper_ore", () -> new BlockIafOre(3.0F, 3.0F), IceAndFire.TAB_BLOCKS);

@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.world.structure;
 // import com.github.alexthe666.citadel.repack.jaad.mp4.api.Track.Codec;
 
 import com.github.alexthe666.iceandfire.IafConfig;
-import com.github.alexthe666.iceandfire.world.IafStructures;
+import com.github.alexthe666.iceandfire.world.IafStructureTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -156,7 +156,7 @@ public class DreadMausoleumStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return IafStructures.DREAD_MAUSOLEUM_STRUCTURE.get(); // Helps the game know how to turn this structure back to json to save to chunks
+        return IafStructureTypes.DREAD_MAUSOLEUM_STRUCTURE.get(); // Helps the game know how to turn this structure back to json to save to chunks
     }
 }
 

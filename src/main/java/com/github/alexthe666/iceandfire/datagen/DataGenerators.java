@@ -8,6 +8,8 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
@@ -16,6 +18,8 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.tags.TagBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,6 +37,15 @@ import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = IceAndFire.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
+
+    @SubscribeEvent
+    public static void gatherData(GatherDataEvent evt) {
+        DataGenerator generator = evt.getGenerator();
+        ExistingFileHelper helper = evt.getExistingFileHelper();
+
+        generator.addProvider(true, new BiomeTagGenerator(generator, helper));
+    }
+
     static PackResources resources = new PackResources();
 
     @SubscribeEvent

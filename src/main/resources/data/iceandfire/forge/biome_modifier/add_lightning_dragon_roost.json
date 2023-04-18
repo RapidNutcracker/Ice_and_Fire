@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#iceandfire:has_feature/dragons/lightning",
-  "features": "iceandfire:lightning_dragon_roost",
-  "step": "surface_structures"
-}

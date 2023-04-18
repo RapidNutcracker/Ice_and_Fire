@@ -139,7 +139,7 @@ public class WorldGenLightningDragonRoosts extends Feature<NoneFeatureConfigurat
                     }
                     if (dist < 0.3D && rand.nextInt(isMale ? 250 : 400) == 0) {
                         BlockPos height = WorldGenUtils.degradeSurface(worldIn, worldIn.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos)).above();
-                        new WorldGenRoostGoldPile(IafBlockRegistry.COPPER_PILE.get()).generate(worldIn, rand, height);
+                        new WorldGenRoostTreasurePile(IafBlockRegistry.COPPER_PILE.get()).generate(worldIn, rand, height);
                     }
                     if (dist < 0.3D && rand.nextInt(isMale ? 500 : 700) == 0) {
                         BlockPos height = WorldGenUtils.degradeSurface(worldIn, worldIn.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos)).above();

@@ -135,7 +135,7 @@ public class WorldGenFireDragonRoosts extends Feature<NoneFeatureConfiguration> 
                     }
                     if (dist < 0.3D && rand.nextInt(isMale ? 200 : 300) == 0) {
                         BlockPos height = WorldGenUtils.degradeSurface(worldIn, worldIn.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos)).above(1);
-                        new WorldGenRoostGoldPile(IafBlockRegistry.GOLD_PILE.get()).generate(worldIn, rand, height);
+                        new WorldGenRoostTreasurePile(IafBlockRegistry.GOLD_PILE.get()).generate(worldIn, rand, height);
                     }
                     if (dist < 0.3D && rand.nextInt(isMale ? 500 : 700) == 0) {
                         BlockPos height = WorldGenUtils.degradeSurface(worldIn, worldIn.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos)).above();

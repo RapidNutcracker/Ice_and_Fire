@@ -1,6 +1,6 @@
 package com.github.alexthe666.iceandfire.world.gen;
 
-import com.github.alexthe666.iceandfire.block.BlockGoldPile;
+import com.github.alexthe666.iceandfire.block.BlockTreasurePile;
 import com.github.alexthe666.iceandfire.block.IafBlockRegistry;
 import com.github.alexthe666.iceandfire.entity.util.MyrmexHive;
 import net.minecraft.core.BlockPos;
@@ -118,11 +118,11 @@ public class WorldGenMyrmexDecoration {
             gold = IafBlockRegistry.COPPER_PILE.get().defaultBlockState();
         }
         if (worldIn.getBlockState(blockpos.below()).isFaceSturdy(worldIn, blockpos.below(), Direction.UP)) {
-            worldIn.setBlock(blockpos, gold.setValue(BlockGoldPile.LAYERS, 8), 3);
-            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.north()), gold.setValue(BlockGoldPile.LAYERS, 1 + new Random().nextInt(7)), 3);
-            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.south()), gold.setValue(BlockGoldPile.LAYERS, 1 + new Random().nextInt(7)), 3);
-            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.west()), gold.setValue(BlockGoldPile.LAYERS, 1 + new Random().nextInt(7)), 3);
-            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.east()), gold.setValue(BlockGoldPile.LAYERS, 1 + new Random().nextInt(7)), 3);
+            worldIn.setBlock(blockpos, gold.setValue(BlockTreasurePile.LAYERS, 8), 3);
+            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.north()), gold.setValue(BlockTreasurePile.LAYERS, 1 + new Random().nextInt(7)), 3);
+            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.south()), gold.setValue(BlockTreasurePile.LAYERS, 1 + new Random().nextInt(7)), 3);
+            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.west()), gold.setValue(BlockTreasurePile.LAYERS, 1 + new Random().nextInt(7)), 3);
+            worldIn.setBlock(MyrmexHive.getGroundedPos(worldIn, blockpos.east()), gold.setValue(BlockTreasurePile.LAYERS, 1 + new Random().nextInt(7)), 3);
             if (rand.nextInt(3) == 0) {
                 worldIn.setBlock(blockpos.above(), Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, HORIZONTALS[new Random().nextInt(3)]), 2);
                 if (worldIn.getBlockState(blockpos.above()).getBlock() instanceof ChestBlock) {

@@ -13,21 +13,16 @@ import com.github.alexthe666.iceandfire.message.*;
 import com.github.alexthe666.iceandfire.misc.IafBannerRegistry;
 import com.github.alexthe666.iceandfire.misc.IafSoundRegistry;
 import com.github.alexthe666.iceandfire.recipe.IafRecipeRegistry;
-import com.github.alexthe666.iceandfire.world.IafProcessors;
-import com.github.alexthe666.iceandfire.world.IafStructures;
-import com.github.alexthe666.iceandfire.world.IafWorldRegistry;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.github.alexthe666.iceandfire.world.*;
+import com.github.alexthe666.iceandfire.world.feature.IafConfiguredFeatures;
+import com.github.alexthe666.iceandfire.world.feature.IafPlacedFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -46,9 +41,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -113,9 +106,18 @@ public class IceAndFire {
         IafTileEntityRegistry.register(modBus);
         IafVillagerRegistry.register(modBus);
         IafSoundRegistry.register(modBus);
-        IafStructures.STRUCTURE_TYPES.register(modBus);
+
+        IafConfiguredFeatures.register(modBus);
+        IafPlacedFeatures.register(modBus);
+
+        IafStructureTypes.register(modBus);
+        IafStructurePieceTypes.register(modBus);
+        IafStructures.register(modBus);
+        IafStructurePlacementTypes.register(modBus);
+
         IafWorldRegistry.FEATURES.register(modBus);
         IafWorldRegistry.BIOME_MODIFIER_SERIALIZERS.register(modBus);
+
         IafBannerRegistry.register(modBus);
 //         IafWorldRegistry.register(modBus);
         IafContainerRegistry.CONTAINERS.register(modBus);

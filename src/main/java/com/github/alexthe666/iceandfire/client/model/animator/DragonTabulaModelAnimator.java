@@ -193,6 +193,10 @@ public abstract class DragonTabulaModelAnimator<T extends EntityDragonBase> exte
             }
         }
         if (entity.flyProgress > 0.0F) {
+            if (getModel(EnumDragonPoses.FLYING_POSE) == null) {
+                return;
+            }
+
             if (!isRotationEqual(cube, getModel(EnumDragonPoses.FLYING_POSE).getCube(cube.boxName))) {
                 transitionTo(cube, getModel(EnumDragonPoses.FLYING_POSE).getCube(cube.boxName), Mth.lerp(partialTick, entity.prevAnimationProgresses[3], entity.flyProgress) - (Mth.lerp(partialTick, entity.prevDiveProgress, entity.diveProgress)) * 2, 20, false);
             }
@@ -233,6 +237,10 @@ public abstract class DragonTabulaModelAnimator<T extends EntityDragonBase> exte
             }
         }
         if (!walking) {
+            if (getModel(EnumDragonPoses.FLYING_POSE) == null) {
+                return;
+            }
+
             AdvancedModelBox flightPart = getModel(EnumDragonPoses.FLYING_POSE).getCube(cube.boxName);
             AdvancedModelBox prevPositionCube = prevPosition.getCube(cube.boxName);
             AdvancedModelBox currPositionCube = currentPosition.getCube(cube.boxName);
@@ -270,10 +278,14 @@ public abstract class DragonTabulaModelAnimator<T extends EntityDragonBase> exte
         if (!entity.isMale()) {
             TabulaModel maleModel = getModel(EnumDragonPoses.MALE);
             TabulaModel femaleModel = getModel(EnumDragonPoses.FEMALE);
+            if(maleModel == null || femaleModel == null) {
+                return;
+            }
             AdvancedModelBox femaleModelCube = femaleModel.getCube(cube.boxName);
             AdvancedModelBox maleModelCube = maleModel.getCube(cube.boxName);
-            if (maleModelCube == null || femaleModelCube == null)
+            if (maleModelCube == null || femaleModelCube == null) {
                 return;
+            }
             float x = femaleModelCube.rotateAngleX;
             float y = femaleModelCube.rotateAngleY;
             float z = femaleModelCube.rotateAngleZ;

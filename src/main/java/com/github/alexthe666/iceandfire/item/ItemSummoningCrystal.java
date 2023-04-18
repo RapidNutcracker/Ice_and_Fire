@@ -68,10 +68,10 @@ public class ItemSummoningCrystal extends Item {
         if (stack.getTag() != null) {
             for (String tagInfo : stack.getTag().getAllKeys()) {
                 if (tagInfo.contains("Dragon")) {
-                    CompoundTag draginTag = stack.getTag().getCompound(tagInfo);
+                    CompoundTag dragonTag = stack.getTag().getCompound(tagInfo);
                     String dragonName = Component.translatable(desc).getString();
-                    if (!draginTag.getString("CustomName").isEmpty()) {
-                        dragonName = draginTag.getString("CustomName");
+                    if (!dragonTag.getString("CustomName").isEmpty()) {
+                        dragonName = dragonTag.getString("CustomName");
                     }
                     tooltip.add(Component.translatable("item.iceandfire.summoning_crystal.bound", dragonName).withStyle(ChatFormatting.GRAY));
                     flag = true;

@@ -1,6 +1,6 @@
  package com.github.alexthe666.iceandfire.world.structure;
 
- import com.github.alexthe666.iceandfire.world.IafStructures;
+ import com.github.alexthe666.iceandfire.world.IafStructureTypes;
  import com.mojang.serialization.Codec;
  import com.mojang.serialization.codecs.RecordCodecBuilder;
  import net.minecraft.core.BlockPos;
@@ -111,7 +111,7 @@
 
      @Override
      public StructureType<?> type() {
-         return IafStructures.GORGON_TEMPLE_STRUCTURE.get(); // Helps the game know how to turn this structure back to json to save to chunks
+         return IafStructureTypes.GORGON_TEMPLE_STRUCTURE.get(); // Helps the game know how to turn this structure back to json to save to chunks
      }
 
 //     public GorgonTempleStructure() {

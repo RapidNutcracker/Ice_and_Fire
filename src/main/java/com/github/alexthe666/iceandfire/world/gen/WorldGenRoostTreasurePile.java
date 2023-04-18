@@ -1,19 +1,18 @@
 package com.github.alexthe666.iceandfire.world.gen;
 
-import com.github.alexthe666.iceandfire.block.BlockGoldPile;
+import com.github.alexthe666.iceandfire.block.BlockTreasurePile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.Heightmap;
 
-import java.util.Random;
 import java.util.stream.Collectors;
 
-public class WorldGenRoostGoldPile {
+public class WorldGenRoostTreasurePile {
     private final Block block;
 
-    public WorldGenRoostGoldPile(Block block) {
+    public WorldGenRoostTreasurePile(Block block) {
         this.block = block;
     }
 
@@ -28,11 +27,11 @@ public class WorldGenRoostGoldPile {
             for (BlockPos blockpos : BlockPos.betweenClosedStream(up.offset(-j, 0, -l), up.offset(j, 0, l)).map(BlockPos::immutable).collect(Collectors.toSet())) {
                 if (blockpos.distSqr(position) <= (double) (f * f)) {
                     blockpos = worldIn.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockpos);
-                    if (block instanceof BlockGoldPile) {
+                    if (block instanceof BlockTreasurePile) {
                         if (worldIn.isEmptyBlock(blockpos)) {
-                            worldIn.setBlock(blockpos, block.defaultBlockState().setValue(BlockGoldPile.LAYERS, 1 + rand.nextInt(7)), 2);
-                            if (worldIn.getBlockState(blockpos.below()).getBlock() instanceof BlockGoldPile) {
-                                worldIn.setBlock(blockpos.below(), block.defaultBlockState().setValue(BlockGoldPile.LAYERS, 8), 2);
+                            worldIn.setBlock(blockpos, block.defaultBlockState().setValue(BlockTreasurePile.LAYERS, 1 + rand.nextInt(7)), 2);
+                            if (worldIn.getBlockState(blockpos.below()).getBlock() instanceof BlockTreasurePile) {
+                                worldIn.setBlock(blockpos.below(), block.defaultBlockState().setValue(BlockTreasurePile.LAYERS, 8), 2);
                             }
                         }
                     }

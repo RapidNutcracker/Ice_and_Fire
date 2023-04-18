@@ -31,14 +31,14 @@ import com.github.alexthe666.iceandfire.misc.IafSoundRegistry;
 
 import javax.annotation.Nullable;
 
-public class BlockGoldPile extends Block {
+public class BlockTreasurePile extends Block {
     public static final IntegerProperty LAYERS = IntegerProperty.create("layers", 1, 8);
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{Shapes.empty(), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D), Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
     public Item itemBlock;
 
     public static final SoundType SOUND_TYPE_GOLD = new SoundType(1.0F, 1.0F, IafSoundRegistry.GOLD_PILE_BREAK.get(), IafSoundRegistry.GOLD_PILE_STEP.get(), IafSoundRegistry.GOLD_PILE_BREAK.get(), IafSoundRegistry.GOLD_PILE_STEP.get(), IafSoundRegistry.GOLD_PILE_STEP.get());
 
-    public BlockGoldPile() {
+    public BlockTreasurePile() {
         super(
             Properties
                 .of(Material.DIRT)
@@ -85,7 +85,7 @@ public class BlockGoldPile extends Block {
         Block block = blockstate.getBlock();
         if (block != Blocks.ICE && block != Blocks.PACKED_ICE && block != Blocks.BARRIER) {
             if (block != Blocks.HONEY_BLOCK && block != Blocks.SOUL_SAND) {
-                return Block.isFaceFull(blockstate.getCollisionShape(worldIn, pos.below()), Direction.UP) || block instanceof BlockGoldPile && blockstate.getValue(LAYERS) == 8;
+                return Block.isFaceFull(blockstate.getCollisionShape(worldIn, pos.below()), Direction.UP) || block instanceof BlockTreasurePile && blockstate.getValue(LAYERS) == 8;
             } else {
                 return true;
             }

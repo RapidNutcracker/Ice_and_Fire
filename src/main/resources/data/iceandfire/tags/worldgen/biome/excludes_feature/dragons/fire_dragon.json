@@ -1,13 +1,9 @@
 {
   "replace": false,
-
   "_comment": " This biome tag can specify the biome directly. Or specify another biome tag by starting with # ",
   "values": [
-    "#iceandfire:collections/jungles",
-    "#iceandfire:collections/badlands",
-    "#iceandfire:collections/savannas",
-    "#forge:is_cold",
-    "#forge:is_water",
-    "#forge:is_wet"
+    "#iceandfire:collections/beaches",
+    "#forge:is_wet/overworld",
+    "#forge:is_water"
   ]
 }

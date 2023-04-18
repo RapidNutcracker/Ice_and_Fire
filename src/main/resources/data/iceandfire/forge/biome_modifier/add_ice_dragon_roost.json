@@ -1,7 +1,0 @@
-{
-  "type": "iceandfire:add_features_with_exceptions_modifier",
-  "biomes": "#iceandfire:has_feature/dragons/ice_dragon",
-  "exceptions": "#iceandfire:excludes_feature/dragons/ice_dragon",
-  "feature": "iceandfire:ice_dragon_roost",
-  "step": "surface_structures"
-}
