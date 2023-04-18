@@ -36,31 +36,41 @@ import java.util.Random;
 
 public class LightningDragonRoostPiece extends ScatteredFeaturePiece {
 
-    public static final int WIDTH = 12;
-    public static final int DEPTH = 6;
+    public static final int RADIUS = 12;
 
     private static final Direction[] HORIZONTALS = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
     private static boolean isDragonMale;
     public static ResourceLocation DRAGON_CHEST = new ResourceLocation("iceandfire", "chest/lightning_dragon_roost");
 
-    private boolean placedMainChest;
-    private boolean placedHiddenChest;
+    private int radius = 0;
+    private boolean hasPlacedDragon;
+    private boolean isDragonAlive;
+    private boolean hasPlacedBase;
+    private int numberOfPlacedChests;
+    private int numberOfPlacedTreasurePiles;
+
 
     public LightningDragonRoostPiece(RandomSource pRandom, int pX, int pZ) {
-        super(IafStructurePieceTypes.LIGHTNING_DRAGON_ROOST_PIECE.get(), pX, 64, pZ, 12, 10, 12, getRandomHorizontalDirection(pRandom));
+        super(IafStructurePieceTypes.LIGHTNING_DRAGON_ROOST_PIECE.get(), pX, 64, pZ, 35, 10, 35, getRandomHorizontalDirection(pRandom));
     }
 
     public LightningDragonRoostPiece(StructurePieceSerializationContext context, CompoundTag pTag) {
         super(IafStructurePieceTypes.LIGHTNING_DRAGON_ROOST_PIECE.get(), pTag);
-        this.placedMainChest = pTag.getBoolean("placedMainChest");
-        this.placedHiddenChest = pTag.getBoolean("placedHiddenChest");
+        this.radius = pTag.getInt("radius");
+        this.hasPlacedDragon = pTag.getBoolean("hasPlacedDragon");
+        this.isDragonAlive = pTag.getBoolean("isDragonAlive");
+        this.numberOfPlacedTreasurePiles = pTag.getInt("numberOfPlacedTreasurePiles");
+        this.numberOfPlacedChests = pTag.getInt("numberOfPlacedChests");
     }
 
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
         super.addAdditionalSaveData(pContext, pTag);
-        pTag.putBoolean("placedMainChest", this.placedMainChest);
-        pTag.putBoolean("placedHiddenChest", this.placedHiddenChest);
+        pTag.putInt("radius", this.radius);
+        pTag.putBoolean("hasPlacedDragon", this.hasPlacedDragon);
+        pTag.putBoolean("isDragonAlive", this.isDragonAlive);
+        pTag.putInt("numberOfPlacedTreasurePiles", this.numberOfPlacedTreasurePiles);
+        pTag.putInt("numberOfPlacedChests", this.numberOfPlacedChests);
     }
 
     private void transformState(LevelAccessor world, BlockPos blockpos, BlockState state) {
@@ -91,13 +101,18 @@ public class LightningDragonRoostPiece extends ScatteredFeaturePiece {
 
     @Override
     public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
+
         if (this.updateAverageGroundHeight(pLevel, pBox, 0)) {
 
-            int radius = WIDTH + pRandom.nextInt(8);
+            if (radius == 0) {
+                radius = RADIUS + pRandom.nextInt(8);
+            }
+
             BlockPos finalPosition = pLevel.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pPos);
 
             isDragonMale = pRandom.nextBoolean();
-            {
+
+            if (!hasPlacedDragon) {
                 EntityDragonBase dragon = IafEntityRegistry.LIGHTNING_DRAGON.get().create(pLevel.getLevel());
                 dragon.setGender(isDragonMale);
                 dragon.growDragon(40 + radius);
@@ -109,58 +124,60 @@ public class LightningDragonRoostPiece extends ScatteredFeaturePiece {
                 dragon.hasHomePosition = true;
                 dragon.setHunger(50);
                 pLevel.addFreshEntity(dragon);
+                this.hasPlacedDragon = true;
             }
 
-            {
-                int j = radius;
-                int k = 2;
-                int l = radius;
-                float f = (j + k + l) * 0.333F + 0.5F;
-                float fSquared = f * f;
+            if (!hasPlacedBase) {
+                {
+                    int j = radius;
+                    int k = 2;
+                    int l = radius;
+                    float f = (j + k + l) * 0.333F + 0.5F;
+                    float fSquared = f * f;
 
-                BlockPos.betweenClosedStream(finalPosition.offset(-j, -k, -l), finalPosition.offset(j, 0, l)).map(BlockPos::immutable).forEach(blockPos -> {
-                    int yAdd = blockPos.getY() - finalPosition.getY();
-                    double squaredDistance = blockPos.distSqr(finalPosition);
+                    BlockPos.betweenClosedStream(finalPosition.offset(-j, -k, -l), finalPosition.offset(j, 0, l)).map(BlockPos::immutable).forEach(blockPos -> {
+                        int yAdd = blockPos.getY() - finalPosition.getY();
+                        double squaredDistance = blockPos.distSqr(finalPosition);
 
-                    if (squaredDistance <= fSquared /*&& yAdd < 2 + pRandom.nextInt(k) && !pLevel.isEmptyBlock(blockPos.below())*/) {
-                        if (pLevel.isEmptyBlock(blockPos.above()))
-                            pLevel.setBlock(blockPos, IafBlockRegistry.CRACKLED_GRASS.get().defaultBlockState(), 2);
-                        else
-                            pLevel.setBlock(blockPos, IafBlockRegistry.CRACKLED_DIRT.get().defaultBlockState(), 2);
-                    }
-                });
+                        if (squaredDistance <= fSquared && yAdd < 2 + pRandom.nextInt(k) && !pLevel.isEmptyBlock(blockPos.below())) {
+                            if (pLevel.isEmptyBlock(blockPos.above()))
+                                pLevel.setBlock(blockPos, IafBlockRegistry.CRACKLED_GRASS.get().defaultBlockState(), 2);
+                            else
+                                pLevel.setBlock(blockPos, IafBlockRegistry.CRACKLED_DIRT.get().defaultBlockState(), 2);
+                        }
+                    });
+                }
+                {
+                    int j = radius;
+                    int k = (radius / 3);
+                    int l = radius;
+                    float f = (j + k + l) * 0.333F + 0.5F;
+                    BlockPos.betweenClosedStream(finalPosition.offset(-j, -k, -l), finalPosition.offset(j, 1, l)).map(BlockPos::immutable).forEach(blockPos -> {
+                        if (blockPos.distSqr(finalPosition) < f * f) {
+                            pLevel.setBlock(blockPos, pRandom.nextBoolean() ? IafBlockRegistry.CRACKLED_GRAVEL.get().defaultBlockState() : IafBlockRegistry.CRACKLED_DIRT.get().defaultBlockState(), 2);
+                        } else if (blockPos.distSqr(finalPosition) == f * f) {
+                            pLevel.setBlock(blockPos, IafBlockRegistry.CRACKLED_COBBLESTONE.get().defaultBlockState(), 2);
+                        }
+                    });
+                }
+                {
+                    int j = radius - 2;
+                    int k = 2;
+                    int l = radius - 2;
+                    float f = (j + k + l) * 0.333F + 0.5F;
+                    BlockPos up = finalPosition.above(k - 1);
+                    BlockPos.betweenClosedStream(up.offset(-j, -k + 2, -l), up.offset(j, k, l)).map(BlockPos::immutable).forEach(blockPos -> {
+                        if (blockPos.distSqr(finalPosition) <= f * f) {
+                            pLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
+                        }
+                    });
+                }
+                this.hasPlacedBase = true;
             }
             {
-                int j = radius;
-                int k = (radius / 5);
-                int l = radius;
-                float f = (j + k + l) * 0.333F + 0.5F;
-                BlockPos.betweenClosedStream(finalPosition.offset(-j, -k, -l), finalPosition.offset(j, 1, l)).map(BlockPos::immutable).forEach(blockPos -> {
-                    if (blockPos.distSqr(finalPosition) < f * f) {
-                        pLevel.setBlock(blockPos, pRandom.nextBoolean() ? IafBlockRegistry.CRACKLED_GRAVEL.get().defaultBlockState() : IafBlockRegistry.CRACKLED_DIRT.get().defaultBlockState(), 2);
-                    } else if (blockPos.distSqr(finalPosition) == f * f) {
-                        pLevel.setBlock(blockPos, IafBlockRegistry.CRACKLED_COBBLESTONE.get().defaultBlockState(), 2);
-                    }
-                });
-            }
-            radius -= 2;
-            {
-                int j = radius;
-                int k = 2;
-                int l = radius;
-                float f = (j + k + l) * 0.333F + 0.5F;
-                BlockPos up = finalPosition.above(k - 1);
-                BlockPos.betweenClosedStream(up.offset(-j, -k + 2, -l), up.offset(j, k, l)).map(BlockPos::immutable).forEach(blockPos -> {
-                    if (blockPos.distSqr(finalPosition) <= f * f) {
-                        pLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
-                    }
-                });
-            }
-            radius += 2;
-            {
-                int j = radius;
-                int k = (radius / 5);
-                int l = radius;
+                int j = (int) (radius * 1.25F);
+                int k = ((radius * 2) / 3);
+                int l = (int) (radius * 1.25F);
                 float f = (j + k + l) * 0.333F + 0.5F;
                 BlockPos.betweenClosedStream(finalPosition.offset(-j, -k, -l), finalPosition.offset(j, k, l)).map(BlockPos::immutable).forEach(blockPos -> {
                     if (blockPos.distSqr(finalPosition) <= f * f) {
@@ -172,25 +189,29 @@ public class LightningDragonRoostPiece extends ScatteredFeaturePiece {
                             BlockPos height = pLevel.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos);
                             new WorldGenRoostBoulder(IafBlockRegistry.CRACKLED_COBBLESTONE.get(), pRandom.nextInt(3), true).generate(pLevel, pRandom, height);
                         }
-                        if (pRandom.nextInt(1000) == 0) {
+                        if (dist > 0.5D && pRandom.nextInt(1500) == 0) {
                             BlockPos height = pLevel.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos);
                             new WorldGenRoostPile(IafBlockRegistry.ASH.get()).generate(pLevel, pRandom, height);
                         }
-                        if (dist < 0.3D && pRandom.nextInt(isDragonMale ? 200 : 300) == 0) {
+                        if (dist < 0.3D && numberOfPlacedTreasurePiles < 10 && pRandom.nextInt(isDragonMale ? 200 : 300) == 0) {
                             BlockPos height = WorldGenUtils.degradeSurface(pLevel, pLevel.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos)).above();
                             new WorldGenRoostTreasurePile(IafBlockRegistry.COPPER_PILE.get()).generate(pLevel, pRandom, height);
+                            this.numberOfPlacedTreasurePiles++;
                         }
-                        if (dist < 0.3D && pRandom.nextInt(isDragonMale ? 500 : 700) == 0) {
+                        if (dist < 0.3D && numberOfPlacedChests < 6 && pRandom.nextInt(isDragonMale ? 500 : 700) == 0) {
                             BlockPos height = WorldGenUtils.degradeSurface(pLevel, pLevel.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos)).above();
-                            pLevel.setBlock(height, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, HORIZONTALS[new Random().nextInt(3)]), 2);
-                            if (pLevel.getBlockState(height).getBlock() instanceof ChestBlock) {
-                                BlockEntity blockEntity = pLevel.getBlockEntity(height);
-                                if (blockEntity instanceof ChestBlockEntity chestBlockEntity) {
-                                    chestBlockEntity.setLootTable(DRAGON_CHEST, new Random().nextLong());
+                            if (pLevel.setBlock(height, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, HORIZONTALS[new Random().nextInt(3)]), 2)) {
+                                numberOfPlacedChests++;
+
+                                if (pLevel.getBlockState(height).getBlock() instanceof ChestBlock) {
+                                    BlockEntity blockEntity = pLevel.getBlockEntity(height);
+                                    if (blockEntity instanceof ChestBlockEntity chestBlockEntity) {
+                                        chestBlockEntity.setLootTable(DRAGON_CHEST, new Random().nextLong());
+                                    }
                                 }
                             }
                         }
-                        if (pRandom.nextInt(5000) == 0) {
+                        if (dist > 0.3D && pRandom.nextInt(5000) == 0) {
                             BlockPos height = pLevel.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, blockPos);
                             new WorldGenRoostArch(IafBlockRegistry.CRACKLED_COBBLESTONE.get()).generate(pLevel, pRandom, height);
                         }

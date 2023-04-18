@@ -73,7 +73,7 @@ public class IafWorldRegistry {
 //    public static final RegistryObject<Feature<NoneFeatureConfiguration>> FIRE_DRAGON_ROOST;
 //    public static final RegistryObject<Feature<NoneFeatureConfiguration>> ICE_DRAGON_ROOST;
 //    public static final RegistryObject<Feature<NoneFeatureConfiguration>> LIGHTNING_DRAGON_ROOST;
-    public static final RegistryObject<Feature<NoneFeatureConfiguration>> FIRE_DRAGON_CAVE;
+//    public static final RegistryObject<Feature<NoneFeatureConfiguration>> FIRE_DRAGON_CAVE;
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ICE_DRAGON_CAVE;
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> LIGHTNING_DRAGON_CAVE;
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> CYCLOPS_CAVE;
@@ -152,7 +152,7 @@ public class IafWorldRegistry {
 //        ICE_DRAGON_ROOST = register("ice_dragon_roost", () -> new WorldGenIceDragonRoosts(NoneFeatureConfiguration.CODEC));
 //        LIGHTNING_DRAGON_ROOST = register("lightning_dragon_roost",
 //                () -> new WorldGenLightningDragonRoosts(NoneFeatureConfiguration.CODEC));
-        FIRE_DRAGON_CAVE = register("fire_dragon_cave", () -> new WorldGenFireDragonCave(NoneFeatureConfiguration.CODEC));
+//        FIRE_DRAGON_CAVE = register("fire_dragon_cave", () -> new WorldGenFireDragonCave(NoneFeatureConfiguration.CODEC));
         ICE_DRAGON_CAVE = register("ice_dragon_cave", () -> new WorldGenIceDragonCave(NoneFeatureConfiguration.CODEC));
         LIGHTNING_DRAGON_CAVE = register("lightning_dragon_cave",
                 () -> new WorldGenLightningDragonCave(NoneFeatureConfiguration.CODEC));
@@ -251,7 +251,7 @@ public class IafWorldRegistry {
 //        FIRE_DRAGON_ROOST_CF = registerSimple.apply("fire_dragon_roost", FIRE_DRAGON_ROOST.get());
 //        ICE_DRAGON_ROOST_CF = registerSimple.apply("ice_dragon_roost", ICE_DRAGON_ROOST.get());
 //        LIGHTNING_DRAGON_ROOST_CF = registerSimple.apply("lightning_dragon_roost", LIGHTNING_DRAGON_ROOST.get());
-        FIRE_DRAGON_CAVE_CF = registerSimple.apply("fire_dragon_cave", FIRE_DRAGON_CAVE.get());
+//        FIRE_DRAGON_CAVE_CF = registerSimple.apply("fire_dragon_cave", FIRE_DRAGON_CAVE.get());
         ICE_DRAGON_CAVE_CF = registerSimple.apply("ice_dragon_cave", ICE_DRAGON_CAVE.get());
         LIGHTNING_DRAGON_CAVE_CF = registerSimple.apply("lightning_dragon_cave", LIGHTNING_DRAGON_CAVE.get());
 

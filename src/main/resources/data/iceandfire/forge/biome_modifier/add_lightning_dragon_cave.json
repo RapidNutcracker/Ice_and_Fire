@@ -1,7 +1,0 @@
-{
-  "type": "iceandfire:add_features_with_exceptions_modifier",
-  "biomes": "#iceandfire:has_feature/dragons/lightning_dragon",
-  "exceptions": "#iceandfire:excludes_feature/dragons/lightning_dragon",
-  "feature": "iceandfire:lightning_dragon_cave",
-  "step": "underground_structures"
-}

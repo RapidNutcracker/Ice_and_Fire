@@ -18,6 +18,11 @@ public class BiomeTagGenerator extends BiomeTagsProvider {
     public static final TagKey<Biome> VALID_ICE_DRAGON_ROOST_BIOMES = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(IceAndFire.MODID, "valid_ice_dragon_roost_biomes"));
     public static final TagKey<Biome> VALID_LIGHTNING_DRAGON_ROOST_BIOMES = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(IceAndFire.MODID, "valid_lightning_dragon_roost_biomes"));
 
+    public static final TagKey<Biome> VALID_FIRE_DRAGON_CAVE_BIOMES = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(IceAndFire.MODID, "valid_fire_dragon_cave_biomes"));
+//    public static final TagKey<Biome> VALID_ICE_DRAGON_ROOST_BIOMES = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(IceAndFire.MODID, "valid_ice_dragon_roost_biomes"));
+//    public static final TagKey<Biome> VALID_LIGHTNING_DRAGON_ROOST_BIOMES = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(IceAndFire.MODID, "valid_lightning_dragon_roost_biomes"));
+
+
     public BiomeTagGenerator(DataGenerator generator, ExistingFileHelper helper) {
         super(generator, IceAndFire.MODID, helper);
     }
@@ -34,6 +39,10 @@ public class BiomeTagGenerator extends BiomeTagsProvider {
 
         tag(VALID_LIGHTNING_DRAGON_ROOST_BIOMES).addTag(
                 Tags.Biomes.IS_WET
+        );
+
+        tag(VALID_FIRE_DRAGON_CAVE_BIOMES).addTag(
+                BiomeTags.IS_OVERWORLD
         );
     }
 }
